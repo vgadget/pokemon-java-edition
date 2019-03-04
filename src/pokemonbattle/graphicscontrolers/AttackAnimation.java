@@ -1,5 +1,6 @@
 package pokemonbattle.graphicscontrolers;
 
+import Util.Dimensions;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -85,7 +86,21 @@ public class AttackAnimation extends JPanel {
             }
         }
 
-        this.attack = front;
+        if (this.frameSize.equals(Dimensions.frameDimension720p)) {
+            
+            this.attack = front;
+            
+        } else if (this.frameSize.equals(Dimensions.frameDimension1080p)) {
+            
+            this.attack = front;
+
+            for (int i = 0; i < this.attack.length; i++) {
+
+                this.attack[i] = Util.ImageUtil.resizeProportional(this.attack[i], 1.5);
+
+            }
+
+        }
 
         this.changingSomething = false;
     }
@@ -125,15 +140,15 @@ public class AttackAnimation extends JPanel {
         }
 
     }
-    
-    public boolean isPlaying(){
-        
-        if (this.attack != null && !this.changingSomething){
-            if (this.currentSprite >= 0 && this.currentSprite < this.attack.length){
+
+    public boolean isPlaying() {
+
+        if (this.attack != null && !this.changingSomething) {
+            if (this.currentSprite >= 0 && this.currentSprite < this.attack.length) {
                 return true;
             }
         }
-        
+
         return false;
     }
 
