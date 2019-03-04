@@ -1,0 +1,1 @@
+Font used in the first and second generation Pokemon games, Credits to Sarial84 on DeviantART for the Cyrillic alphabet and others for the Greek alphabet, more glyphs added but most are custom.
