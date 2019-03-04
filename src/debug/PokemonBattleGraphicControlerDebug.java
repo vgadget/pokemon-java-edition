@@ -3,7 +3,6 @@ package debug;
 import Util.Dimensions;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -18,7 +17,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -34,7 +32,7 @@ import pokemonbattle.graphicscontrolers.PokemonOpponentHealthHud;
  */
 public class PokemonBattleGraphicControlerDebug {
 
-    public static void test() throws IOException {
+    public static void test() {
         JFrame testOutputFrame = new JFrame("Debug: Outputs");
         JFrame testInputFrame = new JFrame("Debug: Inputs");
 
