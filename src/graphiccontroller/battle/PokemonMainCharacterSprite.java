@@ -34,7 +34,7 @@ public class PokemonMainCharacterSprite extends JPanel {
 
     private boolean withdrawing, blink, dead, fly;
 
-    private PokemonAlteredState alteredStateAnimation;
+    private PokemonStatusCondition alteredStateAnimation;
     private ChangeStatsAnimation changeStatsAnimation;
 
     public PokemonMainCharacterSprite(Dimension frameDimension, BufferedImage sprites[]) {
@@ -43,7 +43,7 @@ public class PokemonMainCharacterSprite extends JPanel {
         this.pokemonSprite = sprites;
         setUpSprites(sprites);
 
-        alteredStateAnimation = new PokemonAlteredState(new Dimension(this.pokemonSprite[0].getWidth(), this.pokemonSprite[0].getHeight()), null, pokemonSpriteLocationX, pokemonSpriteLocationY);
+        alteredStateAnimation = new PokemonStatusCondition(new Dimension(this.pokemonSprite[0].getWidth(), this.pokemonSprite[0].getHeight()), null, pokemonSpriteLocationX, pokemonSpriteLocationY);
 
         try {
             changeStatsAnimation = new ChangeStatsAnimation(frameDimension, pokemonSpriteLocationX, pokemonSpriteLocationY);

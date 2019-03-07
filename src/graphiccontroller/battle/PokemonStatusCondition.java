@@ -13,7 +13,7 @@ import javax.swing.JPanel;
  *
  * @author Adrian Vazquez
  */
-public class PokemonAlteredState extends JPanel {
+public class PokemonStatusCondition extends JPanel {
 
     private static final String URI_DEBUG_STATE = "Resources/BattleHUD/AlteredState/DEBUG";
     private static final String URI_DEFAULT_STATE = "Resources/BattleHUD/AlteredState/DEFAULT";
@@ -24,7 +24,7 @@ public class PokemonAlteredState extends JPanel {
     private int currentSprite = 0;
     private boolean enable;
 
-    public PokemonAlteredState(Dimension spriteDimension, BufferedImage sprites[], int locationX, int locationY) {
+    public PokemonStatusCondition(Dimension spriteDimension, BufferedImage sprites[], int locationX, int locationY) {
         this.spriteDimension = spriteDimension;
         this.locationX = locationX;
         this.locationY = locationY;
@@ -44,7 +44,7 @@ public class PokemonAlteredState extends JPanel {
                         try {
                             Thread.sleep(115);
                         } catch (InterruptedException ex) {
-                            Logger.getLogger(PokemonAlteredState.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(PokemonStatusCondition.class.getName()).log(Level.SEVERE, null, ex);
                         }
 
                         currentSprite++;
@@ -53,7 +53,7 @@ public class PokemonAlteredState extends JPanel {
                         try {
                             Thread.sleep(30);
                         } catch (InterruptedException ex) {
-                            Logger.getLogger(PokemonAlteredState.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(PokemonStatusCondition.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                 }
@@ -76,7 +76,7 @@ public class PokemonAlteredState extends JPanel {
                 stateSprites[i] = ImageIO.read(new File(URI_DEFAULT_STATE + "/tile(" + i + ").png"));
                 stateSprites[i] = Util.ImageUtil.resize(stateSprites[i], (int) spriteDimension.getWidth(), (int) spriteDimension.getHeight());
             } catch (IOException ex) {
-                Logger.getLogger(PokemonAlteredState.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PokemonStatusCondition.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 

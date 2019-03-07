@@ -30,7 +30,7 @@ public class PokemonOpponentSprite extends JPanel {
 
     private boolean setEnablePlay, playBackWards, withdrawing, blink, dead, fly;
 
-    private PokemonAlteredState alteredStateAnimation;
+    private PokemonStatusCondition alteredStateAnimation;
     private ChangeStatsAnimation changeStatsAnimation;
 
     public PokemonOpponentSprite(Dimension frameDimension, BufferedImage sprites[]) {
@@ -48,7 +48,7 @@ public class PokemonOpponentSprite extends JPanel {
 
         setUpSprites(sprites);
 
-        alteredStateAnimation = new PokemonAlteredState(new Dimension(this.pokemonSprite[0].getWidth(), this.pokemonSprite[0].getHeight()), null, pokemonSpriteLocationX, pokemonSpriteLocationY);
+        alteredStateAnimation = new PokemonStatusCondition(new Dimension(this.pokemonSprite[0].getWidth(), this.pokemonSprite[0].getHeight()), null, pokemonSpriteLocationX, pokemonSpriteLocationY);
 
         try {
             changeStatsAnimation = new ChangeStatsAnimation(frameDimension, pokemonSpriteLocationX, pokemonSpriteLocationY);

@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  *
  * @author Adrian Vazquez
  */
-public class PokemonBattleGraphicControler extends JPanel {
+public class BattleGraphicController extends JPanel {
 
     private static final String URI_BATTLE_BACKGROUND = "Resources/BattleHUD/BackGround/battleBackground.png";
     private static final String URI_CROPPED_BATTLE_BACKGROUND = "Resources/BattleHUD/BackGround/croppedbattleBackground.png";
@@ -50,7 +50,7 @@ public class PokemonBattleGraphicControler extends JPanel {
     //AttackAnimation
     private AttackAnimation attackAnimation;
 
-    public PokemonBattleGraphicControler(Dimension resolution) {
+    public BattleGraphicController(Dimension resolution) {
 
         this.resolution = resolution;
         this.setEnabledPlay = true;
@@ -87,7 +87,7 @@ public class PokemonBattleGraphicControler extends JPanel {
             }
 
         } catch (IOException ex) {
-            Logger.getLogger(PokemonBattleGraphicControler.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BattleGraphicController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         player1Sprite = new PokemonMainCharacterSprite(resolution, null);
@@ -115,7 +115,7 @@ public class PokemonBattleGraphicControler extends JPanel {
         try {
             pokeballP1 = new PokeballAnimation(resolution);
         } catch (IOException ex) {
-            Logger.getLogger(PokemonBattleGraphicControler.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BattleGraphicController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         this.weatherAnimation = new Weather(resolution, null);
@@ -274,7 +274,7 @@ public class PokemonBattleGraphicControler extends JPanel {
                 try {
                     Thread.sleep(1200);
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(PokemonBattleGraphicControler.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(BattleGraphicController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 player1Appear();
             }
@@ -290,7 +290,7 @@ public class PokemonBattleGraphicControler extends JPanel {
                 try {
                     Thread.sleep(1200);
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(PokemonBattleGraphicControler.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(BattleGraphicController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 player2Appear();
             }
@@ -393,7 +393,7 @@ public class PokemonBattleGraphicControler extends JPanel {
         try {
             this.attackAnimation.loadDefaultAttackAnimationMainCharacter();
         } catch (IOException ex) {
-            Logger.getLogger(PokemonBattleGraphicControler.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BattleGraphicController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -401,7 +401,7 @@ public class PokemonBattleGraphicControler extends JPanel {
         try {
             this.attackAnimation.loadDefaultAttackAnimationOpponent();
         } catch (IOException ex) {
-            Logger.getLogger(PokemonBattleGraphicControler.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BattleGraphicController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
         

@@ -22,7 +22,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
-import graphiccontroller.battle.PokemonBattleGraphicControler;
+import graphiccontroller.battle.BattleGraphicController;
 import graphiccontroller.battle.PokemonMainCharacterHealthHud;
 import graphiccontroller.battle.PokemonOpponentHealthHud;
 
@@ -41,7 +41,7 @@ public class PokemonBattleGraphicControlerDebug {
         Dimension testInputputframeSize = new Dimension((int) (500), (int) (600));
 
         //testOuputElements
-        PokemonBattleGraphicControler HUD = new PokemonBattleGraphicControler(screenSize);
+        BattleGraphicController HUD = new BattleGraphicController(screenSize);
         HUD.setBackground(Color.DARK_GRAY);
 
         JPanel debug = new JPanel();

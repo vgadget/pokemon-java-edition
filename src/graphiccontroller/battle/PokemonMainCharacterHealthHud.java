@@ -29,7 +29,7 @@ public class PokemonMainCharacterHealthHud extends JPanel {
     private static final String URI_RED_HP_BAR = "Resources/BattleHUD/HpBar/Common/Bars/RedBar.png";
     private static final int BAR_UPDATE_SPEED = 10;
 
-    PokemonBattleGraphicControler mainControler;
+    BattleGraphicController mainControler;
 
     private BufferedImage hud;
     private int hudLocationX, hudLocationY;
@@ -51,7 +51,7 @@ public class PokemonMainCharacterHealthHud extends JPanel {
 
     private boolean withdraw;
 
-    public PokemonMainCharacterHealthHud(Dimension frameDimension, String name, int level, int sex, int currentHp, int maxHp, PokemonBattleGraphicControler mainControler) {
+    public PokemonMainCharacterHealthHud(Dimension frameDimension, String name, int level, int sex, int currentHp, int maxHp, BattleGraphicController mainControler) {
 
         this.mainControler = mainControler;
         //Variables that can be modified
@@ -81,7 +81,7 @@ public class PokemonMainCharacterHealthHud extends JPanel {
 
     }
 
-    public PokemonMainCharacterHealthHud(Dimension frameDimension, PokemonBattleGraphicControler mainControler) {
+    public PokemonMainCharacterHealthHud(Dimension frameDimension, BattleGraphicController mainControler) {
         this(frameDimension, "MISSINGNO", 100, NONE, 999, 999, mainControler);
     }
 
