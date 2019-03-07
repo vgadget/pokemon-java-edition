@@ -22,9 +22,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
-import pokemonbattle.graphicscontrolers.PokemonBattleGraphicControler;
-import pokemonbattle.graphicscontrolers.PokemonMainCharacterHealthHud;
-import pokemonbattle.graphicscontrolers.PokemonOpponentHealthHud;
+import pokemonbattle.graphicscontrolers.battle.PokemonBattleGraphicControler;
+import pokemonbattle.graphicscontrolers.battle.PokemonMainCharacterHealthHud;
+import pokemonbattle.graphicscontrolers.battle.PokemonOpponentHealthHud;
 
 /**
  *

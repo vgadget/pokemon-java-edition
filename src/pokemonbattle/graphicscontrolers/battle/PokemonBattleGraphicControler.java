@@ -1,4 +1,4 @@
-package pokemonbattle.graphicscontrolers;
+package pokemonbattle.graphicscontrolers.battle;
 
 import Util.Dimensions;
 import java.awt.Dimension;
@@ -56,6 +56,7 @@ public class PokemonBattleGraphicControler extends JPanel {
         this.setEnabledPlay = true;
 
         setLayout(null);
+        
         try {
             this.background = ImageIO.read(new File(URI_BATTLE_BACKGROUND));
             this.croppedBackground = ImageIO.read(new File(URI_CROPPED_BATTLE_BACKGROUND));

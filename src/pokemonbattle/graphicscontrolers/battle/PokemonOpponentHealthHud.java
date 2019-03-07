@@ -1,4 +1,4 @@
-package pokemonbattle.graphicscontrolers;
+package pokemonbattle.graphicscontrolers.battle;
 
 import Util.Dimensions;
 import java.awt.*;
@@ -14,12 +14,13 @@ import java.util.logging.Logger;
  *
  * @author Adrian Vazquez
  */
-public class PokemonMainCharacterHealthHud extends JPanel {
+public class PokemonOpponentHealthHud extends JPanel {
 
     public static final int MALE = 0, FEMALE = 1, NONE = 2;
     private static final int MAX_CHAR = 10;
 
-    private static final String URI_HP_HUD = "Resources/BattleHUD/HpBar/mainCharacterHpBar/HealthBar/HealthBar.png";
+    private static final String URI_HP_HUD = "Resources/BattleHUD/HpBar/OpponentHpBar/HealthBar.png";
+    private static final String URI_IS_CATCHED_ICON = "Resources/BattleHUD/HpBar/OpponentHpBar/Captured.png";
     private static final String URI_SEX_FEMALE = "Resources/BattleHUD/HpBar/Common/Sex/Female.png";
     private static final String URI_SEX_MALE = "Resources/BattleHUD/HpBar/Common/Sex/Male.png";
     private static final String URI_SEX_NONE = "Resources/BattleHUD/HpBar/Common/Sex/None.png";
@@ -29,13 +30,16 @@ public class PokemonMainCharacterHealthHud extends JPanel {
     private static final String URI_RED_HP_BAR = "Resources/BattleHUD/HpBar/Common/Bars/RedBar.png";
     private static final int BAR_UPDATE_SPEED = 10;
 
-    PokemonBattleGraphicControler mainControler;
+    private PokemonBattleGraphicControler mainControler;
 
     private BufferedImage hud;
     private int hudLocationX, hudLocationY;
 
     private BufferedImage hpBar, hpGreenBar, hpYellowBar, hpRedBar;
     private int hpBarLocationX, hpBarLocationY;
+
+    private BufferedImage isCatchedIcon;
+    private int isCatchedIconLocationX, isCatchedIconLocationY;
 
     private BufferedImage sexIcon;
     private int sexIconLocationX, sexIconLocationY;
@@ -44,22 +48,23 @@ public class PokemonMainCharacterHealthHud extends JPanel {
 
     protected JLabel pokemonName;
     protected JLabel pokemonLevel;
-    protected JLabel pokemonCurrentHp, pokemonMaxHp;
 
     private int percentage;
+    private boolean isCatched;
     private int sex;
 
     private boolean withdraw;
 
-    public PokemonMainCharacterHealthHud(Dimension frameDimension, String name, int level, int sex, int currentHp, int maxHp, PokemonBattleGraphicControler mainControler) {
+    public PokemonOpponentHealthHud(Dimension frameDimension, String name, int level, int sex, int currentHp, int maxHp, boolean isCatched, PokemonBattleGraphicControler mainControler) {
 
-        this.mainControler = mainControler;
         //Variables that can be modified
         this.percentage = 100;
+        this.isCatched = isCatched;
         this.sex = sex;
         this.withdraw = false;
 
         //SetUp the Class
+        this.mainControler = mainControler;
         setLayout(null);
         this.frameDimension = frameDimension;
         try {
@@ -73,7 +78,6 @@ public class PokemonMainCharacterHealthHud extends JPanel {
             }).start();
         }
 
-        this.setPokemonJLableHpValues(currentHp, maxHp);
         this.setPercentage(percentage);
         this.setUpPokemonName(name);
         this.setUpPokemonLevel(level);
@@ -81,8 +85,8 @@ public class PokemonMainCharacterHealthHud extends JPanel {
 
     }
 
-    public PokemonMainCharacterHealthHud(Dimension frameDimension, PokemonBattleGraphicControler mainControler) {
-        this(frameDimension, "MISSINGNO", 100, NONE, 999, 999, mainControler);
+    public PokemonOpponentHealthHud(Dimension frameDimension, PokemonBattleGraphicControler mainControler) {
+        this(frameDimension, "MISSINGNO", 100, NONE, 999, 999, false, mainControler);
     }
 
     private void setUpPokemonName(String name) {
@@ -114,16 +118,7 @@ public class PokemonMainCharacterHealthHud extends JPanel {
 
         }
 
-        //Dimensions and Locations
-        if (frameDimension.equals(Dimensions.frameDimension1080p)) {
-
-            pokemonName.setBounds((int) (hpBarLocationX / 1.15f), (int) (hpBarLocationY * 0.94f), pokemonName.getPreferredSize().width, pokemonName.getPreferredSize().height);
-
-        } else if (frameDimension.equals(Dimensions.frameDimension720p)) {
-
-            pokemonName.setBounds((int) (hpBarLocationX / 1.28), (int) (hpBarLocationY / 1.125), pokemonName.getPreferredSize().width, pokemonName.getPreferredSize().height);
-
-        }
+        setPokemonName(name);
 
         pokemonName.setForeground(Color.WHITE);
         this.add(pokemonName);
@@ -141,17 +136,15 @@ public class PokemonMainCharacterHealthHud extends JPanel {
         //Dimensions and Locations
         if (frameDimension.equals(Dimensions.frameDimension1080p)) {
 
-            pokemonName.setBounds((int) (hpBarLocationX / 1.15f), (int) (hpBarLocationY * 0.94f), pokemonName.getPreferredSize().width, pokemonName.getPreferredSize().height);
+            pokemonName.setBounds((int) (hpBarLocationX / 2.5f), (int) (hpBarLocationY * (1f / 2.5f)), pokemonName.getPreferredSize().width, pokemonName.getPreferredSize().height);
 
         } else if (frameDimension.equals(Dimensions.frameDimension720p)) {
-
-            pokemonName.setBounds((int) (hpBarLocationX / 1.28), (int) (hpBarLocationY / 1.125), pokemonName.getPreferredSize().width, pokemonName.getPreferredSize().height);
+            pokemonName.setBounds((int) (hpBarLocationX / 2.5f), (int) (hpBarLocationY * (1f / 2.5f)), pokemonName.getPreferredSize().width, pokemonName.getPreferredSize().height);
 
         }
 
-        repaint();
         mainControler.repaint();
-
+        repaint();
     }
 
     private void setUpPokemonLevel(int level) {
@@ -180,7 +173,6 @@ public class PokemonMainCharacterHealthHud extends JPanel {
             }
 
             setPokemonLevel(level);
-
             pokemonLevel.setForeground(Color.WHITE);
             this.add(pokemonLevel);
         }
@@ -193,13 +185,13 @@ public class PokemonMainCharacterHealthHud extends JPanel {
             //Dimensions and Locations
             if (frameDimension.equals(Dimensions.frameDimension1080p)) {
 
-                pokemonLevel.setBounds((int) (hpBarLocationX * 1.1f), (int) (hpBarLocationY / (1.077f)), pokemonLevel.getPreferredSize().width, pokemonLevel.getPreferredSize().height);
+                pokemonLevel.setBounds((int) (hpBarLocationX * 2.15f), (int) (hpBarLocationY * (1f / 3.5f)), pokemonLevel.getPreferredSize().width, pokemonLevel.getPreferredSize().height);
 
             } else if (frameDimension.equals(Dimensions.frameDimension720p)) {
-
-                pokemonLevel.setBounds((int) (hpBarLocationX * 1.157f), (int) (hpBarLocationY / (1.152f)), pokemonLevel.getPreferredSize().width, pokemonLevel.getPreferredSize().height);
+                pokemonLevel.setBounds((int) (hpBarLocationX * 2.15f), (int) (hpBarLocationY * (1f / 3.5f)), pokemonLevel.getPreferredSize().width, pokemonLevel.getPreferredSize().height);
 
             }
+
         }
     }
 
@@ -223,9 +215,23 @@ public class PokemonMainCharacterHealthHud extends JPanel {
             sexIcon = ImageUtil.resizeProportional(sexIcon, ImageUtil.getProportion(frameDimension) * 2);
         }
 
-        repaint();
         mainControler.repaint();
+        repaint();
+    }
 
+    public void setPokemonCatched(boolean b) throws IOException {
+
+        this.isCatched = b;
+
+        if (isCatched) {
+            isCatchedIcon = ImageIO.read(new File(URI_IS_CATCHED_ICON));
+            isCatchedIcon = ImageUtil.resizeProportional(isCatchedIcon, ImageUtil.getProportion(frameDimension) * 2);
+        } else {
+            isCatchedIcon = null;
+        }
+
+        mainControler.repaint();
+        repaint();
     }
 
     private void setUpResources() throws IOException {
@@ -243,97 +249,39 @@ public class PokemonMainCharacterHealthHud extends JPanel {
 
         hpBar = ImageUtil.deepCopy(hpGreenBar);
 
-        pokemonCurrentHp = new JLabel();
-        pokemonMaxHp = new JLabel();
-        try {
-
-            //Cargar la fuente
-            InputStream is = getClass().getResourceAsStream("HUD_NAME_FONT.ttf");
-            Font f = Font.createFont(Font.TRUETYPE_FONT, is);
-            f = f.deriveFont(0, 24);
-            pokemonCurrentHp.setFont(f);
-            pokemonMaxHp.setFont(f);
-        } catch (Exception e) {
-
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    JOptionPane.showMessageDialog(null, "ERROR 001: MISSING FONT", "ERROR", 0);
-                }
-            }).start();
-        }
-
-        pokemonCurrentHp.setForeground(Color.WHITE);
-        pokemonMaxHp.setForeground(Color.WHITE);
-        this.add(pokemonCurrentHp);
-        this.add(pokemonMaxHp);
+        setPokemonCatched(isCatched);
 
         setPokemonSex(sex);
 
         //Dimensions and Locations
         if (frameDimension.equals(Dimensions.frameDimension1080p)) {
 
-            hudLocationX = (int) (frameDimension.width / 1.46f);
-            hudLocationY = (int) (frameDimension.height / 1.46f);
+            hudLocationX = 0;
+            hudLocationY = 0;
 
-            hpBarLocationX = (int) (frameDimension.width / 1.185f);
-            hpBarLocationY = (int) (frameDimension.height / 1.313f);
+            isCatchedIconLocationX = 0;
+            isCatchedIconLocationY = 0;
 
-            sexIconLocationX = (int) (frameDimension.width / 1.132f);
-            sexIconLocationY = (int) (frameDimension.width / 2.5f);
+            hpBarLocationX = (int) (frameDimension.width / 9.42);
+            hpBarLocationY = (int) (frameDimension.height / 12.9);
+
+            sexIconLocationX = (int) (frameDimension.width / 5.45f);
+            sexIconLocationY = (int) (frameDimension.width / 65f);
 
         } else if (frameDimension.equals(Dimensions.frameDimension720p)) {
+            hudLocationX = 0;
+            hudLocationY = 0;
 
-            hudLocationX = (int) (frameDimension.width / 1.9);
-            hudLocationY = (int) (frameDimension.height / 2f);
+            isCatchedIconLocationX = 0;
+            isCatchedIconLocationY = 0;
 
-            hpBarLocationX = (int) (frameDimension.width / 1.307f);
-            hpBarLocationY = (int) (frameDimension.height / 1.625f);
+            hpBarLocationX = (int) (frameDimension.width / 6.25f);
+            hpBarLocationY = (int) (frameDimension.height / 8.6f);
 
-            sexIconLocationX = (int) (frameDimension.width / 1.215f);
-            sexIconLocationY = (int) (frameDimension.width / 3.31f);
-
-        }
-    }
-
-    private void setPokemonJLableHpValues(int current, int max) {
-
-        if (current < 0) {
-            current = 0;
-        } else if (current > 999) {
-            current = 999;
+            sexIconLocationX = (int) (frameDimension.width / 3.6f);
+            sexIconLocationY = (int) (frameDimension.width / 45f);
         }
 
-        if (max < 0) {
-            max = 0;
-        } else if (max > 999) {
-            max = 999;
-        }
-
-        if (current <= max) {
-
-            String currentHp = current + "";
-
-            while (currentHp.length() < 3) {
-                currentHp = "0" + currentHp;
-            }
-
-            pokemonCurrentHp.setText(currentHp);
-            pokemonMaxHp.setText(max + "");
-
-            //Dimensions and Locations
-            if (frameDimension.equals(Dimensions.frameDimension1080p)) {
-
-                pokemonCurrentHp.setBounds(hpBarLocationX, (int) (hpBarLocationY * 1.005f), pokemonCurrentHp.getPreferredSize().width, pokemonCurrentHp.getPreferredSize().height);
-                pokemonMaxHp.setBounds((int) (hpBarLocationX * 1.09), (int) (hpBarLocationY * 1.005f), pokemonMaxHp.getPreferredSize().width, pokemonMaxHp.getPreferredSize().height);
-
-            } else if (frameDimension.equals(Dimensions.frameDimension720p)) {
-                pokemonCurrentHp.setBounds(hpBarLocationX, (int) (hpBarLocationY * 1.01f), pokemonCurrentHp.getPreferredSize().width, pokemonCurrentHp.getPreferredSize().height);
-                pokemonMaxHp.setBounds((int) (hpBarLocationX * 1.15), (int) (hpBarLocationY * 1.01f), pokemonMaxHp.getPreferredSize().width, pokemonMaxHp.getPreferredSize().height);
-
-            }
-
-        }
     }
 
     @Override
@@ -341,8 +289,10 @@ public class PokemonMainCharacterHealthHud extends JPanel {
 
         if (!withdraw) {
             super.paintComponent(g);
+
             g.drawImage(hud, hudLocationX, hudLocationY, this);
             g.drawImage(hpBar, hpBarLocationX, hpBarLocationY, this);
+            g.drawImage(isCatchedIcon, isCatchedIconLocationX, isCatchedIconLocationY, this);
             g.drawImage(sexIcon, sexIconLocationX, sexIconLocationY, this);
         }
     }
@@ -391,38 +341,28 @@ public class PokemonMainCharacterHealthHud extends JPanel {
         }
 
         if (newPercentage < percentage) {
-
             while (newPercentage != percentage) {
 
                 percentage--;
-                setPokemonJLableHpValues(Integer.parseInt(this.pokemonCurrentHp.getText()) - 1, maxHp);
-
                 setPercentage(percentage);
                 try {
                     Thread.sleep(BAR_UPDATE_SPEED);
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(PokemonMainCharacterHealthHud.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(PokemonOpponentHealthHud.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             }
-
         } else if (newPercentage > percentage) {
-
             while (newPercentage != percentage) {
-
                 percentage++;
-                setPokemonJLableHpValues(Integer.parseInt(this.pokemonCurrentHp.getText()) + 1, maxHp);
-
                 setPercentage(percentage);
                 try {
                     Thread.sleep(BAR_UPDATE_SPEED);
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(PokemonMainCharacterHealthHud.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(PokemonOpponentHealthHud.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
-
-        setPokemonJLableHpValues(currentHP, maxHp);
 
     }
 
@@ -430,22 +370,21 @@ public class PokemonMainCharacterHealthHud extends JPanel {
         return sex;
     }
 
+    public boolean pokemonIsCatched() {
+        return isCatched;
+    }
+
     public void withdraw() {
-        withdraw = true;
+        this.withdraw = true;
         pokemonName.setVisible(false);
         pokemonLevel.setVisible(false);
-        pokemonMaxHp.setVisible(false);
-        pokemonCurrentHp.setVisible(false);
         repaint();
     }
 
     public void appear() {
-        withdraw = false;
+        this.withdraw = false;
         pokemonName.setVisible(true);
         pokemonLevel.setVisible(true);
-        pokemonMaxHp.setVisible(true);
-        pokemonCurrentHp.setVisible(true);
-        repaint();
     }
 
 }

@@ -1,4 +1,4 @@
-package pokemonbattle.graphicscontrolers;
+package pokemonbattle.graphicscontrolers.battle;
 
 import Util.Dimensions;
 import Util.ImageUtil;
@@ -16,9 +16,9 @@ import javax.swing.JPanel;
  *
  * @author Adrian Vazquez
  */
-public class PokemonMainCharacterSprite extends JPanel {
+public class PokemonOpponentSprite extends JPanel {
 
-    private static final String URI_MISSINGNO_SPRITE = "Resources/BattleHUD/Pokedex/MISSINGNO/Sprite/BACK";
+    private static final String URI_MISSINGNO_SPRITE = "Resources/BattleHUD/Pokedex/MISSINGNO/Sprite/FRONT";
     private static final int SPRITE_SPEED = 80;
 
     private boolean threadlocked, drawingLocked, changingSomething;
@@ -28,19 +28,24 @@ public class PokemonMainCharacterSprite extends JPanel {
     private int currentSprite;
     private int pokemonSpriteLocationX, pokemonSpriteLocationY;
 
-    private boolean setEnablePlay;
-
-    private boolean playBackWards;
-
-    private boolean withdrawing, blink, dead, fly;
+    private boolean setEnablePlay, playBackWards, withdrawing, blink, dead, fly;
 
     private PokemonAlteredState alteredStateAnimation;
     private ChangeStatsAnimation changeStatsAnimation;
 
-    public PokemonMainCharacterSprite(Dimension frameDimension, BufferedImage sprites[]) {
+    public PokemonOpponentSprite(Dimension frameDimension, BufferedImage sprites[]) {
 
         this.frameDimension = frameDimension;
         this.pokemonSprite = sprites;
+
+        this.changingSomething = false;
+        this.threadlocked = false;
+        this.drawingLocked = false;
+        setEnablePlay = true;
+        this.playBackWards = false;
+        this.dead = false;
+        this.fly = false;
+
         setUpSprites(sprites);
 
         alteredStateAnimation = new PokemonAlteredState(new Dimension(this.pokemonSprite[0].getWidth(), this.pokemonSprite[0].getHeight()), null, pokemonSpriteLocationX, pokemonSpriteLocationY);
@@ -50,16 +55,6 @@ public class PokemonMainCharacterSprite extends JPanel {
         } catch (IOException ex) {
             Logger.getLogger(PokemonMainCharacterSprite.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        this.setEnablePlay = true;
-        this.playBackWards = false;
-        this.withdrawing = false;
-        this.blink = false;
-        this.dead = false;
-        this.fly = false;
-        this.changingSomething = false;
-        this.threadlocked = false;
-        this.drawingLocked = false;
 
         new Thread(new Runnable() {
             @Override
@@ -162,12 +157,11 @@ public class PokemonMainCharacterSprite extends JPanel {
         // SET UP THE LOCATION
         appear();
 
-        this.changingSomething = false;
+        changingSomething = false;
 
     }
 
     public void appear() {
-
         withdrawing = false;
         dead = false;
         fly = false;
@@ -178,13 +172,13 @@ public class PokemonMainCharacterSprite extends JPanel {
 
         if (frameDimension.equals(Dimensions.frameDimension720p)) {
 
-            pokemonSpriteLocationX = 30;
-            pokemonSpriteLocationY = (int) frameDimension.getHeight() - 270;
+            pokemonSpriteLocationX = (int) frameDimension.getWidth() - 395;
+            pokemonSpriteLocationY = (int) 40;
 
         } else if (frameDimension.equals(Dimensions.frameDimension1080p)) {
 
-            pokemonSpriteLocationX = 50;
-            pokemonSpriteLocationY = (int) 445;
+            pokemonSpriteLocationX = (int) frameDimension.getWidth() - 565;
+            pokemonSpriteLocationY = (int) 110;
 
         }
 
@@ -217,7 +211,6 @@ public class PokemonMainCharacterSprite extends JPanel {
 
     public void setAlteredState(BufferedImage sprites[]) {
         alteredStateAnimation.setState(sprites);
-
     }
 
     public void loadDefaultsetAlteredState() { //Debug
@@ -235,8 +228,12 @@ public class PokemonMainCharacterSprite extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
 
+//        if (currentSprite == this.pokemonSprite.length - 1) {
+//            playBackWards = true;
+//        } else if (currentSprite == 0) {
+//            playBackWards = false;
+//        }
         if (!changingSomething && g != null) {
-
             if (blink) {
 
                 if (currentSprite % 2 == 0 || currentSprite % 8 == 0) {
@@ -248,20 +245,23 @@ public class PokemonMainCharacterSprite extends JPanel {
             } else {
                 g.drawImage(pokemonSprite[currentSprite], pokemonSpriteLocationX, pokemonSpriteLocationY, this);
                 this.alteredStateAnimation.paintComponent(g);
+
             }
 
             if (withdrawing) {
 
-                if (pokemonSpriteLocationX > -500) {
-                    pokemonSpriteLocationX -= 50;
+                if (pokemonSpriteLocationX < frameDimension.width) {
+                    pokemonSpriteLocationX += 50;
                 }
 
             } else if (dead) {
+
                 if (pokemonSpriteLocationY < frameDimension.getHeight()) {
-                    pokemonSpriteLocationY += 50;
+                    pokemonSpriteLocationY += 100;
                 }
+
             } else if (fly) {
-                if (pokemonSpriteLocationY > -frameDimension.getHeight()) {
+                if (pokemonSpriteLocationY > -frameDimension.getHeight() / 2) {
                     pokemonSpriteLocationY -= frameDimension.getHeight() / 8;
                 }
             } else {
@@ -276,7 +276,6 @@ public class PokemonMainCharacterSprite extends JPanel {
 
         } else {
             drawingLocked = true;
-
         }
     }
 
