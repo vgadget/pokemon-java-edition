@@ -14,13 +14,15 @@ import javax.swing.JPanel;
  */
 public class Weather extends JPanel {
 
+    //Local resources - DEBUG
     private String URI_DEFAULT_WEATHER = "Resources/BattleHUD/Weather/Rain";
     private static final int DEFAULT_WEATHER_NO_SPRITES = 4;
 
+    // Array of images. It contains all the images to create an animation
     private BufferedImage sprites[];
-    private int currentSprite;
+    private int currentSprite; // Store what image is currently being loaded
 
-    private Dimension frameDimension;
+    private Dimension frameDimension; //Store the dimension of the panel.
 
     public Weather(Dimension frameDimension, BufferedImage sprites[]) {
 
@@ -62,12 +64,17 @@ public class Weather extends JPanel {
     }
 
     public void changeWeather(BufferedImage s[]) {
+
+        removeWeather();
+
         this.sprites = s;
 
         if (this.sprites == null) {
             loadDefaultWeather();
         } else {
+            
             for (int i = 0; i < this.sprites.length; i++) {
+                
                 if (this.frameDimension.equals(Dimensions.frameDimension720p)) {
 
                     sprites[i] = Util.ImageUtil.resizeProportional(sprites[i], 4);

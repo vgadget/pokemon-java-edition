@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  */
 public class PokemonStatusCondition extends JPanel {
 
-    private static final String URI_DEBUG_STATE = "Resources/BattleHUD/AlteredState/DEBUG";
+    private static final String URI_DEBUG_STATE = "Resources/BattleHUD/AlteredState/DEBUG"; //Special state used to show some debug elements.
     private static final String URI_DEFAULT_STATE = "Resources/BattleHUD/AlteredState/DEFAULT";
 
     private Dimension spriteDimension;

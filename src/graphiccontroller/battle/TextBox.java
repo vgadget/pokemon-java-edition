@@ -28,26 +28,27 @@ public class TextBox extends JPanel {
     private static final String URI_TEXTBOX_BACKGROUND = "Resources/BattleHUD/TextBox/textBox.png";
     private static final String URI_TEXTBOX_INTRO_KEY = "Resources/BattleHUD/TextBox";
 
-    private static final int MAX_CAR = 25;
+    private static final int MAX_CAR = 25; //The maximum characters that can be displayed at a time.
 
-    private BufferedImage textbackground;
+    
+    private BufferedImage textbackground; //The image that surrounds the text.  
     private int textbackgroundLocationX, textbackgroundLocationY;
 
-    private BufferedImage[] introKey;
+    private BufferedImage[] introKey; // Images who give the intro key animation.
     private int currentSprite, introKeyLocationX, introKeyLocationY;
 
-    private Queue<String> textQueue;
+    private Queue<String> textQueue; // If the text is longer that MAX_CAR it cannot be displayed. We use textQueue to store and show the text in slices of MAX_CAR size.
 
-    protected JTextArea text;
+    protected JTextArea text; //Text displayed on screen
 
-    protected JLabel inputDetector;
+    protected JLabel inputDetector; // Hidden object, it detects any input from de keyboard or mouse (click only on the image) to show the following text in the queue.
 
     public TextBox(Dimension frameDimension) {
 
-        setLayout(null);
+        setLayout(null); //Allows free location of Java swing objects. 
 
+        //Initialize
         textQueue = new LinkedBlockingQueue<>();
-
         text = new JTextArea("");
         text.setEditable(false);
         text.setVisible(false);
@@ -60,10 +61,11 @@ public class TextBox extends JPanel {
                 introKey[i] = Util.ImageUtil.resizeProportional(introKey[i], 0.1);
             }
 
-            //Cargar el fondo
+            
+            //Load text background
             textbackground = ImageIO.read(new File(URI_TEXTBOX_BACKGROUND));
 
-            //Cargar la fuente
+            //Load font
             InputStream is = getClass().getResourceAsStream("HUD_NAME_FONT.ttf");
             Font f = Font.createFont(Font.TRUETYPE_FONT, is);
             f = f.deriveFont(0, 16);
@@ -80,6 +82,8 @@ public class TextBox extends JPanel {
 
         }
 
+        
+        //Set location and size depending of choosen resolution.
         if (frameDimension.equals(Dimensions.frameDimension720p)) {
 
             this.textbackground = Util.ImageUtil.resizeProportional(textbackground, 2);
@@ -180,14 +184,14 @@ public class TextBox extends JPanel {
 
     public void dequeueText() {
 
-        if (haveText()) {
+        if (hasText()) {
             String s1 = "", s2 = "";
 
-            if (haveText()) {
+            if (hasText()) {
                 s1 = this.textQueue.remove();
             }
 
-            if (haveText()) {
+            if (hasText()) {
                 s2 = this.textQueue.remove();
             }
 
@@ -202,22 +206,23 @@ public class TextBox extends JPanel {
 
     }
 
-    public boolean haveText() {
+    public boolean hasText() {
         return this.textQueue.size() > 0;
     }
 
     @Override
     protected void paintComponent(Graphics g) {
 
-        if (haveText() || !text.getText().equals("")) {
-            if (text.getText().equals("")) {
+        if (hasText() || !text.getText().equals("")) {
+           
+            if (text.getText().equals("")) { //If there are text on the queue, load next text on the queue. 
                 dequeueText();
             }
 
             g.drawImage(textbackground, textbackgroundLocationX, textbackgroundLocationY, this);
             g.drawImage(this.introKey[currentSprite], this.introKeyLocationX, this.introKeyLocationY, this);
 
-            inputDetector.requestFocusInWindow();
+            inputDetector.requestFocusInWindow(); // Each time some text pop-up, it request keyBoard attention over the other elements. If receive some imputs from the keyboard or mouse, load next text on queuse 
 
         }
     }
