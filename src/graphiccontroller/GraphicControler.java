@@ -1,8 +1,8 @@
-package pokemonbattle;
+package graphiccontroller;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import pokemonbattle.graphicscontrolers.battle.PokemonBattleGraphicControler;
+import graphiccontroller.battle.PokemonBattleGraphicControler;
 
 /**
  *

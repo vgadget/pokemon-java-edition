@@ -1,4 +1,4 @@
-package pokemonbattle.graphicscontrolers.battle;
+package graphiccontroller.battle;
 
 import Util.Dimensions;
 import java.awt.Dimension;
