@@ -18,8 +18,12 @@ import javax.swing.JPanel;
  */
 public class PokemonMainCharacterSprite extends JPanel {
 
-    private static final String URI_MISSINGNO_SPRITE = "Resources/BattleHUD/Pokedex/MISSINGNO/Sprite/BACK";
+    private static final String URI_MISSINGNO_SPRITE = "Resources/BattleHUD/Pokedex/MISSINGNO/Sprite/BACKMew";
     private static final int SPRITE_SPEED = 80;
+    
+    //PROPORTION: 1:1
+    private static final Dimension spriteDimension720p = new Dimension(252, 252);
+    private static final Dimension spriteDimension1080p = new Dimension(378, 378);
 
     private boolean threadlocked, drawingLocked, changingSomething;
 
@@ -125,7 +129,9 @@ public class PokemonMainCharacterSprite extends JPanel {
 
         this.currentSprite = 0;
 
+        //Set-up sprites
         if (this.pokemonSprite == null) {
+            
             this.pokemonSprite = new BufferedImage[20];
             try {
 
@@ -137,32 +143,33 @@ public class PokemonMainCharacterSprite extends JPanel {
                 Logger.getLogger(PokemonMainCharacterSprite.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            // SET UP THE PROPORTION
-            if (frameDimension.equals(Dimensions.frameDimension720p)) {
-
-                for (int i = 0; i < this.pokemonSprite.length; i++) {
-
-                    this.pokemonSprite[i] = ImageUtil.resizeProportional(this.pokemonSprite[i], ImageUtil.getProportion(frameDimension) * 2);
-
-                }
-            } else if (frameDimension.equals(Dimensions.frameDimension1080p)) {
-
-                for (int i = 0; i < this.pokemonSprite.length; i++) {
-
-                    this.pokemonSprite[i] = ImageUtil.resizeProportional(this.pokemonSprite[i], ImageUtil.getProportion(frameDimension) * 3);
-
-                }
-
-            }
-
         } else {
             this.pokemonSprite = pokemonSprite;
         }
 
-        // SET UP THE LOCATION
-        appear();
+        // SET UP THE PROPORTION
+        if (frameDimension.equals(Dimensions.frameDimension720p)) {
 
-        this.changingSomething = false;
+            for (int i = 0; i < this.pokemonSprite.length; i++) {
+
+                this.pokemonSprite[i] = ImageUtil.resize(this.pokemonSprite[i], (int) this.spriteDimension720p.getWidth(), (int) this.spriteDimension720p.getHeight());
+
+            }
+
+        } else if (frameDimension.equals(Dimensions.frameDimension1080p)) {
+
+            for (int i = 0; i < this.pokemonSprite.length; i++) {
+
+                this.pokemonSprite[i] = ImageUtil.resize(this.pokemonSprite[i], (int) this.spriteDimension1080p.getWidth(), (int) this.spriteDimension1080p.getHeight());
+
+            }
+
+            // SET UP THE LOCATION
+            appear();
+
+            this.changingSomething = false;
+
+        }
 
     }
 

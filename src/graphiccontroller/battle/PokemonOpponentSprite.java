@@ -21,6 +21,10 @@ public class PokemonOpponentSprite extends JPanel {
     private static final String URI_MISSINGNO_SPRITE = "Resources/BattleHUD/Pokedex/MISSINGNO/Sprite/FRONT";
     private static final int SPRITE_SPEED = 80;
 
+    // PROPORTION: 77 / 57 
+    private static final Dimension spriteDimension720p = new Dimension(308, 228);
+    private static final Dimension spriteDimension1080p = new Dimension(462, 342);
+
     private boolean threadlocked, drawingLocked, changingSomething;
 
     private Dimension frameDimension;
@@ -132,26 +136,27 @@ public class PokemonOpponentSprite extends JPanel {
                 Logger.getLogger(PokemonMainCharacterSprite.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            // SET UP THE PROPORTION
-            if (frameDimension.equals(Dimensions.frameDimension720p)) {
+        } else {
+            this.pokemonSprite = pokemonSprite;
+        }
 
-                for (int i = 0; i < this.pokemonSprite.length; i++) {
+        // SET UP THE PROPORTION
+        if (frameDimension.equals(Dimensions.frameDimension720p)) {
 
-                    this.pokemonSprite[i] = ImageUtil.resizeProportional(this.pokemonSprite[i], ImageUtil.getProportion(frameDimension) * 2);
+            for (int i = 0; i < this.pokemonSprite.length; i++) {
 
-                }
-            } else if (frameDimension.equals(Dimensions.frameDimension1080p)) {
-
-                for (int i = 0; i < this.pokemonSprite.length; i++) {
-
-                    this.pokemonSprite[i] = ImageUtil.resizeProportional(this.pokemonSprite[i], ImageUtil.getProportion(frameDimension) * 3);
-
-                }
+                this.pokemonSprite[i] = ImageUtil.resize(this.pokemonSprite[i], (int) this.spriteDimension720p.getWidth(), (int) this.spriteDimension720p.getHeight());
 
             }
 
-        } else {
-            this.pokemonSprite = pokemonSprite;
+        } else if (frameDimension.equals(Dimensions.frameDimension1080p)) {
+
+            for (int i = 0; i < this.pokemonSprite.length; i++) {
+
+                this.pokemonSprite[i] = ImageUtil.resize(this.pokemonSprite[i], (int) this.spriteDimension1080p.getWidth(), (int) this.spriteDimension1080p.getHeight());
+
+            }
+
         }
 
         // SET UP THE LOCATION

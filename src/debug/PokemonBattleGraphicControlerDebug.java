@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
@@ -36,13 +35,15 @@ public class PokemonBattleGraphicControlerDebug {
         JFrame testOutputFrame = new JFrame("Debug: Outputs");
         JFrame testInputFrame = new JFrame("Debug: Inputs");
 
-        Dimension screenSize = Dimensions.frameDimension720p;
+        Dimension screenSize = Dimensions.frameDimension1080p;
         Dimension testOutputframeSize = new Dimension(screenSize);
+        
         Dimension testInputputframeSize = new Dimension((int) (500), (int) (600));
 
         //testOuputElements
         BattleGraphicController HUD = new BattleGraphicController(screenSize);
         HUD.setBackground(Color.DARK_GRAY);
+        
 
         JPanel debug = new JPanel();
 
@@ -588,11 +589,13 @@ public class PokemonBattleGraphicControlerDebug {
 
         testOutputFrame.add(HUD);
 
-        testOutputFrame.setResizable(false);
+        testOutputFrame.setResizable(true);
         testOutputFrame.setSize(testOutputframeSize);
 
         testOutputFrame.setLocationRelativeTo(null);
         testOutputFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+                testOutputFrame.setSize(screenSize.width, screenSize.height + 20);
 
         testOutputFrame.setVisible(true);
 

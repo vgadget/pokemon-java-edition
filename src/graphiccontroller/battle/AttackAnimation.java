@@ -19,6 +19,8 @@ public class AttackAnimation extends JPanel {
 
     private String URI_DEFAULT_ATTACK_FRONT = "Resources/BattleHUD/Attack/Default/FRONT";
     private String URI_DEFAULT_ATTACK_BACK = "Resources/BattleHUD/Attack/Default/BACK";
+    
+    // PROPORTION: 984 x 553
 
     private Dimension frameSize;
 

@@ -12,6 +12,7 @@ import javax.swing.JPanel;
  *
  * @author Adrian Vazquez
  */
+
 public class PokeballAnimation extends JPanel {
 
     public static final String URI_POKEBALL_SPRITES = "Resources/BattleHUD/Trainer/Pokeball";
