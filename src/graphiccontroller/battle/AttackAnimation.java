@@ -40,34 +40,29 @@ public class AttackAnimation extends JPanel {
         this.changingSomething = false;
         this.drawingLocked = false;
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                while (true) {
-
-                    if (!changingSomething) {
-                        if (attack != null) {
-                            if (currentSprite >= 0 && currentSprite < attack.length) {
-                                currentSprite++;
-                            }
+        new Thread(() -> {
+            while (true) {
+                
+                if (!changingSomething) {
+                    if (attack != null) {
+                        if (currentSprite >= 0 && currentSprite < attack.length) {
+                            currentSprite++;
                         }
-
-                        if (threadlocked) {
-                            threadlocked = false;
-                        }
-
-                    } else {
-                        threadlocked = true;
                     }
-
-                    try {
-                        Thread.sleep(SPEED);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(AttackAnimation.class.getName()).log(Level.SEVERE, null, ex);
+                    
+                    if (threadlocked) {
+                        threadlocked = false;
                     }
+                    
+                } else {
+                    threadlocked = true;
                 }
 
+                try {
+                    Thread.sleep(SPEED);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(AttackAnimation.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }).start();
 

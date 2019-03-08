@@ -67,23 +67,20 @@ public class ChangeStatsAnimation extends JPanel {
 
         }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    if (currentSpriteUP < spriteUP.length) {
-                        currentSpriteUP++;
-                    } else if (currentSpriteDown < spriteDown.length) {
-                        currentSpriteDown++;
-                    }
-
-                    try {
-                        Thread.sleep(SPEED);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(ChangeStatsAnimation.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
+        new Thread(() -> {
+            while (true) {
+                if (currentSpriteUP < spriteUP.length) {
+                    currentSpriteUP++;
+                } else if (currentSpriteDown < spriteDown.length) {
+                    currentSpriteDown++;
                 }
+                
+                try {
+                    Thread.sleep(SPEED);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ChangeStatsAnimation.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
             }
         }).start();
 

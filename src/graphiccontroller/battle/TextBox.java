@@ -73,11 +73,8 @@ public class TextBox extends JPanel {
 
         } catch (Exception e) {
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    JOptionPane.showMessageDialog(null, "ERROR 001: MISSING FONT", "ERROR", 0);
-                }
+            new Thread(() -> {
+                JOptionPane.showMessageDialog(null, "ERROR 001: MISSING FONT", "ERROR", 0);
             }).start();
 
         }
@@ -136,23 +133,20 @@ public class TextBox extends JPanel {
             }
         });
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-
-                        if (currentSprite >= introKey.length) {
-                            currentSprite = 0;
-                        }
-
-                        Thread.sleep(500);
-
-                        currentSprite++;
-
-                    } catch (InterruptedException ex) {
-
+        new Thread(() -> {
+            while (true) {
+                try {
+                    
+                    if (currentSprite >= introKey.length) {
+                        currentSprite = 0;
                     }
+                    
+                    Thread.sleep(500);
+                    
+                    currentSprite++;
+                    
+                } catch (InterruptedException ex) {
+                    
                 }
             }
         }).start();

@@ -65,39 +65,36 @@ public class PokemonMainCharacterSprite extends JPanel {
         this.threadlocked = false;
         this.drawingLocked = false;
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-
-                    if (!changingSomething) {
-                        if (currentSprite == pokemonSprite.length - 1) {
-                            playBackWards = true;
-                        } else if (currentSprite == 0) {
-                            playBackWards = false;
-                        }
-
-                        if (setEnablePlay) {
-                            if (playBackWards == true) {
-                                currentSprite--;
-                            } else {
-                                currentSprite++;
-                            }
-                        }
-
-                        if (threadlocked) {
-                            threadlocked = false;
-                        }
-
-                    } else {
-                        threadlocked = true;
+        new Thread(() -> {
+            while (true) {
+                
+                if (!changingSomething) {
+                    if (currentSprite == pokemonSprite.length - 1) {
+                        playBackWards = true;
+                    } else if (currentSprite == 0) {
+                        playBackWards = false;
                     }
-
-                    try {
-                        Thread.sleep(SPRITE_SPEED);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(PokemonMainCharacterSprite.class.getName()).log(Level.SEVERE, null, ex);
+                    
+                    if (setEnablePlay) {
+                        if (playBackWards == true) {
+                            currentSprite--;
+                        } else {
+                            currentSprite++;
+                        }
                     }
+                    
+                    if (threadlocked) {
+                        threadlocked = false;
+                    }
+                    
+                } else {
+                    threadlocked = true;
+                }
+                
+                try {
+                    Thread.sleep(SPRITE_SPEED);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(PokemonMainCharacterSprite.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }).start();

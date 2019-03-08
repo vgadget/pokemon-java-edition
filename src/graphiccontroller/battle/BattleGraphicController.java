@@ -20,7 +20,7 @@ public class BattleGraphicController extends JPanel {
     private static final String URI_BATTLE_BACKGROUND = "Resources/BattleHUD/BackGround/battleBackground.png";
     private static final String URI_CROPPED_BATTLE_BACKGROUND = "Resources/BattleHUD/BackGround/croppedbattleBackground.png";
 
-    private static final int FPS = 80;
+    private static final int FPS = 30; //Milliseconds
 
     private static final String URI_BATTLE_GROUND = "Resources/BattleHUD/BackGround/groundBattle.png";
 
@@ -39,7 +39,7 @@ public class BattleGraphicController extends JPanel {
     private PokemonOpponentSprite player2Sprite;
 
     //Pokeball
-    private PokeballAnimation pokeballP1;
+    private PokeballAnimation pokeballAnimation;
 
     //Weather
     private Weather weatherAnimation;
@@ -113,7 +113,7 @@ public class BattleGraphicController extends JPanel {
         }).start();
 
         try {
-            pokeballP1 = new PokeballAnimation(resolution);
+            pokeballAnimation = new PokeballAnimation(resolution);
         } catch (IOException ex) {
             Logger.getLogger(BattleGraphicController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -308,17 +308,17 @@ public class BattleGraphicController extends JPanel {
 
     public void player1LaunchPokeball() {
         if (resolution.equals(Dimensions.frameDimension720p)) {
-            pokeballP1.doAnimation(0, 200);
+            pokeballAnimation.doAnimation(0, 200);
         } else if (resolution.equals(Dimensions.frameDimension1080p)) {
-            pokeballP1.doAnimation(50, 400);
+            pokeballAnimation.doAnimation(50, 400);
         }
     }
 
     public void player2LaunchPokeball() {
         if (resolution.equals(Dimensions.frameDimension720p)) {
-            pokeballP1.doAnimation(500, 0);
+            pokeballAnimation.doAnimation(500, 0);
         } else if (resolution.equals(Dimensions.frameDimension1080p)) {
-            pokeballP1.doAnimation(900, 40);
+            pokeballAnimation.doAnimation(900, 40);
         }
     }
 
@@ -448,7 +448,7 @@ public class BattleGraphicController extends JPanel {
         }
 
         //Pokeball
-        pokeballP1.paintComponent(g);
+        pokeballAnimation.paintComponent(g);
 
         weatherAnimation.paintComponent(g);
 

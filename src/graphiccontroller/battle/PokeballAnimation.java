@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
@@ -12,11 +14,12 @@ import javax.swing.JPanel;
  *
  * @author Adrian Vazquez
  */
-
 public class PokeballAnimation extends JPanel {
 
     public static final String URI_POKEBALL_SPRITES = "Resources/BattleHUD/Trainer/Pokeball";
     private BufferedImage sprites[];
+    private static final int SPRITE_SPED = 80; //Milliseconds
+
     
     private int numberOfSprites = 16;
     private int currentSprite;
@@ -39,6 +42,25 @@ public class PokeballAnimation extends JPanel {
         }
 
         currentSprite = numberOfSprites;
+
+        new Thread(() -> {
+
+            while (true) {
+
+                if (currentSprite >= 0 && currentSprite < numberOfSprites) {
+                    
+                    currentSprite++;
+                    
+                }
+                try {
+                    Thread.sleep(SPRITE_SPED);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(PokeballAnimation.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        }).start();
+
     }
 
     public void doAnimation(int x, int y) {
@@ -54,7 +76,6 @@ public class PokeballAnimation extends JPanel {
 
         if (currentSprite < numberOfSprites && activateAnimation) {
             g.drawImage(sprites[currentSprite], x, y, this);
-            currentSprite++;
         } else {
             activateAnimation = false;
         }

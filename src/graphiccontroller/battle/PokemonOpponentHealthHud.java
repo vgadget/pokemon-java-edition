@@ -70,11 +70,8 @@ public class PokemonOpponentHealthHud extends JPanel {
         try {
             setUpResources();
         } catch (IOException ex) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    JOptionPane.showMessageDialog(null, "ERROR 404: RESOURCES NOT FOUND", "FATAL ERROR", 0);
-                }
+            new Thread(() -> {
+                JOptionPane.showMessageDialog(null, "ERROR 404: RESOURCES NOT FOUND", "FATAL ERROR", 0);
             }).start();
         }
 
@@ -109,11 +106,8 @@ public class PokemonOpponentHealthHud extends JPanel {
 
         } catch (Exception e) {
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    JOptionPane.showMessageDialog(null, "ERROR 001: MISSING FONT", "ERROR", 0);
-                }
+            new Thread(() -> {
+                JOptionPane.showMessageDialog(null, "ERROR 001: MISSING FONT", "ERROR", 0);
             }).start();
 
         }
@@ -163,11 +157,8 @@ public class PokemonOpponentHealthHud extends JPanel {
 
             } catch (Exception e) {
 
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        JOptionPane.showMessageDialog(null, "ERROR 001: MISSING FONT", "ERROR", 0);
-                    }
+                new Thread(() -> {
+                    JOptionPane.showMessageDialog(null, "ERROR 001: MISSING FONT", "ERROR", 0);
                 }).start();
 
             }

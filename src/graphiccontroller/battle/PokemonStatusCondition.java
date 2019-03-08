@@ -31,30 +31,27 @@ public class PokemonStatusCondition extends JPanel {
         this.stateSprites = sprites;
         this.enable = false;
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-
-                    if (stateSprites != null && enable) {
-                        if (currentSprite >= stateSprites.length) {
-                            currentSprite = 0;
-                        }
-
-                        try {
-                            Thread.sleep(115);
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(PokemonStatusCondition.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-
-                        currentSprite++;
-                    } else {
-
-                        try {
-                            Thread.sleep(30);
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(PokemonStatusCondition.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+        new Thread(() -> {
+            while (true) {
+                
+                if (stateSprites != null && enable) {
+                    if (currentSprite >= stateSprites.length) {
+                        currentSprite = 0;
+                    }
+                    
+                    try {
+                        Thread.sleep(115);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(PokemonStatusCondition.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    currentSprite++;
+                } else {
+                    
+                    try {
+                        Thread.sleep(30);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(PokemonStatusCondition.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
