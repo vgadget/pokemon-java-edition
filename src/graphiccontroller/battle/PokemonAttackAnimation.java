@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  *
  * @author Adrian Vazquez
  */
-public class AttackAnimation extends JPanel {
+public class PokemonAttackAnimation extends JPanel {
 
     private String URI_DEFAULT_ATTACK_FRONT = "Resources/BattleHUD/Attack/Default/FRONT";
     private String URI_DEFAULT_ATTACK_BACK = "Resources/BattleHUD/Attack/Default/BACK";
@@ -31,7 +31,7 @@ public class AttackAnimation extends JPanel {
 
     private boolean threadlocked, drawingLocked, changingSomething;
 
-    public AttackAnimation(Dimension frameSize) {
+    public PokemonAttackAnimation(Dimension frameSize) {
         this.frameSize = frameSize;
 
         this.currentSprite = -1;
@@ -61,7 +61,7 @@ public class AttackAnimation extends JPanel {
                 try {
                     Thread.sleep(SPEED);
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(AttackAnimation.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(PokemonAttackAnimation.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }).start();
@@ -79,7 +79,7 @@ public class AttackAnimation extends JPanel {
             try {
                 Thread.sleep(SPEED);
             } catch (InterruptedException ex) {
-                Logger.getLogger(AttackAnimation.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PokemonAttackAnimation.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 

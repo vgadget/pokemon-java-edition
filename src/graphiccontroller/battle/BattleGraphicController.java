@@ -48,7 +48,7 @@ public class BattleGraphicController extends JPanel {
     private TextBox textBox;
     
     //AttackAnimation
-    private AttackAnimation attackAnimation;
+    private PokemonAttackAnimation attackAnimation;
 
     public BattleGraphicController(Dimension resolution) {
 
@@ -120,7 +120,7 @@ public class BattleGraphicController extends JPanel {
 
         this.weatherAnimation = new Weather(resolution, null);
         
-        this.attackAnimation = new AttackAnimation(resolution);
+        this.attackAnimation = new PokemonAttackAnimation(resolution);
 
         textBox = new TextBox(resolution);
         this.add(textBox.text);
