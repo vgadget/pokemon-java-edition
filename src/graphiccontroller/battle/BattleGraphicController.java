@@ -27,8 +27,11 @@ public class BattleGraphicController extends JPanel {
     private Dimension resolution;
     private BufferedImage background, ground, croppedBackground;
     private int groundLocationX, groundLocationY;
+    private int backgroundLocationX, backgroundLocationY;
 
     private boolean setEnabledPlay;
+
+    private boolean earthquake;
 
     //Pokemon player1
     private PokemonMainCharacterHealthHud player1HUD;
@@ -46,7 +49,7 @@ public class BattleGraphicController extends JPanel {
 
     //TextBox
     private TextBox textBox;
-    
+
     //AttackAnimation
     private PokemonAttackAnimation attackAnimation;
 
@@ -54,9 +57,11 @@ public class BattleGraphicController extends JPanel {
 
         this.resolution = resolution;
         this.setEnabledPlay = true;
+        this.earthquake = false;
+        this.backgroundLocationX = this.backgroundLocationY = 0;
 
         setLayout(null);
-        
+
         try {
             this.background = ImageIO.read(new File(URI_BATTLE_BACKGROUND));
             this.croppedBackground = ImageIO.read(new File(URI_CROPPED_BATTLE_BACKGROUND));
@@ -119,7 +124,7 @@ public class BattleGraphicController extends JPanel {
         }
 
         this.weatherAnimation = new Weather(resolution, null);
-        
+
         this.attackAnimation = new PokemonAttackAnimation(resolution);
 
         textBox = new TextBox(resolution);
@@ -380,42 +385,115 @@ public class BattleGraphicController extends JPanel {
         textBox.dequeueText();
 
     }
-    
-    public void setAttackAnimation( BufferedImage sprites[]){
+
+    public void setAttackAnimation(BufferedImage sprites[]) {
         this.attackAnimation.setAttack(sprites);
     }
-    
-    public void doAttackAnimation(){
+
+    public void doAttackAnimation() {
         this.attackAnimation.doAnimation();
     }
-    
-    public void player1LoadDefaultAttackAnimation(){
+
+    public void player1LoadDefaultAttackAnimation() {
         try {
             this.attackAnimation.loadDefaultAttackAnimationMainCharacter();
         } catch (IOException ex) {
             Logger.getLogger(BattleGraphicController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-        public void player2LoadDefaultAttackAnimation(){
+
+    public void player2LoadDefaultAttackAnimation() {
         try {
             this.attackAnimation.loadDefaultAttackAnimationOpponent();
         } catch (IOException ex) {
             Logger.getLogger(BattleGraphicController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-        
-    public boolean attackAnimationIsPplaying(){
+
+    public boolean attackAnimationIsPplaying() {
         return this.attackAnimation.isPlaying();
     }
 
+    public void startEarthquake() {
+
+        this.earthquake = true;
+
+        int copyOfXBackground;
+        int copyOfXground;
+
+        copyOfXground = this.groundLocationX;
+        copyOfXBackground = this.backgroundLocationX;
+
+        new Thread(() -> {
+
+            int slice = 15;
+
+            int groundBoundStart = copyOfXground - ground.getWidth() / slice, groundBoundEnd = copyOfXground + ground.getWidth() / slice;
+
+            int backgroundBoundStart = copyOfXBackground - background.getWidth() / slice, backgroundBoundEnd = copyOfXBackground + background.getWidth() / slice;
+
+            groundLocationX = groundBoundEnd + 1;
+            backgroundLocationX = backgroundBoundStart - 1;
+
+            boolean backwardsGround = false, backwardsBackground = false;
+            
+            int speed = ground.getWidth() / (slice*15);
+
+            while (earthquake) {
+
+                if (groundLocationX < groundBoundStart) {
+                    backwardsGround = false;
+                } else if (groundLocationX > groundBoundEnd) {
+                    backwardsGround = true;
+                }
+
+                if (backgroundLocationX < groundBoundStart) {
+                    backwardsBackground = false;
+                } else if (backgroundLocationX > groundBoundEnd) {
+                    backwardsBackground = true;
+                }
+
+                if (backwardsGround) {
+                    groundLocationX-=speed;
+
+                } else {
+                    groundLocationX+=speed;
+
+                }
+
+                if (backwardsBackground) {
+                    backgroundLocationX-=speed;
+                } else {
+                    backgroundLocationX+=speed;
+                }
+
+                try {
+                    Thread.sleep(0, 1);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(BattleGraphicController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+
+            backgroundLocationX = copyOfXBackground;
+            groundLocationX = copyOfXground;
+
+        }).start();
+
+    }
+
+    public void stopEarthquake() {
+
+        this.earthquake = false;
+
+    }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
         if (background != null) {
-            g.drawImage(background, 0, 0, this);
+            g.drawImage(background, this.backgroundLocationX, this.backgroundLocationY, this);
         }
 
         if (this.ground != null) {
@@ -428,7 +506,7 @@ public class BattleGraphicController extends JPanel {
         }
 
         if (croppedBackground != null) {
-            g.drawImage(croppedBackground, 0, 0, this);
+            g.drawImage(croppedBackground, this.backgroundLocationX, this.backgroundLocationY, this);
         }
 
         //Player 1-HUD
@@ -454,7 +532,7 @@ public class BattleGraphicController extends JPanel {
 
         //TextBox
         textBox.paintComponent(g);
-        
+
         //Attack animation
         attackAnimation.paintComponent(g);
 

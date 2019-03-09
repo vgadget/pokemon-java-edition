@@ -35,15 +35,14 @@ public class PokemonBattleGraphicControlerDebug {
         JFrame testOutputFrame = new JFrame("Debug: Outputs");
         JFrame testInputFrame = new JFrame("Debug: Inputs");
 
-        Dimension screenSize = Dimensions.frameDimension1080p;
+        Dimension screenSize = Dimensions.frameDimension720p;
         Dimension testOutputframeSize = new Dimension(screenSize);
-        
+
         Dimension testInputputframeSize = new Dimension((int) (500), (int) (600));
 
         //testOuputElements
         BattleGraphicController HUD = new BattleGraphicController(screenSize);
         HUD.setBackground(Color.DARK_GRAY);
-        
 
         JPanel debug = new JPanel();
 
@@ -265,7 +264,7 @@ public class PokemonBattleGraphicControlerDebug {
         JButton changeStatsDownP2 = new JButton("Stats DOWN");
         JButton makeAttackP2 = new JButton("Attack");
 
-         makeAttackP2.addActionListener(new ActionListener() {
+        makeAttackP2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
@@ -298,8 +297,7 @@ public class PokemonBattleGraphicControlerDebug {
 
             }
         });
-        
-        
+
         changeStatsUpP2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -416,7 +414,6 @@ public class PokemonBattleGraphicControlerDebug {
         debug.add(changeStatsUpP2);
         debug.add(changeStatsDownP2);
         debug.add(makeAttackP2);
-
 
         JSeparator separator2 = new JSeparator(SwingConstants.HORIZONTAL);
         separator2.setPreferredSize(new Dimension(500, 1));
@@ -547,6 +544,24 @@ public class PokemonBattleGraphicControlerDebug {
 
         debug.add(changeWeather);
 
+        JToggleButton earthquake = new JToggleButton("Earthquake");
+
+        earthquake.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent ev) {
+
+                if (ev.getStateChange() == ItemEvent.SELECTED) {
+                    HUD.startEarthquake();
+                } else if (ev.getStateChange() == ItemEvent.DESELECTED) {
+                    HUD.stopEarthquake();
+                }
+
+            }
+
+        });
+
+        debug.add(earthquake);
+
         JSeparator separator4 = new JSeparator(SwingConstants.HORIZONTAL);
         separator4.setPreferredSize(new Dimension(500, 1));
         debug.add(separator4);
@@ -554,7 +569,7 @@ public class PokemonBattleGraphicControlerDebug {
         JTextArea text = new JTextArea(5, 25);
         text.setLineWrap(true);
         text.setWrapStyleWord(true);
-                
+
         JButton sendText = new JButton("Send text");
         JButton nextText = new JButton("Next Text");
 
@@ -595,7 +610,7 @@ public class PokemonBattleGraphicControlerDebug {
         testOutputFrame.setLocationRelativeTo(null);
         testOutputFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-                testOutputFrame.setSize(screenSize.width, screenSize.height + 20);
+        testOutputFrame.setSize(screenSize.width, screenSize.height + 20);
 
         testOutputFrame.setVisible(true);
 

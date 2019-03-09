@@ -1,7 +1,6 @@
 package graphiccontroller;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import graphiccontroller.battle.BattleGraphicController;
 
 /**

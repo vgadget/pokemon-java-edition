@@ -20,7 +20,7 @@ public class PokemonMainCharacterSprite extends JPanel {
 
     private static final String URI_MISSINGNO_SPRITE = "Resources/BattleHUD/Pokedex/MISSINGNO/Sprite/BACKMew";
     private static final int SPRITE_SPEED = 80;
-    
+
     //PROPORTION: 1:1
     private static final Dimension spriteDimension720p = new Dimension(252, 252);
     private static final Dimension spriteDimension1080p = new Dimension(378, 378);
@@ -50,7 +50,12 @@ public class PokemonMainCharacterSprite extends JPanel {
         alteredStateAnimation = new PokemonStatusCondition(new Dimension(this.pokemonSprite[0].getWidth(), this.pokemonSprite[0].getHeight()), null, pokemonSpriteLocationX, pokemonSpriteLocationY);
 
         try {
-            changeStatsAnimation = new ChangeStatsAnimation(frameDimension, pokemonSpriteLocationX, pokemonSpriteLocationY);
+            if (frameDimension.equals(Dimensions.frameDimension1080p)) {
+                changeStatsAnimation = new ChangeStatsAnimation(frameDimension, pokemonSpriteLocationX, pokemonSpriteLocationY);
+            } else {
+                changeStatsAnimation = new ChangeStatsAnimation(frameDimension, pokemonSpriteLocationX, pokemonSpriteLocationY+300);
+
+            }
         } catch (IOException ex) {
             Logger.getLogger(PokemonMainCharacterSprite.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -67,14 +72,14 @@ public class PokemonMainCharacterSprite extends JPanel {
 
         new Thread(() -> {
             while (true) {
-                
+
                 if (!changingSomething) {
                     if (currentSprite == pokemonSprite.length - 1) {
                         playBackWards = true;
                     } else if (currentSprite == 0) {
                         playBackWards = false;
                     }
-                    
+
                     if (setEnablePlay) {
                         if (playBackWards == true) {
                             currentSprite--;
@@ -82,15 +87,15 @@ public class PokemonMainCharacterSprite extends JPanel {
                             currentSprite++;
                         }
                     }
-                    
+
                     if (threadlocked) {
                         threadlocked = false;
                     }
-                    
+
                 } else {
                     threadlocked = true;
                 }
-                
+
                 try {
                     Thread.sleep(SPRITE_SPEED);
                 } catch (InterruptedException ex) {
@@ -128,7 +133,7 @@ public class PokemonMainCharacterSprite extends JPanel {
 
         //Set-up sprites
         if (this.pokemonSprite == null) {
-            
+
             this.pokemonSprite = new BufferedImage[20];
             try {
 
