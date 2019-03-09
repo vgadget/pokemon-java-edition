@@ -1,5 +1,6 @@
 package debug;
 
+import graphiccontroller.battle.BattleGraphicController;
 import utilities.Dimensions;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -21,7 +22,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
-import graphiccontroller.battle.BattleGraphicController;
+import graphiccontroller.battle.BattleGraphicControllerImpl;
 import graphiccontroller.battle.PokemonMainCharacterHealthHud;
 import graphiccontroller.battle.PokemonOpponentHealthHud;
 
@@ -41,7 +42,7 @@ public class PokemonBattleGraphicControlerDebug {
         Dimension testInputputframeSize = new Dimension((int) (500), (int) (600));
 
         //testOuputElements
-        BattleGraphicController HUD = new BattleGraphicController(screenSize);
+        BattleGraphicController HUD = new BattleGraphicControllerImpl(screenSize);
         HUD.setBackground(Color.DARK_GRAY);
 
         JPanel debug = new JPanel();
@@ -72,7 +73,7 @@ public class PokemonBattleGraphicControlerDebug {
         JButton launchPokeballP1 = new JButton("Pokeball");
         JButton goP1 = new JButton("Let's Go");
         JButton flyP1 = new JButton("Fly");
-        JToggleButton stateP1 = new JToggleButton("Altered State");
+        JToggleButton stateP1 = new JToggleButton("Status Condition");
         JButton changeStatsUpP1 = new JButton("Stats UP");
         JButton changeStatsDownP1 = new JButton("Stats DOWN");
         JButton makeAttackP1 = new JButton("Attack");
@@ -145,9 +146,9 @@ public class PokemonBattleGraphicControlerDebug {
             public void itemStateChanged(ItemEvent ev) {
 
                 if (ev.getStateChange() == ItemEvent.SELECTED) {
-                    HUD.player1LoadDefaultAlteredState();
+                    HUD.player1SetStatusCondition(null);
                 } else if (ev.getStateChange() == ItemEvent.DESELECTED) {
-                    HUD.player1RemoveAlteredState();
+                    HUD.player1RemoveStatusCondition();
                 }
             }
         });
@@ -258,7 +259,7 @@ public class PokemonBattleGraphicControlerDebug {
         JButton goP2 = new JButton("Let's Go");
         JButton flyP2 = new JButton("Fly");
 
-        JToggleButton stateP2 = new JToggleButton("Altered State");
+        JToggleButton stateP2 = new JToggleButton("Status Condition");
 
         JButton changeStatsUpP2 = new JButton("Stats UP");
         JButton changeStatsDownP2 = new JButton("Stats DOWN");
@@ -321,9 +322,9 @@ public class PokemonBattleGraphicControlerDebug {
             public void itemStateChanged(ItemEvent ev) {
 
                 if (ev.getStateChange() == ItemEvent.SELECTED) {
-                    HUD.player2LoadDefaultAlteredState();
+                    HUD.player2SetStatusCondition(null);
                 } else if (ev.getStateChange() == ItemEvent.DESELECTED) {
-                    HUD.player2RemoveAlteredState();
+                    HUD.player2RemoveStatusCondition();
                 }
             }
         });

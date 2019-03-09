@@ -207,15 +207,15 @@ public class PokemonOpponentSprite extends JPanel {
         alteredStateAnimation.setEnable(false);
     }
 
-    public void removeAlteredState() {
+    public void removeStatusCondition() {
         alteredStateAnimation.setState(null);
     }
 
-    public void setAlteredState(BufferedImage sprites[]) {
+    public void setStatusCondition(BufferedImage sprites[]) {
         alteredStateAnimation.setState(sprites);
     }
 
-    public void loadDefaultsetAlteredState() { //Debug
+    public void loadDefaultsetStatusCondition() { //Debug
         alteredStateAnimation.loadDefaultState();
     }
 

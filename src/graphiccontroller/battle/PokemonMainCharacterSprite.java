@@ -38,7 +38,7 @@ public class PokemonMainCharacterSprite extends JPanel {
 
     private boolean withdrawing, blink, dead, fly;
 
-    private PokemonStatusCondition alteredStateAnimation;
+    private PokemonStatusCondition statusCondition;
     private ChangeStatsAnimation changeStatsAnimation;
 
     public PokemonMainCharacterSprite(Dimension frameDimension, BufferedImage sprites[]) {
@@ -47,13 +47,19 @@ public class PokemonMainCharacterSprite extends JPanel {
         this.pokemonSprite = sprites;
         setUpSprites(sprites);
 
-        alteredStateAnimation = new PokemonStatusCondition(new Dimension(this.pokemonSprite[0].getWidth(), this.pokemonSprite[0].getHeight()), null, pokemonSpriteLocationX, pokemonSpriteLocationY);
+        if (frameDimension.equals(Dimensions.frameDimension1080p)) {
+            statusCondition = new PokemonStatusCondition(new Dimension(this.pokemonSprite[0].getWidth(), this.pokemonSprite[0].getHeight()), null, pokemonSpriteLocationX, pokemonSpriteLocationY);
+        } else if (frameDimension.equals(Dimensions.frameDimension720p)) {
+
+            statusCondition = new PokemonStatusCondition(new Dimension(this.pokemonSprite[0].getWidth(), this.pokemonSprite[0].getHeight()), null, pokemonSpriteLocationX+50, pokemonSpriteLocationY+280);
+
+        }
 
         try {
             if (frameDimension.equals(Dimensions.frameDimension1080p)) {
                 changeStatsAnimation = new ChangeStatsAnimation(frameDimension, pokemonSpriteLocationX, pokemonSpriteLocationY);
             } else {
-                changeStatsAnimation = new ChangeStatsAnimation(frameDimension, pokemonSpriteLocationX, pokemonSpriteLocationY+300);
+                changeStatsAnimation = new ChangeStatsAnimation(frameDimension, pokemonSpriteLocationX, pokemonSpriteLocationY + 300);
 
             }
         } catch (IOException ex) {
@@ -181,8 +187,8 @@ public class PokemonMainCharacterSprite extends JPanel {
         dead = false;
         fly = false;
 
-        if (alteredStateAnimation != null) {
-            alteredStateAnimation.setEnable(true);
+        if (statusCondition != null) {
+            statusCondition.setEnable(true);
         }
 
         if (frameDimension.equals(Dimensions.frameDimension720p)) {
@@ -201,7 +207,7 @@ public class PokemonMainCharacterSprite extends JPanel {
 
     public void withdraw() {
         withdrawing = true;
-        alteredStateAnimation.setEnable(false);
+        statusCondition.setEnable(false);
 
     }
 
@@ -211,26 +217,26 @@ public class PokemonMainCharacterSprite extends JPanel {
 
     public void dead() {
         this.dead = true;
-        alteredStateAnimation.setEnable(false);
+        statusCondition.setEnable(false);
 
     }
 
     public void fly() {
         fly = true;
-        alteredStateAnimation.setEnable(false);
+        statusCondition.setEnable(false);
     }
 
-    public void removeAlteredState() {
-        alteredStateAnimation.setState(null);
+    public void removeStatusCondition() {
+        statusCondition.setState(null);
     }
 
-    public void setAlteredState(BufferedImage sprites[]) {
-        alteredStateAnimation.setState(sprites);
+    public void setStatusCondition(BufferedImage sprites[]) {
+        statusCondition.setState(sprites);
 
     }
 
-    public void loadDefaultsetAlteredState() { //Debug
-        alteredStateAnimation.loadDefaultState();
+    public void loadDefaultsetStatusCondition() { //Debug
+        statusCondition.loadDefaultState();
     }
 
     public void statsDownAnimation() {
@@ -250,13 +256,13 @@ public class PokemonMainCharacterSprite extends JPanel {
 
                 if (currentSprite % 2 == 0 || currentSprite % 8 == 0) {
                     g.drawImage(pokemonSprite[currentSprite], pokemonSpriteLocationX, pokemonSpriteLocationY, this);
-                    this.alteredStateAnimation.paintComponent(g);
+                    this.statusCondition.paintComponent(g);
 
                 }
 
             } else {
                 g.drawImage(pokemonSprite[currentSprite], pokemonSpriteLocationX, pokemonSpriteLocationY, this);
-                this.alteredStateAnimation.paintComponent(g);
+                this.statusCondition.paintComponent(g);
             }
 
             if (withdrawing) {
