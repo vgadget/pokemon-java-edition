@@ -51,7 +51,7 @@ public class ChangeStatsAnimation extends JPanel {
 
         if (frameDimension.equals(Dimensions.frameDimension720p)) {
 
-            this.locationXUp = locationX - 40;
+            this.locationXUp = locationX;
             this.locationYUp = locationY - 100;
 
             this.locationXDown = locationX - 40;
