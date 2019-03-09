@@ -1,7 +1,7 @@
 package graphiccontroller;
 
+import graphiccontroller.battle.BattleGraphicController;
 import javax.swing.JFrame;
-import graphiccontroller.battle.BattleGraphicControllerImpl;
 
 /**
  *
@@ -11,7 +11,7 @@ public class GraphicController extends JFrame {
 
     private static GraphicController instance = null;
     
-    private BattleGraphicControllerImpl battleControler;
+    private BattleGraphicController battleControler;
     
     private GraphicController(){}
     

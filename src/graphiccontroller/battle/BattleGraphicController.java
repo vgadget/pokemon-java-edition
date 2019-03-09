@@ -18,6 +18,14 @@ public abstract class BattleGraphicController extends JPanel {
 
     public abstract void player2SetSprites(BufferedImage s[]);
 
+    public abstract void player1PausePokemonSprite();
+
+    public abstract void player2PausePokemonSprite();
+
+    public abstract void player1PlayPokemonSprite();
+
+    public abstract void player2PlayPokemonSprite();
+
     public abstract void player1Appear();
 
     public abstract void player2Appear();

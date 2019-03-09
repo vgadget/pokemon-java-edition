@@ -9,13 +9,12 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.JPanel;
 
 /**
  *
  * @author Adrian Vazquez
  */
-public class BattleGraphicControllerImpl extends BattleGraphicController{
+public class BattleGraphicControllerImpl extends BattleGraphicController {
 
     private static final String URI_BATTLE_BACKGROUND = "Resources/BattleHUD/BackGround/battleBackground.png";
     private static final String URI_CROPPED_BATTLE_BACKGROUND = "Resources/BattleHUD/BackGround/croppedbattleBackground.png";
@@ -137,6 +136,7 @@ public class BattleGraphicControllerImpl extends BattleGraphicController{
 
     }
 
+    @Override
     public void pausePokemonSprites() {
 
         this.setEnabledPlay = false;
@@ -151,6 +151,7 @@ public class BattleGraphicControllerImpl extends BattleGraphicController{
 
     }
 
+    @Override
     public void playPokemonSprites() {
 
         this.setEnabledPlay = true;
@@ -165,15 +166,18 @@ public class BattleGraphicControllerImpl extends BattleGraphicController{
 
     }
 
+    @Override
     public void player1SetSprites(BufferedImage s[]) {
         this.player1Sprite.setUpSprites(s);
     }
 
+    @Override
     public void player2SetSprites(BufferedImage s[]) {
         this.player2Sprite.setUpSprites(s);
 
     }
 
+    @Override
     public void player1UpdateData(String name, int level, int sex) {
 
         if (player1HUD != null) {
@@ -188,6 +192,7 @@ public class BattleGraphicControllerImpl extends BattleGraphicController{
         }
     }
 
+    @Override
     public void player2UpdateData(String name, int level, int sex, boolean isCatched) {
 
         if (player2HUD != null) {
@@ -203,6 +208,7 @@ public class BattleGraphicControllerImpl extends BattleGraphicController{
         }
     }
 
+    @Override
     public void player1UpdateHP(int currentHP, int maxHP) {
 
         if (player1HUD != null) {
@@ -211,6 +217,7 @@ public class BattleGraphicControllerImpl extends BattleGraphicController{
 
     }
 
+    @Override
     public void player2UpdateHP(int currentHP, int maxHP) {
 
         if (player2HUD != null) {
@@ -219,6 +226,7 @@ public class BattleGraphicControllerImpl extends BattleGraphicController{
 
     }
 
+    @Override
     public void player1Appear() {
 
         player1Sprite.appear();
@@ -230,6 +238,7 @@ public class BattleGraphicControllerImpl extends BattleGraphicController{
 
     }
 
+    @Override
     public void player2Appear() {
 
         player2Sprite.appear();
@@ -239,6 +248,7 @@ public class BattleGraphicControllerImpl extends BattleGraphicController{
 
     }
 
+    @Override
     public void player1Withdraw() {
 
         player1HUD.withdraw();
@@ -247,6 +257,7 @@ public class BattleGraphicControllerImpl extends BattleGraphicController{
         repaint();
     }
 
+    @Override
     public void player2Withdraw() {
 
         player2HUD.withdraw();
@@ -255,62 +266,65 @@ public class BattleGraphicControllerImpl extends BattleGraphicController{
         repaint();
     }
 
+    @Override
     public void player1Blink() {
         player1Sprite.blink();
     }
 
+    @Override
     public void player2Blink() {
         player2Sprite.blink();
     }
 
+    @Override
     public void player1Dead() {
         this.player1Sprite.dead();
     }
 
+    @Override
     public void player2Dead() {
         this.player2Sprite.dead();
     }
 
+    @Override
     public void player1LetsGo() {
         player1LaunchPokeball();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(1200);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(BattleGraphicControllerImpl.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                player1Appear();
+        new Thread(() -> {
+            try {
+                Thread.sleep(1200);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(BattleGraphicControllerImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
+            player1Appear();
         }).start();
     }
 
+    @Override
     public void player2LetsGo() {
         player2LaunchPokeball();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(1200);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(BattleGraphicControllerImpl.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                player2Appear();
+        new Thread(() -> {
+            try {
+                Thread.sleep(1200);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(BattleGraphicControllerImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
+            player2Appear();
         }).start();
 
     }
 
+    @Override
     public void player1Fly() {
         player1Sprite.fly();
     }
 
+    @Override
     public void player2Fly() {
         player2Sprite.fly();
     }
 
+    @Override
     public void player1LaunchPokeball() {
         if (resolution.equals(Dimensions.frameDimension720p)) {
             pokeballAnimation.doAnimation(0, 200);
@@ -319,6 +333,7 @@ public class BattleGraphicControllerImpl extends BattleGraphicController{
         }
     }
 
+    @Override
     public void player2LaunchPokeball() {
         if (resolution.equals(Dimensions.frameDimension720p)) {
             pokeballAnimation.doAnimation(500, 0);
@@ -327,14 +342,16 @@ public class BattleGraphicControllerImpl extends BattleGraphicController{
         }
     }
 
+    @Override
     public void player1SetStatusCondition(BufferedImage sprites[]) {
-        if (sprites != null){
+        if (sprites != null) {
             this.player1Sprite.setStatusCondition(sprites);
         } else {
             player1LoadDefaultStatusCondition();
         }
     }
 
+    @Override
     public void player1RemoveStatusCondition() {
         this.player1Sprite.removeStatusCondition();
     }
@@ -343,14 +360,16 @@ public class BattleGraphicControllerImpl extends BattleGraphicController{
         this.player1Sprite.loadDefaultsetStatusCondition();
     }
 
+    @Override
     public void player2SetStatusCondition(BufferedImage sprites[]) {
-        if (sprites != null){
+        if (sprites != null) {
             this.player2Sprite.setStatusCondition(sprites);
         } else {
             player2LoadDefaultStatusCondition();
         }
     }
 
+    @Override
     public void player2RemoveStatusCondition() {
         this.player2Sprite.removeStatusCondition();
     }
@@ -359,49 +378,60 @@ public class BattleGraphicControllerImpl extends BattleGraphicController{
         this.player2Sprite.loadDefaultsetStatusCondition();
     }
 
+    @Override
     public void player1StatsUP() {
         this.player1Sprite.statsUpAnimation();
     }
 
+    @Override
     public void player1StatsDown() {
         this.player1Sprite.statsDownAnimation();
     }
 
+    @Override
     public void player2StatsUP() {
         this.player2Sprite.statsUpAnimation();
     }
 
+    @Override
     public void player2StatsDown() {
         this.player2Sprite.statsDownAnimation();
     }
 
+    @Override
     public void setWeather(BufferedImage[] weather) {
         this.weatherAnimation.changeWeather(weather);
     }
 
+    @Override
     public void removeWeather() {
 
         this.weatherAnimation.removeWeather();
     }
 
+    @Override
     public void addText(String t) {
         textBox.enqueueText(t);
     }
 
+    @Override
     public void nextText() {
 
         textBox.dequeueText();
 
     }
 
+    @Override
     public void setAttackAnimation(BufferedImage sprites[]) {
         this.attackAnimation.setAttack(sprites);
     }
 
+    @Override
     public void doAttackAnimation() {
         this.attackAnimation.doAnimation();
     }
 
+    @Override
     public void player1LoadDefaultAttackAnimation() {
         try {
             this.attackAnimation.loadDefaultAttackAnimationMainCharacter();
@@ -410,6 +440,7 @@ public class BattleGraphicControllerImpl extends BattleGraphicController{
         }
     }
 
+    @Override
     public void player2LoadDefaultAttackAnimation() {
         try {
             this.attackAnimation.loadDefaultAttackAnimationOpponent();
@@ -418,10 +449,12 @@ public class BattleGraphicControllerImpl extends BattleGraphicController{
         }
     }
 
+    @Override
     public boolean attackAnimationIsPplaying() {
         return this.attackAnimation.isPlaying();
     }
 
+    @Override
     public void startEarthquake() {
 
         this.earthquake = true;
@@ -444,8 +477,8 @@ public class BattleGraphicControllerImpl extends BattleGraphicController{
             backgroundLocationX = backgroundBoundStart - 1;
 
             boolean backwardsGround = false, backwardsBackground = false;
-            
-            int speed = ground.getWidth() / (slice*15);
+
+            int speed = ground.getWidth() / (slice * 15);
 
             while (earthquake) {
 
@@ -462,17 +495,17 @@ public class BattleGraphicControllerImpl extends BattleGraphicController{
                 }
 
                 if (backwardsGround) {
-                    groundLocationX-=speed;
+                    groundLocationX -= speed;
 
                 } else {
-                    groundLocationX+=speed;
+                    groundLocationX += speed;
 
                 }
 
                 if (backwardsBackground) {
-                    backgroundLocationX-=speed;
+                    backgroundLocationX -= speed;
                 } else {
-                    backgroundLocationX+=speed;
+                    backgroundLocationX += speed;
                 }
 
                 try {
@@ -490,6 +523,7 @@ public class BattleGraphicControllerImpl extends BattleGraphicController{
 
     }
 
+    @Override
     public void stopEarthquake() {
 
         this.earthquake = false;
@@ -544,6 +578,29 @@ public class BattleGraphicControllerImpl extends BattleGraphicController{
         //Attack animation
         attackAnimation.paintComponent(g);
 
+    }
+
+    @Override
+    public void player1PausePokemonSprite() {
+
+        this.player1Sprite.pause();
+
+    }
+
+    @Override
+    public void player2PausePokemonSprite() {
+        this.player2Sprite.pause();
+    }
+
+    @Override
+    public void player1PlayPokemonSprite() {
+        this.player1Sprite.play();
+
+    }
+
+    @Override
+    public void player2PlayPokemonSprite() {
+        this.player2Sprite.play();
     }
 
 }
