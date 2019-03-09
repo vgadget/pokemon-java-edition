@@ -38,7 +38,7 @@ public class PokemonMainCharacterSprite extends JPanel {
 
     private boolean withdrawing, blink, dead, fly;
 
-    private PokemonStatusCondition statusCondition;
+    private PokemonStatusCondition nonVolatileStatus, volatileStatus;
     private ChangeStatsAnimation changeStatsAnimation;
 
     public PokemonMainCharacterSprite(Dimension frameDimension, BufferedImage sprites[]) {
@@ -48,10 +48,13 @@ public class PokemonMainCharacterSprite extends JPanel {
         setUpSprites(sprites);
 
         if (frameDimension.equals(Dimensions.frameDimension1080p)) {
-            statusCondition = new PokemonStatusCondition(new Dimension(this.pokemonSprite[0].getWidth(), this.pokemonSprite[0].getHeight()), null, pokemonSpriteLocationX, pokemonSpriteLocationY);
+            nonVolatileStatus = new PokemonStatusCondition(new Dimension(this.pokemonSprite[0].getWidth(), this.pokemonSprite[0].getHeight()), null, pokemonSpriteLocationX, pokemonSpriteLocationY);
+            volatileStatus = new PokemonStatusCondition(new Dimension(this.pokemonSprite[0].getWidth(), this.pokemonSprite[0].getHeight()), null, pokemonSpriteLocationX, pokemonSpriteLocationY);
+
         } else if (frameDimension.equals(Dimensions.frameDimension720p)) {
 
-            statusCondition = new PokemonStatusCondition(new Dimension(this.pokemonSprite[0].getWidth(), this.pokemonSprite[0].getHeight()), null, pokemonSpriteLocationX+50, pokemonSpriteLocationY+280);
+            nonVolatileStatus = new PokemonStatusCondition(new Dimension(this.pokemonSprite[0].getWidth(), this.pokemonSprite[0].getHeight()), null, pokemonSpriteLocationX + 50, pokemonSpriteLocationY + 280);
+            volatileStatus = new PokemonStatusCondition(new Dimension(this.pokemonSprite[0].getWidth(), this.pokemonSprite[0].getHeight()), null, pokemonSpriteLocationX + 50, pokemonSpriteLocationY + 280);
 
         }
 
@@ -187,8 +190,12 @@ public class PokemonMainCharacterSprite extends JPanel {
         dead = false;
         fly = false;
 
-        if (statusCondition != null) {
-            statusCondition.setEnable(true);
+        if (nonVolatileStatus != null) {
+            nonVolatileStatus.setEnable(true);
+        }
+
+        if (volatileStatus != null) {
+            volatileStatus.setEnable(true);
         }
 
         if (frameDimension.equals(Dimensions.frameDimension720p)) {
@@ -207,7 +214,8 @@ public class PokemonMainCharacterSprite extends JPanel {
 
     public void withdraw() {
         withdrawing = true;
-        statusCondition.setEnable(false);
+        nonVolatileStatus.setEnable(false);
+        nonVolatileStatus.setEnable(false);
 
     }
 
@@ -217,26 +225,41 @@ public class PokemonMainCharacterSprite extends JPanel {
 
     public void dead() {
         this.dead = true;
-        statusCondition.setEnable(false);
+        nonVolatileStatus.setEnable(false);
+        volatileStatus.setEnable(false);
 
     }
 
     public void fly() {
         fly = true;
-        statusCondition.setEnable(false);
+        nonVolatileStatus.setEnable(false);
+        volatileStatus.setEnable(false);
     }
 
-    public void removeStatusCondition() {
-        statusCondition.setState(null);
+    public void removeNonVolatileStatus() {
+        nonVolatileStatus.setState(null);
     }
 
-    public void setStatusCondition(BufferedImage sprites[]) {
-        statusCondition.setState(sprites);
+    public void setNonVolatileStatus(BufferedImage sprites[]) {
+        nonVolatileStatus.setState(sprites);
 
     }
 
-    public void loadDefaultsetStatusCondition() { //Debug
-        statusCondition.loadDefaultState();
+    public void removeVolatileStatus() {
+        volatileStatus.setState(null);
+    }
+
+    public void setVolatileStatus(BufferedImage sprites[]) {
+        volatileStatus.setState(sprites);
+
+    }
+
+    public void loadDefaultsetNonVolatileStatus() { //Debug
+        nonVolatileStatus.loadDefaultState();
+    }
+
+    public void loadDefaultsetVolatileStatus() { //Debug
+        volatileStatus.loadDefaultState();
     }
 
     public void statsDownAnimation() {
@@ -256,13 +279,16 @@ public class PokemonMainCharacterSprite extends JPanel {
 
                 if (currentSprite % 2 == 0 || currentSprite % 8 == 0) {
                     g.drawImage(pokemonSprite[currentSprite], pokemonSpriteLocationX, pokemonSpriteLocationY, this);
-                    this.statusCondition.paintComponent(g);
+                    this.nonVolatileStatus.paintComponent(g);
+                    this.volatileStatus.paintComponent(g);
 
                 }
 
             } else {
                 g.drawImage(pokemonSprite[currentSprite], pokemonSpriteLocationX, pokemonSpriteLocationY, this);
-                this.statusCondition.paintComponent(g);
+                this.nonVolatileStatus.paintComponent(g);
+                this.volatileStatus.paintComponent(g);
+
             }
 
             if (withdrawing) {

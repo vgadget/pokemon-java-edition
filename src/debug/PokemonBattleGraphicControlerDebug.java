@@ -73,7 +73,9 @@ public class PokemonBattleGraphicControlerDebug {
         JButton launchPokeballP1 = new JButton("Pokeball");
         JButton goP1 = new JButton("Let's Go");
         JButton flyP1 = new JButton("Fly");
-        JToggleButton stateP1 = new JToggleButton("Status Condition");
+        JToggleButton stateP1 = new JToggleButton("Non-volatile status");
+        JToggleButton state2P1 = new JToggleButton("Volatile status");
+
         JButton changeStatsUpP1 = new JButton("Stats UP");
         JButton changeStatsDownP1 = new JButton("Stats DOWN");
         JButton makeAttackP1 = new JButton("Attack");
@@ -146,9 +148,21 @@ public class PokemonBattleGraphicControlerDebug {
             public void itemStateChanged(ItemEvent ev) {
 
                 if (ev.getStateChange() == ItemEvent.SELECTED) {
-                    HUD.player1SetStatusCondition(null);
+                    HUD.player1SetNonVolatileStatus(null);
                 } else if (ev.getStateChange() == ItemEvent.DESELECTED) {
-                    HUD.player1RemoveStatusCondition();
+                    HUD.player1RemoveNonVolatileStatus();
+                }
+            }
+        });
+
+        state2P1.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent ev) {
+
+                if (ev.getStateChange() == ItemEvent.SELECTED) {
+                    HUD.player1SetVolatileStatus(null);
+                } else if (ev.getStateChange() == ItemEvent.DESELECTED) {
+                    HUD.player1RemoveVolatileStatus();
                 }
             }
         });
@@ -232,6 +246,7 @@ public class PokemonBattleGraphicControlerDebug {
         debug.add(goP1);
         debug.add(flyP1);
         debug.add(stateP1);
+        debug.add(state2P1);
         debug.add(changeStatsUpP1);
         debug.add(changeStatsDownP1);
         debug.add(makeAttackP1);
@@ -259,7 +274,8 @@ public class PokemonBattleGraphicControlerDebug {
         JButton goP2 = new JButton("Let's Go");
         JButton flyP2 = new JButton("Fly");
 
-        JToggleButton stateP2 = new JToggleButton("Status Condition");
+        JToggleButton stateP2 = new JToggleButton("Non-volatile status");
+        JToggleButton state2P2 = new JToggleButton("Volatile status");
 
         JButton changeStatsUpP2 = new JButton("Stats UP");
         JButton changeStatsDownP2 = new JButton("Stats DOWN");
@@ -322,9 +338,21 @@ public class PokemonBattleGraphicControlerDebug {
             public void itemStateChanged(ItemEvent ev) {
 
                 if (ev.getStateChange() == ItemEvent.SELECTED) {
-                    HUD.player2SetStatusCondition(null);
+                    HUD.player2SetNonVolatileStatus(null);
                 } else if (ev.getStateChange() == ItemEvent.DESELECTED) {
-                    HUD.player2RemoveStatusCondition();
+                    HUD.player2RemoveNonVolatileStatus();
+                }
+            }
+        });
+
+        state2P2.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent ev) {
+
+                if (ev.getStateChange() == ItemEvent.SELECTED) {
+                    HUD.player2SetVolatileStatus(null);
+                } else if (ev.getStateChange() == ItemEvent.DESELECTED) {
+                    HUD.player2RemoveVolatileStatus();
                 }
             }
         });
@@ -412,6 +440,7 @@ public class PokemonBattleGraphicControlerDebug {
         debug.add(goP2);
         debug.add(flyP2);
         debug.add(stateP2);
+        debug.add(state2P2);
         debug.add(changeStatsUpP2);
         debug.add(changeStatsDownP2);
         debug.add(makeAttackP2);

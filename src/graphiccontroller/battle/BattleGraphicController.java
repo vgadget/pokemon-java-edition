@@ -54,13 +54,21 @@ public abstract class BattleGraphicController extends JPanel {
 
     public abstract void player2LaunchPokeball();
 
-    public abstract void player1SetStatusCondition(BufferedImage sprites[]);
+    public abstract void player1SetNonVolatileStatus(BufferedImage sprites[]);
 
-    public abstract void player2SetStatusCondition(BufferedImage sprites[]);
+    public abstract void player2SetNonVolatileStatus(BufferedImage sprites[]);
 
-    public abstract void player1RemoveStatusCondition();
+    public abstract void player1RemoveNonVolatileStatus();
 
-    public abstract void player2RemoveStatusCondition();
+    public abstract void player2RemoveNonVolatileStatus();
+    
+    public abstract void player1SetVolatileStatus(BufferedImage sprites[]);
+
+    public abstract void player2SetVolatileStatus(BufferedImage sprites[]);
+
+    public abstract void player1RemoveVolatileStatus();
+
+    public abstract void player2RemoveVolatileStatus();
 
     public abstract void player1StatsUP();
 

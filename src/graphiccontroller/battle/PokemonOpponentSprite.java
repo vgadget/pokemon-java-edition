@@ -34,7 +34,7 @@ public class PokemonOpponentSprite extends JPanel {
 
     private boolean setEnablePlay, playBackWards, withdrawing, blink, dead, fly;
 
-    private PokemonStatusCondition alteredStateAnimation;
+    private PokemonStatusCondition nonVolatileStatus, volatileStatus;
     private ChangeStatsAnimation changeStatsAnimation;
 
     public PokemonOpponentSprite(Dimension frameDimension, BufferedImage sprites[]) {
@@ -52,7 +52,8 @@ public class PokemonOpponentSprite extends JPanel {
 
         setUpSprites(sprites);
 
-        alteredStateAnimation = new PokemonStatusCondition(new Dimension(this.pokemonSprite[0].getWidth(), this.pokemonSprite[0].getHeight()), null, pokemonSpriteLocationX, pokemonSpriteLocationY);
+        nonVolatileStatus = new PokemonStatusCondition(new Dimension(this.pokemonSprite[0].getWidth(), this.pokemonSprite[0].getHeight()), null, pokemonSpriteLocationX, pokemonSpriteLocationY);
+        volatileStatus = new PokemonStatusCondition(new Dimension(this.pokemonSprite[0].getWidth(), this.pokemonSprite[0].getHeight()), null, pokemonSpriteLocationX, pokemonSpriteLocationY);
 
         try {
             changeStatsAnimation = new ChangeStatsAnimation(frameDimension, pokemonSpriteLocationX, pokemonSpriteLocationY);
@@ -62,14 +63,14 @@ public class PokemonOpponentSprite extends JPanel {
 
         new Thread(() -> {
             while (true) {
-                
+
                 if (!changingSomething) {
                     if (currentSprite == pokemonSprite.length - 1) {
                         playBackWards = true;
                     } else if (currentSprite == 0) {
                         playBackWards = false;
                     }
-                    
+
                     if (setEnablePlay) {
                         if (playBackWards == true) {
                             currentSprite--;
@@ -77,15 +78,15 @@ public class PokemonOpponentSprite extends JPanel {
                             currentSprite++;
                         }
                     }
-                    
+
                     if (threadlocked) {
                         threadlocked = false;
                     }
-                    
+
                 } else {
                     threadlocked = true;
                 }
-                
+
                 try {
                     Thread.sleep(SPRITE_SPEED);
                 } catch (InterruptedException ex) {
@@ -168,8 +169,12 @@ public class PokemonOpponentSprite extends JPanel {
         dead = false;
         fly = false;
 
-        if (alteredStateAnimation != null) {
-            alteredStateAnimation.setEnable(true);
+        if (nonVolatileStatus != null) {
+            nonVolatileStatus.setEnable(true);
+        }
+
+        if (volatileStatus != null) {
+            volatileStatus.setEnable(true);
         }
 
         if (frameDimension.equals(Dimensions.frameDimension720p)) {
@@ -188,7 +193,8 @@ public class PokemonOpponentSprite extends JPanel {
 
     public void withdraw() {
         withdrawing = true;
-        alteredStateAnimation.setEnable(false);
+        nonVolatileStatus.setEnable(false);
+        volatileStatus.setEnable(false);
 
     }
 
@@ -198,25 +204,41 @@ public class PokemonOpponentSprite extends JPanel {
 
     public void dead() {
         this.dead = true;
-        alteredStateAnimation.setEnable(false);
+        nonVolatileStatus.setEnable(false);
+        volatileStatus.setEnable(false);
 
     }
 
     public void fly() {
         fly = true;
-        alteredStateAnimation.setEnable(false);
+        nonVolatileStatus.setEnable(false);
+        volatileStatus.setEnable(false);
+
     }
 
-    public void removeStatusCondition() {
-        alteredStateAnimation.setState(null);
+    public void removeNonVolatileStatus() {
+        nonVolatileStatus.setState(null);
     }
 
-    public void setStatusCondition(BufferedImage sprites[]) {
-        alteredStateAnimation.setState(sprites);
+    public void setNonVolatileStatus(BufferedImage sprites[]) {
+        nonVolatileStatus.setState(sprites);
     }
 
-    public void loadDefaultsetStatusCondition() { //Debug
-        alteredStateAnimation.loadDefaultState();
+    public void loadDefaultsetNonVolatileStatus() { //Debug
+        nonVolatileStatus.loadDefaultState();
+    }
+
+    public void setVolatileStatus(BufferedImage sprites[]) {
+        volatileStatus.setState(sprites);
+
+    }
+
+    public void removeVolatileStatus() {
+        volatileStatus.setState(null);
+    }
+
+    public void loadDefaultsetVolatileStatus() { //Debug
+        volatileStatus.loadDefaultState();
     }
 
     public void statsDownAnimation() {
@@ -240,13 +262,16 @@ public class PokemonOpponentSprite extends JPanel {
 
                 if (currentSprite % 2 == 0 || currentSprite % 8 == 0) {
                     g.drawImage(pokemonSprite[currentSprite], pokemonSpriteLocationX, pokemonSpriteLocationY, this);
-                    this.alteredStateAnimation.paintComponent(g);
+                    this.nonVolatileStatus.paintComponent(g);
+                    this.volatileStatus.paintComponent(g);
 
                 }
 
             } else {
                 g.drawImage(pokemonSprite[currentSprite], pokemonSpriteLocationX, pokemonSpriteLocationY, this);
-                this.alteredStateAnimation.paintComponent(g);
+                this.nonVolatileStatus.paintComponent(g);
+                this.volatileStatus.paintComponent(g);
+
 
             }
 

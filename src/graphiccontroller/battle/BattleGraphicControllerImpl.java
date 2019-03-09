@@ -343,39 +343,39 @@ public class BattleGraphicControllerImpl extends BattleGraphicController {
     }
 
     @Override
-    public void player1SetStatusCondition(BufferedImage sprites[]) {
+    public void player1SetNonVolatileStatus(BufferedImage sprites[]) {
         if (sprites != null) {
-            this.player1Sprite.setStatusCondition(sprites);
+            this.player1Sprite.setNonVolatileStatus(sprites);
         } else {
-            player1LoadDefaultStatusCondition();
+            player1LoadDefaultNonVolatileStatus();
         }
     }
 
     @Override
-    public void player1RemoveStatusCondition() {
-        this.player1Sprite.removeStatusCondition();
+    public void player1RemoveNonVolatileStatus() {
+        this.player1Sprite.removeNonVolatileStatus();
     }
 
-    private void player1LoadDefaultStatusCondition() {
-        this.player1Sprite.loadDefaultsetStatusCondition();
+    private void player1LoadDefaultNonVolatileStatus() {
+        this.player1Sprite.loadDefaultsetNonVolatileStatus();
     }
 
     @Override
-    public void player2SetStatusCondition(BufferedImage sprites[]) {
+    public void player2SetNonVolatileStatus(BufferedImage sprites[]) {
         if (sprites != null) {
-            this.player2Sprite.setStatusCondition(sprites);
+            this.player2Sprite.setNonVolatileStatus(sprites);
         } else {
-            player2LoadDefaultStatusCondition();
+            player2LoadDefaultNonVolatileStatus();
         }
     }
 
     @Override
-    public void player2RemoveStatusCondition() {
-        this.player2Sprite.removeStatusCondition();
+    public void player2RemoveNonVolatileStatus() {
+        this.player2Sprite.removeNonVolatileStatus();
     }
 
-    private void player2LoadDefaultStatusCondition() {
-        this.player2Sprite.loadDefaultsetStatusCondition();
+    private void player2LoadDefaultNonVolatileStatus() {
+        this.player2Sprite.loadDefaultsetNonVolatileStatus();
     }
 
     @Override
@@ -601,6 +601,33 @@ public class BattleGraphicControllerImpl extends BattleGraphicController {
     @Override
     public void player2PlayPokemonSprite() {
         this.player2Sprite.play();
+    }
+
+    @Override
+    public void player1SetVolatileStatus(BufferedImage[] sprites) {
+        if (sprites != null) {
+            this.player1Sprite.setVolatileStatus(sprites);
+        } else {
+            this.player1Sprite.loadDefaultsetVolatileStatus();
+        }
+    }
+
+    @Override
+    public void player2SetVolatileStatus(BufferedImage[] sprites) {
+        if (sprites != null) {
+            this.player2Sprite.setVolatileStatus(sprites);
+        } else {
+            this.player2Sprite.loadDefaultsetVolatileStatus();
+        }    }
+
+    @Override
+    public void player1RemoveVolatileStatus() {
+        this.player1Sprite.removeVolatileStatus();
+    }
+
+    @Override
+    public void player2RemoveVolatileStatus() {
+        this.player2Sprite.removeVolatileStatus();
     }
 
 }
