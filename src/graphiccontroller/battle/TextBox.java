@@ -1,6 +1,6 @@
 package graphiccontroller.battle;
 
-import Util.Dimensions;
+import utilities.Dimensions;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -58,7 +58,7 @@ public class TextBox extends JPanel {
             introKey = new BufferedImage[2];
             for (int i = 0; i < introKey.length; i++) {
                 introKey[i] = ImageIO.read(new File(URI_TEXTBOX_INTRO_KEY + "/tile(" + i + ").png"));
-                introKey[i] = Util.ImageUtil.resizeProportional(introKey[i], 0.1);
+                introKey[i] = utilities.ImageUtil.resizeProportional(introKey[i], 0.1);
             }
 
             
@@ -83,7 +83,7 @@ public class TextBox extends JPanel {
         //Set location and size depending of choosen resolution.
         if (frameDimension.equals(Dimensions.frameDimension720p)) {
 
-            this.textbackground = Util.ImageUtil.resizeProportional(textbackground, 2);
+            this.textbackground = utilities.ImageUtil.resizeProportional(textbackground, 2);
             this.textbackgroundLocationX = 0;
             this.textbackgroundLocationY = (int) (frameDimension.getHeight() - 135);
 
@@ -94,7 +94,7 @@ public class TextBox extends JPanel {
             text.setLocation(25, (int) (frameDimension.getHeight() - 115));
 
         } else if (frameDimension.equals(Dimensions.frameDimension1080p)) {
-            this.textbackground = Util.ImageUtil.resizeProportional(textbackground, 2);
+            this.textbackground = utilities.ImageUtil.resizeProportional(textbackground, 2);
             this.textbackgroundLocationX = 0;
             this.textbackgroundLocationY = (int) (frameDimension.getHeight() - 135);
 

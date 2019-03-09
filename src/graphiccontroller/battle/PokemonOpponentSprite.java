@@ -1,7 +1,7 @@
 package graphiccontroller.battle;
 
-import Util.Dimensions;
-import Util.ImageUtil;
+import utilities.Dimensions;
+import utilities.ImageUtil;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;

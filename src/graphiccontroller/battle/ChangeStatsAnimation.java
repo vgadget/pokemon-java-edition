@@ -1,6 +1,6 @@
 package graphiccontroller.battle;
 
-import Util.Dimensions;
+import utilities.Dimensions;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -40,12 +40,12 @@ public class ChangeStatsAnimation extends JPanel {
 
             if (frameDimension.equals(Dimensions.frameDimension720p)) {
 
-                spriteUP[i] = Util.ImageUtil.resizeProportional(spriteUP[i], 2);
-                spriteDown[i] = Util.ImageUtil.resizeProportional(spriteDown[i], 2);
+                spriteUP[i] = utilities.ImageUtil.resizeProportional(spriteUP[i], 2);
+                spriteDown[i] = utilities.ImageUtil.resizeProportional(spriteDown[i], 2);
 
             } else if (frameDimension.equals(Dimensions.frameDimension1080p)) {
-                spriteUP[i] = Util.ImageUtil.resizeProportional(spriteUP[i], 4);
-                spriteDown[i] = Util.ImageUtil.resizeProportional(spriteDown[i], 4);
+                spriteUP[i] = utilities.ImageUtil.resizeProportional(spriteUP[i], 4);
+                spriteDown[i] = utilities.ImageUtil.resizeProportional(spriteDown[i], 4);
             }
         }
 

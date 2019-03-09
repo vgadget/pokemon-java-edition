@@ -1,6 +1,6 @@
 package debug;
 
-import Util.Dimensions;
+import utilities.Dimensions;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;

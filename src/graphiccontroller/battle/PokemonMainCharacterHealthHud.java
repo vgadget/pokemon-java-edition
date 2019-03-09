@@ -1,12 +1,12 @@
 package graphiccontroller.battle;
 
-import Util.Dimensions;
+import utilities.Dimensions;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import Util.ImageUtil;
+import utilities.ImageUtil;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

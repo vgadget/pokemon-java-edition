@@ -1,6 +1,6 @@
 package graphiccontroller.battle;
 
-import Util.Dimensions;
+import utilities.Dimensions;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -93,7 +93,7 @@ public class PokemonAttackAnimation extends JPanel {
 
             for (int i = 0; i < this.attack.length; i++) {
 
-                this.attack[i] = Util.ImageUtil.resizeProportional(this.attack[i], 1.5);
+                this.attack[i] = utilities.ImageUtil.resizeProportional(this.attack[i], 1.5);
 
             }
 

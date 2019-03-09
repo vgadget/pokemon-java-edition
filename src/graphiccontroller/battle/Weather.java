@@ -1,6 +1,6 @@
 package graphiccontroller.battle;
 
-import Util.Dimensions;
+import utilities.Dimensions;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -49,10 +49,10 @@ public class Weather extends JPanel {
 
                 if (this.frameDimension.equals(Dimensions.frameDimension720p)) {
 
-                    sprites[i] = Util.ImageUtil.resizeProportional(sprites[i], 4);
+                    sprites[i] = utilities.ImageUtil.resizeProportional(sprites[i], 4);
 
                 } else if (this.frameDimension.equals(Dimensions.frameDimension1080p)) {
-                    sprites[i] = Util.ImageUtil.resizeProportional(sprites[i], 6);
+                    sprites[i] = utilities.ImageUtil.resizeProportional(sprites[i], 6);
 
                 }
 
@@ -77,11 +77,11 @@ public class Weather extends JPanel {
                 
                 if (this.frameDimension.equals(Dimensions.frameDimension720p)) {
 
-                    sprites[i] = Util.ImageUtil.resizeProportional(sprites[i], 4);
+                    sprites[i] = utilities.ImageUtil.resizeProportional(sprites[i], 4);
 
                 } else if (this.frameDimension.equals(Dimensions.frameDimension1080p)) {
 
-                    sprites[i] = Util.ImageUtil.resizeProportional(sprites[i], 6);
+                    sprites[i] = utilities.ImageUtil.resizeProportional(sprites[i], 6);
 
                 }
 

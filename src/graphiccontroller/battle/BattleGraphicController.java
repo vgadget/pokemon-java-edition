@@ -1,6 +1,6 @@
 package graphiccontroller.battle;
 
-import Util.Dimensions;
+import utilities.Dimensions;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -70,21 +70,21 @@ public class BattleGraphicController extends JPanel {
 
             if (this.resolution.equals(Dimensions.frameDimension1080p)) {
 
-                this.background = Util.ImageUtil.resizeProportional(background, 6);
-                this.croppedBackground = Util.ImageUtil.resizeProportional(croppedBackground, 6);
+                this.background = utilities.ImageUtil.resizeProportional(background, 6);
+                this.croppedBackground = utilities.ImageUtil.resizeProportional(croppedBackground, 6);
 
-                this.ground = Util.ImageUtil.resize(ground, (int) (313 * 4.6f), 168 * 4);
+                this.ground = utilities.ImageUtil.resize(ground, (int) (313 * 4.6f), 168 * 4);
 
                 this.groundLocationX = 0;
                 this.groundLocationY = 130;
 
             } else if (this.resolution.equals(Dimensions.frameDimension720p)) {
 
-                this.background = Util.ImageUtil.resizeProportional(background, 4);
+                this.background = utilities.ImageUtil.resizeProportional(background, 4);
 
-                this.croppedBackground = Util.ImageUtil.resizeProportional(croppedBackground, 4);
+                this.croppedBackground = utilities.ImageUtil.resizeProportional(croppedBackground, 4);
 
-                this.ground = Util.ImageUtil.resizeProportional(ground, 3);
+                this.ground = utilities.ImageUtil.resizeProportional(ground, 3);
 
                 this.groundLocationX = 0;
                 this.groundLocationY = 20;
