@@ -54,4 +54,76 @@ public class ImageUtil {
         return dest;
     }
 
+    public static BufferedImage changeColor(BufferedImage img, RGB oldPixelValue, RGB newPixelValue) throws Exception {
+
+        BufferedImage image = deepCopy(img);
+        int width = image.getWidth();
+        int height = image.getHeight();
+        WritableRaster imageRaster = image.getRaster();
+
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+
+                int[] pixel = imageRaster.getPixel(x, y, (int[]) null);
+
+                if (RGB.getRGB(pixel[0], pixel[1], pixel[2]).equals(oldPixelValue)) {
+                    pixel[0] = newPixelValue.getRed();
+                    pixel[1] = newPixelValue.getGreen();
+                    pixel[2] = newPixelValue.getBlue();
+                    imageRaster.setPixel(x, y, pixel);
+                }
+            }
+        }
+        return image;
+    }
+
+    public static BufferedImage setBrightness(BufferedImage img, int amount) throws Exception {
+        BufferedImage image = deepCopy(img);
+        int width = image.getWidth();
+        int height = image.getHeight();
+        WritableRaster imageRaster = image.getRaster();
+
+        RGB pixelValue;
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+
+                int[] pixel = imageRaster.getPixel(x, y, (int[]) null);
+
+                pixelValue = RGB.getRGB(img, x, y);
+
+                int red = pixelValue.getRed() + amount;
+                int green = pixelValue.getGreen() + amount;
+                int blue = pixelValue.getBlue() + amount;
+
+                if (red < 0) {
+                    red = 0;
+                } else if (red > 255) {
+                    red = 255;
+                }
+
+                if (green < 0) {
+                    green = 0;
+                } else if (green > 255) {
+                    green = 255;
+                }
+
+                if (blue < 0) {
+                    blue = 0;
+                } else if (blue > 255) {
+                    blue = 255;
+                }
+
+                pixel[0] = red;
+                pixel[1] = green;
+                pixel[2] = blue;
+
+                imageRaster.setPixel(x, y, pixel);
+
+            }
+        }
+        return image;
+    }
+
+
+
 }
