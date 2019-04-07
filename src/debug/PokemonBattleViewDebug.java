@@ -30,7 +30,7 @@ import view.battle.components.PokemonOpponentHealthHud;
  *
  * @author Adrian Vazquez
  */
-public class PokemonBattleGraphicControlerDebug {
+public class PokemonBattleViewDebug {
 
     public static void test() {
         JFrame testOutputFrame = new JFrame("Debug: Outputs");
@@ -107,7 +107,7 @@ public class PokemonBattleGraphicControlerDebug {
                             try {
                                 Thread.sleep(10);
                             } catch (InterruptedException ex) {
-                                Logger.getLogger(PokemonBattleGraphicControlerDebug.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(PokemonBattleViewDebug.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
 
@@ -115,7 +115,7 @@ public class PokemonBattleGraphicControlerDebug {
                         try {
                             Thread.sleep(1000);
                         } catch (InterruptedException ex) {
-                            Logger.getLogger(PokemonBattleGraphicControlerDebug.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(PokemonBattleViewDebug.class.getName()).log(Level.SEVERE, null, ex);
                         }
 
                         HUD.player2Blink();
@@ -296,7 +296,7 @@ public class PokemonBattleGraphicControlerDebug {
                             try {
                                 Thread.sleep(10);
                             } catch (InterruptedException ex) {
-                                Logger.getLogger(PokemonBattleGraphicControlerDebug.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(PokemonBattleViewDebug.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
 
@@ -304,7 +304,7 @@ public class PokemonBattleGraphicControlerDebug {
                         try {
                             Thread.sleep(1000);
                         } catch (InterruptedException ex) {
-                            Logger.getLogger(PokemonBattleGraphicControlerDebug.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(PokemonBattleViewDebug.class.getName()).log(Level.SEVERE, null, ex);
                         }
 
                         HUD.player1Blink();

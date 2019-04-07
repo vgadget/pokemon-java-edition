@@ -1,4 +1,4 @@
-package controller.texttospeech;
+package narrator;
 
 
 import javax.sound.sampled.AudioFormat;

@@ -1,6 +1,9 @@
 package utilities;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -122,6 +125,19 @@ public class ImageUtil {
             }
         }
         return image;
+    }
+    
+    public static BufferedImage addText(BufferedImage img, String text, int x, int y, Font font, Color c){
+        
+        BufferedImage newImage = deepCopy(img);
+        
+        Graphics2D g = (Graphics2D) newImage.createGraphics();
+        g.setPaint(c);
+        g.setFont(font);
+        g.drawString(text, x, y);
+        g.dispose();
+        
+        return newImage;
     }
 
 

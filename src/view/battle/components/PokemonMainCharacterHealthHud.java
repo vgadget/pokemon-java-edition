@@ -10,6 +10,7 @@ import utilities.ImageUtil;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import view.battle.BattleViewImpl;
+import view.components.fonts.PokemonFont;
 
 /**
  *
@@ -96,10 +97,8 @@ public class PokemonMainCharacterHealthHud extends JPanel {
         try {
 
             //Cargar la fuente
-            InputStream is = getClass().getResourceAsStream("HUD_NAME_FONT.ttf");
-            Font f = Font.createFont(Font.TRUETYPE_FONT, is);
-            f = f.deriveFont(0, 18);
-            pokemonName.setFont(f);
+            pokemonName.setFont(PokemonFont.getFont(18));
+           
 
         } catch (Exception e) {
 
@@ -156,12 +155,8 @@ public class PokemonMainCharacterHealthHud extends JPanel {
             pokemonLevel = new JLabel(level + "");
 
             try {
-
-                //Cargar la fuente
-                InputStream is = getClass().getResourceAsStream("HUD_NAME_FONT.ttf");
-                Font f = Font.createFont(Font.TRUETYPE_FONT, is);
-                f = f.deriveFont(0, 24);
-                pokemonLevel.setFont(f);
+                
+                pokemonLevel.setFont(PokemonFont.getFont(24));
 
             } catch (Exception e) {
 
@@ -238,13 +233,10 @@ public class PokemonMainCharacterHealthHud extends JPanel {
         pokemonCurrentHp = new JLabel();
         pokemonMaxHp = new JLabel();
         try {
-
-            //Cargar la fuente
-            InputStream is = getClass().getResourceAsStream("HUD_NAME_FONT.ttf");
-            Font f = Font.createFont(Font.TRUETYPE_FONT, is);
-            f = f.deriveFont(0, 24);
-            pokemonCurrentHp.setFont(f);
-            pokemonMaxHp.setFont(f);
+            
+            pokemonMaxHp.setFont(PokemonFont.getFont(24));
+            pokemonCurrentHp.setFont(PokemonFont.getFont(24));
+            
         } catch (Exception e) {
 
             new Thread(() -> {
@@ -434,8 +426,7 @@ public class PokemonMainCharacterHealthHud extends JPanel {
     public JLabel getPokemonMaxHp() {
         return pokemonMaxHp;
     }
-    
-   
+
     public void withdraw() {
         withdraw = true;
         pokemonName.setVisible(false);

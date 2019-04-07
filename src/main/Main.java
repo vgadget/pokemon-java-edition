@@ -8,8 +8,9 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        //Debug - IN DEV
-        debug.PokemonBattleGraphicControlerDebug.test();
+        //Debug
+        //debug.ViewDebug.test();
+       debug.PokemonBattleViewDebug.test();
     }
 
 }

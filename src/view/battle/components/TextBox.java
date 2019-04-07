@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import view.components.fonts.PokemonFont;
 
 /**
  *
@@ -66,10 +67,7 @@ public class TextBox extends JPanel {
             textbackground = ImageIO.read(new File(URI_TEXTBOX_BACKGROUND));
 
             //Load font
-            InputStream is = getClass().getResourceAsStream("HUD_NAME_FONT.ttf");
-            Font f = Font.createFont(Font.TRUETYPE_FONT, is);
-            f = f.deriveFont(0, 16);
-            text.setFont(f);
+            text.setFont(PokemonFont.getFont(16));
 
         } catch (Exception e) {
 
