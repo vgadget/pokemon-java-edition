@@ -22,17 +22,17 @@ public class Button extends JButton {
 
     private final int BRIGHTNESS_RATE = 50;
 
-    public Button(String text, int fontSize, BufferedImage img, Dimension size) throws Exception {
+    public Button(String text, int fontSize, Color fontColor ,BufferedImage backGround, Dimension buttonSize) throws Exception {
         super();
 
-        this.image = utilities.ImageUtil.resize(img, size.width, size.height);
+        this.image = utilities.ImageUtil.resize(backGround, buttonSize.width, buttonSize.height);
 
-        this.image = utilities.ImageUtil.addText(this.image, text, 0, 0, PokemonFont.getFont(fontSize), Color.WHITE);
+        this.image = utilities.ImageUtil.addText(this.image, text, 0, 0, PokemonFont.getFont(fontSize), fontColor);
 
         this.displayedImage = utilities.ImageUtil.deepCopy(this.image);
 
         enableInputMethods(true);
-        setPreferredSize(size);
+        setPreferredSize(buttonSize);
 
         this.addMouseListener(new MouseAdapter() {
 

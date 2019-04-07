@@ -1,7 +1,14 @@
-Rain: raidensan - OpenGameArt.org
-Mew: Misdreavous525 - spriters-resource.com
-Main font: MaurizioVit - DevianArt
-Battle Background: Eli-eli76 - DevianArt
-Battle Background (LEAFS): KlNothinComin - spriters-resource.com
-State Paralys -  RPG Maker MV -  Davias - spriters-resource.com
-State UP-  RPG Maker MV -  Davias - spriters-resource.com
+Sprites and Backgrounds:
+
+	Rain: raidensan - OpenGameArt.org
+	Mew: Misdreavous525 - spriters-resource.com
+	Main font: MaurizioVit - DevianArt
+	Battle Background: Eli-eli76 - DevianArt
+	Battle Background (LEAFS): KlNothinComin - spriters-resource.com
+	State Paralys -  RPG Maker MV -  Davias - spriters-resource.com
+	State UP -  RPG Maker MV -  Davias - spriters-resource.com
+	Route 120 - Badassbill - spriters-resource.com
+	Safari Zone - Bob799 - spriters-resource.com
+
+Narrator:
+	based on MaryTTS project.

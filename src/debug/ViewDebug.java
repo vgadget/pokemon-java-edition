@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package debug;
 
 import java.awt.Color;
@@ -30,8 +25,8 @@ public class ViewDebug {
 
         Dimension d = new Dimension(img2.getWidth(), img2.getHeight());
 
-        view.components.Button boton = new Button("Botón 1", 50 ,img1, d);
-        view.components.Button boton2 = new Button("Botón 2", 50 ,img2, d);
+        view.components.Button boton = new Button("Botón 1", 50, Color.WHITE ,img1, d);
+        view.components.Button boton2 = new Button("Botón 2", 50, Color.BLACK ,img2, d);
 
         panel.add(boton);
         panel.add(boton2);
