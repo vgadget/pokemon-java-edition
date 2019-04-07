@@ -1,4 +1,4 @@
-package narrator;
+package controller.texttospeech;
 
 import java.util.Collection;
 

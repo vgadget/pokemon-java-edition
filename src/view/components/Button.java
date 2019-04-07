@@ -1,5 +1,6 @@
 package view.components;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
@@ -8,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
+import view.components.fonts.PokemonFont;
 
 /**
  *
@@ -17,15 +19,18 @@ public class Button extends JButton {
 
     private BufferedImage image;
     private BufferedImage displayedImage;
-    
+
     private final int BRIGHTNESS_RATE = 50;
 
-    public Button(BufferedImage img, Dimension size) throws Exception {
+    public Button(String text, int fontSize, BufferedImage img, Dimension size) throws Exception {
         super();
 
         this.image = utilities.ImageUtil.resize(img, size.width, size.height);
+
+        this.image = utilities.ImageUtil.addText(this.image, text, 0, 0, PokemonFont.getFont(fontSize), Color.WHITE);
+
         this.displayedImage = utilities.ImageUtil.deepCopy(this.image);
-        
+
         enableInputMethods(true);
         setPreferredSize(size);
 
@@ -63,7 +68,7 @@ public class Button extends JButton {
             @Override
             public void mouseExited(MouseEvent e) {
                 try {
-                    displayedImage =  utilities.ImageUtil.deepCopy(image);
+                    displayedImage = utilities.ImageUtil.deepCopy(image);
                     repaint();
                 } catch (Exception ex) {
                     Logger.getLogger(Button.class.getName()).log(Level.SEVERE, null, ex);

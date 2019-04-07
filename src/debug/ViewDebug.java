@@ -5,7 +5,9 @@
  */
 package debug;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -20,8 +22,16 @@ public class ViewDebug {
 
     public static void test() throws Exception {
         JPanel panel = new JPanel();
-        view.components.Button boton = new Button(ImageIO.read(new File("img.png")), new Dimension(250, 250));
-        view.components.Button boton2 = new Button(ImageIO.read(new File("img.png")), new Dimension(250, 250));
+
+        BufferedImage img1, img2;
+
+        img1 = ImageIO.read(new File("img.png"));
+        img2 = utilities.ImageUtil.deepCopy(img1);
+
+        Dimension d = new Dimension(img2.getWidth(), img2.getHeight());
+
+        view.components.Button boton = new Button("Botón 1", 50 ,img1, d);
+        view.components.Button boton2 = new Button("Botón 2", 50 ,img2, d);
 
         panel.add(boton);
         panel.add(boton2);

@@ -3,12 +3,18 @@ package utilities;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -126,20 +132,26 @@ public class ImageUtil {
         }
         return image;
     }
-    
-    public static BufferedImage addText(BufferedImage img, String text, int x, int y, Font font, Color c){
-        
+
+    public static BufferedImage addText(BufferedImage img, String text, int x, int y, Font font, Color c) {
+
         BufferedImage newImage = deepCopy(img);
-        
+
         Graphics2D g = (Graphics2D) newImage.createGraphics();
         g.setPaint(c);
         g.setFont(font);
-        g.drawString(text, x, y);
+
+        FontMetrics fm = g.getFontMetrics();
+
+        int fixedX, fixedY;
+
+        fixedX = (int) ((newImage.getWidth() - fm.stringWidth(text)) / 2f);
+        fixedY = (int) ((newImage.getHeight() + fm.getHeight()/2f) / 2f);
+
+        g.drawString(text, fixedX, fixedY);
         g.dispose();
-        
+
         return newImage;
     }
-
-
 
 }
