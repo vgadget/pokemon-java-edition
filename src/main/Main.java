@@ -1,5 +1,8 @@
 package main;
 
+import java.util.Random;
+import texttospeech.Narrator;
+import texttospeech.NumbersToSpanishWordsConverter;
 import view.menu.MainMenuView;
 
 /**
@@ -11,11 +14,10 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         //Debug
-       //debug.ViewDebug.test();
-       //debug.PokemonBattleViewDebug.test();
-       
-       new MainMenuView(utilities.Dimensions.frameDimension1080p).setVisible(true);
-       
+        //debug.ViewDebug.test();
+        //debug.PokemonBattleViewDebug.test();
+        //new MainMenuView(utilities.Dimensions.frameDimension1080p).setVisible(true);
+
 //       
 //        AnimatedBackground a = new AnimatedBackground(Dimensions.frameDimension720p);
 //       
