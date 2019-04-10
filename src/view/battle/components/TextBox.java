@@ -2,7 +2,6 @@ package view.battle.components;
 
 import utilities.Dimensions;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -10,7 +9,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.InputStream;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 import javax.imageio.ImageIO;

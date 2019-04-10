@@ -9,17 +9,17 @@ public class NumbersToSpanishWordsConverter {
         for (int i = 0; i < input.length(); i++) {
 
             if (isNumber(input.charAt(i))) {
-                
+
                 int j = i;
                 buffer = "";
-                while(j < input.length() && isNumber(input.charAt(j))){
+                while (j < input.length() && isNumber(input.charAt(j))) {
                     buffer += input.charAt(j);
                     j++;
                 }
-                
+
                 output += toSpanish((int) Long.parseLong(buffer));
-                i = j-1;
-                
+                i = j - 1;
+
             } else {
                 output += input.charAt(i);
             }
@@ -245,6 +245,8 @@ public class NumbersToSpanishWordsConverter {
 
         if (milesimaU == 0 && milesimaD == 0 && milesimaC == 0) {
             res = toSpanishCentenas(n);
+        } else if (milesimaU == 1 && milesimaD == 0 && milesimaC == 0) {
+             res ="mil " + toSpanishCentenas(n);
         } else {
             int num = (100 * milesimaC) + (10 * milesimaD) + (milesimaU);
             res = toSpanishCentenas(num) + " mil " + toSpanishCentenas(n);

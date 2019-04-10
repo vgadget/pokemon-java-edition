@@ -85,7 +85,7 @@ public class Narrator {
         String output = s + "";
 
         output = NumbersToSpanishWordsConverter.substituteNumbers(output);
-        
+
         output = output.toLowerCase();
 
         output = output.replace("ce", "se");
@@ -96,6 +96,8 @@ public class Narrator {
         output = output.replace("ñ", "ny");
         output = output.replace("que", "ke");
         output = output.replace("qui", "ki");
+        output = output.replace("qué", "ké");
+        output = output.replace("quí", "kí");
         output = output.replace("chi", "ci");
         output = output.replace("che", "ce");
         output = output.replace("ch", "ts");
@@ -103,9 +105,10 @@ public class Narrator {
         output = output.replace("ll", "y");
         output = output.replace("gué", "gé");
         output = output.replace("guí", "gí");
-        output = output.replace("gue", "gé");
-        output = output.replace("gui", "gí");
+        output = output.replace("gí", "jí");
+        output = output.replace("que", "qé");
         output = output.replace("w", "gu");
+        
 
         return output;
     }

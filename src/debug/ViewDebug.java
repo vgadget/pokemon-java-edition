@@ -7,7 +7,7 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import view.components.Button;
+import view.components.CustomButton;
 
 /**
  *
@@ -25,8 +25,8 @@ public class ViewDebug {
 
         Dimension d = new Dimension(img2.getWidth(), img2.getHeight());
 
-        view.components.Button boton = new Button("Botón 1", 50, Color.WHITE ,img1, d);
-        view.components.Button boton2 = new Button("Botón 2", 50, Color.BLACK ,img2, d);
+        view.components.CustomButton boton = new CustomButton("Botón 1", 50, Color.WHITE ,img1, d);
+        view.components.CustomButton boton2 = new CustomButton("Botón 2", 50, Color.BLACK ,img2, d);
 
         panel.add(boton);
         panel.add(boton2);

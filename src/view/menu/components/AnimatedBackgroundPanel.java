@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view.menu.components;
 
 import java.awt.Dimension;
@@ -12,13 +7,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 import javax.imageio.ImageIO;
-import javax.swing.JPanel;
+import view.components.AidPanel;
 
 /**
  *
  * @author Adrian Vazquez
  */
-public class AnimatedBackgroundPanel extends JPanel {
+public class AnimatedBackgroundPanel extends AidPanel {
 
     private static final String URI_BACKGROUNDS = "Resources/MainTitle/backgrounds";
 
@@ -36,6 +31,8 @@ public class AnimatedBackgroundPanel extends JPanel {
 
     public AnimatedBackgroundPanel(Dimension frameDimension) throws IOException {
 
+        
+        
         this.frameDimension = frameDimension;
         setUpBackgrounds();
 
@@ -53,6 +50,8 @@ public class AnimatedBackgroundPanel extends JPanel {
                 }
             }
         }).start();
+        
+        
 
     }
 
