@@ -6,6 +6,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import view.components.AidPanel;
 
@@ -29,11 +31,10 @@ public class AnimatedBackgroundPanel extends AidPanel {
 
     Random rnd = new Random();
 
-    public AnimatedBackgroundPanel(Dimension frameDimension) throws IOException {
+    public AnimatedBackgroundPanel(Dimension frameDimension) {
 
-        
-        
         this.frameDimension = frameDimension;
+                
         setUpBackgrounds();
 
         dx = dy = BACKGROUND_SPEED;
@@ -50,8 +51,6 @@ public class AnimatedBackgroundPanel extends AidPanel {
                 }
             }
         }).start();
-        
-        
 
     }
 
@@ -102,20 +101,21 @@ public class AnimatedBackgroundPanel extends AidPanel {
         return !((y + dy >= 0) || (y + dy + background.getHeight() <= frameDimension.getHeight()));
     }
 
-    private void setUpBackgrounds() throws IOException {
-        int i = new Random().nextInt(AVAILABLE_IMAGES);
-        background = ImageIO.read(new File(URI_BACKGROUNDS + "/tile(" + i + ").png"));
-
-        
-        
-        
-        background = utilities.ImageUtil.resizeProportional(background, utilities.ImageUtil.getProportion(frameDimension)*1.5f);
+    private void setUpBackgrounds() {
+        try {
+            int i = new Random().nextInt(AVAILABLE_IMAGES);
+            background = ImageIO.read(new File(URI_BACKGROUNDS + "/tile(" + i + ").png"));
+            background = utilities.ImageUtil.resizeProportional(background, utilities.ImageUtil.getProportion(frameDimension) * 1.5f);
+        } catch (IOException ex) {
+            Logger.getLogger(AnimatedBackgroundPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        
         g.drawImage(background, x, y, this);
     }
 }
