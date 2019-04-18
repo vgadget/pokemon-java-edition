@@ -43,8 +43,8 @@ public class Main {
        java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 
-                    //new MainMenu();
-                    debug.PokemonBattleViewDebug.test();
+                    new MainMenu();
+                    //debug.PokemonBattleViewDebug.test();
                 
             }
         });
