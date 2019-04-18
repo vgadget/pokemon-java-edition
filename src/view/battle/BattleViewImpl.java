@@ -27,7 +27,7 @@ public class BattleViewImpl extends BattleView {
     private static final String URI_BATTLE_BACKGROUND = "Resources/BattleHUD/BackGround/battleBackground.png";
     private static final String URI_CROPPED_BATTLE_BACKGROUND = "Resources/BattleHUD/BackGround/croppedbattleBackground.png";
 
-    private static final int FPS = 30; //Milliseconds
+    private static final int FPS = 30; //Milliseconds refresh rate
 
     private static final String URI_BATTLE_GROUND = "Resources/BattleHUD/BackGround/groundBattle.png";
 
@@ -36,8 +36,10 @@ public class BattleViewImpl extends BattleView {
     private int groundLocationX, groundLocationY;
     private int backgroundLocationX, backgroundLocationY;
 
+    // play pause animation
     private boolean setEnabledPlay;
 
+    // is earthquaque activated ?
     private boolean earthquake;
 
     //Pokemon player1
@@ -106,9 +108,9 @@ public class BattleViewImpl extends BattleView {
 
         player2Sprite = new PokemonOpponentSprite(resolution, null);
 
-        player1HUD = new PokemonMainCharacterHealthHud(resolution, this);
+        player1HUD = new PokemonMainCharacterHealthHud(resolution);
 
-        player2HUD = new PokemonOpponentHealthHud(resolution, this);
+        player2HUD = new PokemonOpponentHealthHud(resolution);
 
         new Thread(() -> {
             while (true) {
@@ -195,7 +197,7 @@ public class BattleViewImpl extends BattleView {
                 player1HUD.setPokemonLevel(level);
                 player1HUD.setPokemonSex(sex);
             } catch (IOException ex) {
-                System.out.println("Error en jugador 1");
+                System.out.println("Error in player 1");
             }
         }
     }
@@ -211,7 +213,7 @@ public class BattleViewImpl extends BattleView {
                 player2HUD.setPokemonSex(sex);
                 player2HUD.setPokemonCatched(isCatched);
             } catch (IOException ex) {
-                System.out.println("Error en jugador 2");
+                System.out.println("Error in player 2");
             }
         }
     }
@@ -539,52 +541,56 @@ public class BattleViewImpl extends BattleView {
     }
 
     @Override
-    protected void paintComponent(Graphics g) {
+    public void paintComponent(Graphics g) { // Components to be displayed. 
         super.paintComponent(g);
 
+        //LAYER 1: BACKGROUND
         if (background != null) {
             g.drawImage(background, this.backgroundLocationX, this.backgroundLocationY, this);
         }
 
+        //LAYER 2: GROUND
         if (this.ground != null) {
             g.drawImage(ground, this.groundLocationX, this.groundLocationY, this);
         }
 
-        //Player 2-Sprite
+        //LAYER 3: Player 1 - Sprite
+        if (player1Sprite != null) {
+            player1Sprite.paintComponent(g);
+        }
+
+        //LAYER 4: Player 2 - Sprite
         if (player2Sprite != null) {
             player2Sprite.paintComponent(g);
         }
 
+        //LAYER 5: CROPPED BACKGROUND, A FRAGMENT OF BACKGROUND USED TO MAKE THE ILLUSION OF DEATH ANIMATION.
         if (croppedBackground != null) {
             g.drawImage(croppedBackground, this.backgroundLocationX, this.backgroundLocationY, this);
         }
 
-        //Player 1-HUD
+        //LAYER 6: Attack animation
+        attackAnimation.paintComponent(g);
+
+        //LAYER 7: WeatherAnimation
+        weatherAnimation.paintComponent(g);
+
+        //LAYER 8: Player 1-HUD
         if (player1HUD != null) {
 
             player1HUD.paintComponent(g);
         }
 
-        //Player 1-Sprite
-        if (player1Sprite != null) {
-            player1Sprite.paintComponent(g);
-        }
-
-        //Player 2-HUD
+        //LAYER 9: Player 2-HUD
         if (player2HUD != null) {
             player2HUD.paintComponent(g);
         }
 
-        //Pokeball
+        // LAYER 10: Pokeball Launch animation
         pokeballAnimation.paintComponent(g);
 
-        weatherAnimation.paintComponent(g);
-
-        //TextBox
+        //LAYER 11: TextBox
         textBox.paintComponent(g);
-
-        //Attack animation
-        attackAnimation.paintComponent(g);
 
     }
 
@@ -626,7 +632,8 @@ public class BattleViewImpl extends BattleView {
             this.player2Sprite.setVolatileStatus(sprites);
         } else {
             this.player2Sprite.loadDefaultsetVolatileStatus();
-        }    }
+        }
+    }
 
     @Override
     public void player1RemoveVolatileStatus() {

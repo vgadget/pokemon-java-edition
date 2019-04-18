@@ -31,8 +31,6 @@ public class PokemonMainCharacterHealthHud extends JPanel {
     private static final String URI_RED_HP_BAR = "Resources/BattleHUD/HpBar/Common/Bars/RedBar.png";
     private static final int BAR_UPDATE_SPEED = 10;
 
-    BattleViewImpl mainControler;
-
     private BufferedImage hud;
     private int hudLocationX, hudLocationY;
 
@@ -53,9 +51,8 @@ public class PokemonMainCharacterHealthHud extends JPanel {
 
     private boolean withdraw;
 
-    public PokemonMainCharacterHealthHud(Dimension frameDimension, String name, int level, int sex, int currentHp, int maxHp, BattleViewImpl mainControler) {
+    public PokemonMainCharacterHealthHud(Dimension frameDimension, String name, int level, int sex, int currentHp, int maxHp) {
 
-        this.mainControler = mainControler;
         //Variables that can be modified
         this.percentage = 100;
         this.sex = sex;
@@ -80,8 +77,8 @@ public class PokemonMainCharacterHealthHud extends JPanel {
 
     }
 
-    public PokemonMainCharacterHealthHud(Dimension frameDimension, BattleViewImpl mainControler) {
-        this(frameDimension, "MISSINGNO", 100, NONE, 999, 999, mainControler);
+    public PokemonMainCharacterHealthHud(Dimension frameDimension) {
+        this(frameDimension, "MISSINGNO", 100, NONE, 999, 999);
     }
 
     private void setUpPokemonName(String name) {
@@ -144,8 +141,6 @@ public class PokemonMainCharacterHealthHud extends JPanel {
         }
 
         repaint();
-        mainControler.repaint();
-
     }
 
     private void setUpPokemonLevel(int level) {
@@ -211,8 +206,6 @@ public class PokemonMainCharacterHealthHud extends JPanel {
         }
 
         repaint();
-        mainControler.repaint();
-
     }
 
     private void setUpResources() throws IOException {
@@ -352,7 +345,6 @@ public class PokemonMainCharacterHealthHud extends JPanel {
                 hpBar = null;
             }
 
-            mainControler.repaint();
             repaint();
         }
     }

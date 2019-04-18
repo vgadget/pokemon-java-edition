@@ -32,8 +32,6 @@ public class PokemonOpponentHealthHud extends JPanel {
     private static final String URI_RED_HP_BAR = "Resources/BattleHUD/HpBar/Common/Bars/RedBar.png";
     private static final int BAR_UPDATE_SPEED = 10;
 
-    private BattleViewImpl mainControler;
-
     private BufferedImage hud;
     private int hudLocationX, hudLocationY;
 
@@ -57,7 +55,7 @@ public class PokemonOpponentHealthHud extends JPanel {
 
     private boolean withdraw;
 
-    public PokemonOpponentHealthHud(Dimension frameDimension, String name, int level, int sex, int currentHp, int maxHp, boolean isCatched, BattleViewImpl mainControler) {
+    public PokemonOpponentHealthHud(Dimension frameDimension, String name, int level, int sex, int currentHp, int maxHp, boolean isCatched) {
 
         //Variables that can be modified
         this.percentage = 100;
@@ -66,7 +64,6 @@ public class PokemonOpponentHealthHud extends JPanel {
         this.withdraw = false;
 
         //SetUp the Class
-        this.mainControler = mainControler;
         setLayout(null);
         this.frameDimension = frameDimension;
         try {
@@ -84,8 +81,8 @@ public class PokemonOpponentHealthHud extends JPanel {
 
     }
 
-    public PokemonOpponentHealthHud(Dimension frameDimension, BattleViewImpl mainControler) {
-        this(frameDimension, "MISSINGNO", 100, NONE, 999, 999, false, mainControler);
+    public PokemonOpponentHealthHud(Dimension frameDimension) {
+        this(frameDimension, "MISSINGNO", 100, NONE, 999, 999, false);
     }
 
     private void setUpPokemonName(String name) {
@@ -133,7 +130,6 @@ public class PokemonOpponentHealthHud extends JPanel {
 
         }
 
-        mainControler.repaint();
         repaint();
     }
 
@@ -199,7 +195,6 @@ public class PokemonOpponentHealthHud extends JPanel {
             sexIcon = ImageUtil.resizeProportional(sexIcon, ImageUtil.getProportion(frameDimension) * 2);
         }
 
-        mainControler.repaint();
         repaint();
     }
 
@@ -214,7 +209,6 @@ public class PokemonOpponentHealthHud extends JPanel {
             isCatchedIcon = null;
         }
 
-        mainControler.repaint();
         repaint();
     }
 
@@ -304,8 +298,6 @@ public class PokemonOpponentHealthHud extends JPanel {
             if (p == 0) {
                 hpBar = null;
             }
-
-            mainControler.repaint();
             repaint();
         }
     }

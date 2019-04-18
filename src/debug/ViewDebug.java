@@ -7,6 +7,8 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import view.components.AidComponent;
+import view.components.AidPanel;
 import view.components.ButtonFactory;
 import view.components.CustomButton;
 
@@ -17,11 +19,13 @@ import view.components.CustomButton;
 public class ViewDebug {
 
     public static void test() throws Exception {
-        JPanel panel = new JPanel();
+        AidPanel panel = new AidPanel();
 
 
-//        panel.add(ButtonFactory.menuButton("one"));
-//        panel.add(ButtonFactory.menuButton("two"));
+                panel.add(ButtonFactory.menuButton("magic"));
+
+        panel.add(ButtonFactory.menuButton("one"));
+        panel.add(ButtonFactory.menuButton("two"));
 
         JFrame frame = new JFrame("VENTANA");
         frame.setSize(600, 600);

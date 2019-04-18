@@ -14,7 +14,7 @@ public class Dimensions {
     public static final Dimension mainMenuResolution =  new Dimension(getSelectedResolution().width, (int) (getSelectedResolution().height*1.3));
     
     public static Dimension getSelectedResolution(){
-        return frameDimension720p;
+        return frameDimension1080p;
     }
     public static Dimension getMainMenuResolution(){
         
