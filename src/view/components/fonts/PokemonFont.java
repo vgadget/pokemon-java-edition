@@ -6,7 +6,9 @@
 package view.components.fonts;
 
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.io.InputStream;
+import javax.swing.JLabel;
 
 /**
  *
@@ -25,6 +27,15 @@ public class PokemonFont {
     
     public static Font getFont(int size) throws Exception{
         return new PokemonFont().createFont(size);
+    }
+    
+    public static FontMetrics getFontMetrics(Font f){
+        
+        JLabel j = new JLabel();
+        j.setFont(f);
+        FontMetrics fm = j.getFontMetrics(f);
+        
+        return fm;
     }
 
 }

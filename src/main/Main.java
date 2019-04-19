@@ -8,6 +8,8 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import model.pokemon.Move;
 import model.pokemon.MoveSet;
@@ -43,8 +45,12 @@ public class Main {
        java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 
-                    new MainMenu();
-                    //debug.PokemonBattleViewDebug.test();
+                try {
+                    //new MainMenu();
+                    debug.ViewDebug.test();
+                } catch (Exception ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 
             }
         });

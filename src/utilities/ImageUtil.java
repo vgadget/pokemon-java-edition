@@ -86,6 +86,41 @@ public class ImageUtil {
         return image;
     }
 
+    public static BufferedImage changeEveryColor(BufferedImage img, RGB newPixelValue) throws Exception {
+
+        BufferedImage image = deepCopy(img);
+        int width = image.getWidth();
+        int height = image.getHeight();
+        WritableRaster imageRaster = image.getRaster();
+
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+
+                int[] pixel = imageRaster.getPixel(x, y, (int[]) null);
+
+                pixel[0] = newPixelValue.getRed();
+                pixel[1] = newPixelValue.getGreen();
+                pixel[2] = newPixelValue.getBlue();
+                imageRaster.setPixel(x, y, pixel);
+
+            }
+        }
+        return image;
+    }
+
+    public static BufferedImage overlayImages(BufferedImage background, BufferedImage foreground) {
+
+        BufferedImage image = deepCopy(background);
+
+        Graphics2D g2d = image.createGraphics();
+
+        //g2d.drawImage(background, 0, 0, background.getWidth(), background.getHeight(), null);
+        g2d.drawImage(foreground, 0, 0, foreground.getWidth(), foreground.getHeight(), null);
+        g2d.dispose();
+
+        return image;
+    }
+
     public static BufferedImage setBrightness(BufferedImage img, int amount) throws Exception {
         BufferedImage image = deepCopy(img);
         int width = image.getWidth();
@@ -133,7 +168,7 @@ public class ImageUtil {
         return image;
     }
 
-    public static BufferedImage addText(BufferedImage img, String text, int x, int y, Font font, Color c) {
+    public static BufferedImage addText(BufferedImage img, String text, Font font, Color c) {
 
         BufferedImage newImage = deepCopy(img);
 
@@ -146,7 +181,7 @@ public class ImageUtil {
         int fixedX, fixedY;
 
         fixedX = (int) ((newImage.getWidth() - fm.stringWidth(text)) / 2f);
-        fixedY = (int) ((newImage.getHeight() + fm.getHeight()/2f) / 2f);
+        fixedY = (int) ((newImage.getHeight() + fm.getHeight() / 2f) / 2f);
 
         g.drawString(text, fixedX, fixedY);
         g.dispose();
@@ -154,4 +189,17 @@ public class ImageUtil {
         return newImage;
     }
 
+    public static BufferedImage addText(BufferedImage img, String text, int x, int y, Font font, Color c) {
+
+        BufferedImage newImage = deepCopy(img);
+
+        Graphics2D g = (Graphics2D) newImage.createGraphics();
+        g.setPaint(c);
+        g.setFont(font);
+
+        g.drawString(text, x, y);
+        g.dispose();
+
+        return newImage;
+    }
 }

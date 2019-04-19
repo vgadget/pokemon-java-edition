@@ -15,42 +15,23 @@ import javax.imageio.ImageIO;
 public class Type implements Serializable {
 
     private String name;
-    private transient BufferedImage tag;
     private Color color;
 
     public String getName() {
         return name;
     }
 
-    public BufferedImage getTag() {
-        return tag;
-    }
-
     public Color getColor() {
         return color;
     }
 
-    public Type(String name, BufferedImage tag, Color color) throws Exception {
-        if (name != null && !name.equalsIgnoreCase("") && tag != null && color != null) {
+    public Type(String name, Color color) throws Exception {
+        if (name != null && !name.equalsIgnoreCase("") && color != null) {
             this.name = name;
-            this.tag = tag;
             this.color = color;
         } else {
             throw new Exception("TYPE: INVALID FIELDS");
         }
-    }
-
-    private void writeObject(ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject(); // All fields will be saved normally.
-        out.writeInt(1); //One image will be serialized
-        ImageIO.write(tag, "png", out);
-    }
-
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        in.readInt(); // One image will be read
-        tag = ImageIO.read(in); // read image.
-
     }
 
     @Override

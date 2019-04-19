@@ -31,30 +31,17 @@ public class CustomButton extends JButton implements AidComponent {
     public CustomButton(String text, int fontSize, Color fontColor, BufferedImage background, Dimension buttonSize) throws Exception {
         super();
 
-        this.text = text;
-
-        this.idle = utilities.ImageUtil.resize(background, buttonSize.width, buttonSize.height);
-
-        this.idle = utilities.ImageUtil.addText(this.idle, text, 0, 0, PokemonFont.getFont(fontSize), fontColor);
-
-        this.displayedImage = idle;
-
-        mouseEntered = utilities.ImageUtil.setBrightness(displayedImage, BRIGHTNESS_RATE);
-
-        mousePressed = utilities.ImageUtil.setBrightness(displayedImage, -BRIGHTNESS_RATE);
+        setImage(text, fontSize, fontColor, background, buttonSize);
 
         enableInputMethods(true);
         setPreferredSize(buttonSize);
 
         setBorder(BorderFactory.createEmptyBorder());
-        setBorderPainted(false); 
-        setContentAreaFilled(false); 
-        setFocusPainted(false); 
+        setBorderPainted(false);
+        setContentAreaFilled(false);
+        setFocusPainted(false);
         setOpaque(false);
-        
-        
-        
-        
+
         this.addMouseListener(new MouseAdapter() {
 
             @Override
@@ -92,26 +79,37 @@ public class CustomButton extends JButton implements AidComponent {
             }
         });
 
-        
-        
     }
 
     public CustomButton(String text, int fontSize, Color fontColor, BufferedImage backgroundIdle, BufferedImage backgroundMouseEntered, Dimension buttonSize) throws Exception {
 
         this(text, fontSize, fontColor, backgroundIdle, buttonSize);
         mouseEntered = utilities.ImageUtil.resize(backgroundMouseEntered, buttonSize.width, buttonSize.height);
-        mouseEntered = utilities.ImageUtil.addText(mouseEntered, text, 0, 0, PokemonFont.getFont(fontSize), fontColor);
+        mouseEntered = utilities.ImageUtil.addText(mouseEntered, text, PokemonFont.getFont(fontSize), fontColor);
         mouseEntered = utilities.ImageUtil.setBrightness(mouseEntered, BRIGHTNESS_RATE);
 
+    }
+
+    public void setImage(String text, int fontSize, Color fontColor, BufferedImage background, Dimension buttonSize) throws Exception {
+        this.text = text;
+
+        this.idle = utilities.ImageUtil.resize(background, buttonSize.width, buttonSize.height);
+
+        this.idle = utilities.ImageUtil.addText(this.idle, text, PokemonFont.getFont(fontSize), fontColor);
+
+        this.displayedImage = idle;
+
+        mouseEntered = utilities.ImageUtil.setBrightness(displayedImage, BRIGHTNESS_RATE);
+
+        mousePressed = utilities.ImageUtil.setBrightness(displayedImage, -BRIGHTNESS_RATE);
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        
+
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(displayedImage, 0, 0, this);
-        
 
     }
 
@@ -119,6 +117,12 @@ public class CustomButton extends JButton implements AidComponent {
     public String getDescription() {
         return text;
     }
+
+    public void setDescription(String text) {
+        this.text = text;
+    }
+    
+    
 
     @Override
     public void press() {

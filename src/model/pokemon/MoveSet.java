@@ -97,6 +97,10 @@ public class MoveSet implements Serializable {
 
         return removed && added;
     }
+    
+    public int availableMoves(){
+        return this.moveSet.size();
+    }
 
     @Override
     public String toString() {

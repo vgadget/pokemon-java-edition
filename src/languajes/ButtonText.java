@@ -45,5 +45,18 @@ public class ButtonText {
     public static String saveAndExit() {
         return saveAndExit;
     }
+    
+    // Attack button description
+       private static String attackButtonDescription = "Attack: {name}, Type: {type}, with {remainingPP} over {maximunPP} PP.";
+
+    public static String attackButtonDescription(String name, String type, int remainingPP, int maximunPP) {
+        
+        String s = attackButtonDescription.replace("{name}", name);
+        s = s.replace("{type}", type);
+        s = s.replace("{remainingPP}", remainingPP+"");
+        s = s.replace("{maximunPP}", maximunPP+"");
+        
+        return s;
+    }
 
 }
