@@ -30,11 +30,11 @@ public class MainMenu extends JFrame {
     private static int START_POINT_X; // Position in X coordinate where components are aligned.
 
     private AidPanel panel = new AnimatedBackgroundPanel(Dimensions.getMainMenuResolution());
-    private CustomButton singlePlayer = ButtonFactory.menuButton(ButtonText.singlePlayerButton());
-    private CustomButton multiPlayer = ButtonFactory.menuButton(ButtonText.multiPlayerButton());
-    private CustomButton settings = ButtonFactory.menuButton(ButtonText.settingsButton());
-    private CustomButton credits = ButtonFactory.menuButton(ButtonText.creditsButton());
-    private CustomButton saveAndExit = ButtonFactory.menuButton(ButtonText.saveAndExit());
+    private CustomButton singlePlayer = ButtonFactory.menuButton(ButtonText.getInstance().singlePlayerButton());
+    private CustomButton multiPlayer = ButtonFactory.menuButton(ButtonText.getInstance().multiPlayerButton());
+    private CustomButton settings = ButtonFactory.menuButton(ButtonText.getInstance().settingsButton());
+    private CustomButton credits = ButtonFactory.menuButton(ButtonText.getInstance().creditsButton());
+    private CustomButton saveAndExit = ButtonFactory.menuButton(ButtonText.getInstance().saveAndExit());
 
     public MainMenu() {
         try {
@@ -72,13 +72,13 @@ public class MainMenu extends JFrame {
         //Author text
         Font f = view.components.fonts.PokemonFont.getFont(16);
         
-        JLabel developedByAdrianVazquezBarreraLabel = new JLabel(LabelText.developedByAdrianVazquezBarrera());
+        JLabel developedByAdrianVazquezBarreraLabel = new JLabel(LabelText.getInstance().developedByAdrianVazquezBarrera());
         developedByAdrianVazquezBarreraLabel.setFont(f);
         developedByAdrianVazquezBarreraLabel.setForeground(Color.WHITE);
         
         FontMetrics fm = developedByAdrianVazquezBarreraLabel.getFontMetrics(developedByAdrianVazquezBarreraLabel.getFont());
         developedByAdrianVazquezBarreraLabel.setLocation(0, Dimensions.getMainMenuResolution().height - 3*fm.getHeight());
-        developedByAdrianVazquezBarreraLabel.setSize(fm.stringWidth(LabelText.developedByAdrianVazquezBarrera()), fm.getHeight());
+        developedByAdrianVazquezBarreraLabel.setSize(fm.stringWidth(LabelText.getInstance().developedByAdrianVazquezBarrera()), fm.getHeight());
         panel.add(developedByAdrianVazquezBarreraLabel);
     
         //Pokemon logo

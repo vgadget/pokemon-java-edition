@@ -17,11 +17,10 @@ import javax.swing.JPanel;
  */
 public class PokemonAttackAnimation extends JPanel {
 
-    private String URI_DEFAULT_ATTACK_FRONT = "Resources/BattleHUD/Attack/Default/FRONT";
-    private String URI_DEFAULT_ATTACK_BACK = "Resources/BattleHUD/Attack/Default/BACK";
-    
-    // PROPORTION: 984 x 553
+    private final String URI_DEFAULT_ATTACK_FRONT = "Resources/BattleHUD/Attack/Default/FRONT";
+    private final String URI_DEFAULT_ATTACK_BACK = "Resources/BattleHUD/Attack/Default/BACK";
 
+    // PROPORTION: 984 x 553
     private Dimension frameSize;
 
     private static final int SPEED = 100;
@@ -29,33 +28,19 @@ public class PokemonAttackAnimation extends JPanel {
     private BufferedImage[] attack;
     private int currentSprite;
 
-    private boolean threadlocked, drawingLocked, changingSomething;
-
+    //private boolean threadlocked, drawingLocked, changingSomething;
     public PokemonAttackAnimation(Dimension frameSize) {
         this.frameSize = frameSize;
 
         this.currentSprite = -1;
 
-        this.threadlocked = false;
-        this.changingSomething = false;
-        this.drawingLocked = false;
-
         new Thread(() -> {
             while (true) {
-                
-                if (!changingSomething) {
-                    if (attack != null) {
-                        if (currentSprite >= 0 && currentSprite < attack.length) {
-                            currentSprite++;
-                        }
+
+                if (attack != null) {
+                    if (currentSprite >= 0 && currentSprite < attack.length) {
+                        currentSprite++;
                     }
-                    
-                    if (threadlocked) {
-                        threadlocked = false;
-                    }
-                    
-                } else {
-                    threadlocked = true;
                 }
 
                 try {
@@ -70,25 +55,21 @@ public class PokemonAttackAnimation extends JPanel {
 
     public synchronized void setAttack(BufferedImage[] front) {
 
-        changingSomething = true;
+        this.paintComponent(null);
 
-        while (this.threadlocked == false || this.drawingLocked == false) {
+        try {
+            Thread.sleep(SPEED);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(PokemonAttackAnimation.class.getName()).log(Level.SEVERE, null, ex);
 
-            this.paintComponent(null);
-
-            try {
-                Thread.sleep(SPEED);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(PokemonAttackAnimation.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
 
         if (this.frameSize.equals(Dimensions.frameDimension720p)) {
-            
+
             this.attack = front;
-            
+
         } else if (this.frameSize.equals(Dimensions.frameDimension1080p)) {
-            
+
             this.attack = front;
 
             for (int i = 0; i < this.attack.length; i++) {
@@ -99,7 +80,6 @@ public class PokemonAttackAnimation extends JPanel {
 
         }
 
-        this.changingSomething = false;
     }
 
     public void loadDefaultAttackAnimationMainCharacter() throws IOException {
@@ -140,7 +120,7 @@ public class PokemonAttackAnimation extends JPanel {
 
     public boolean isPlaying() {
 
-        if (this.attack != null && !this.changingSomething) {
+        if (this.attack != null) {
             if (this.currentSprite >= 0 && this.currentSprite < this.attack.length) {
                 return true;
             }
@@ -152,7 +132,7 @@ public class PokemonAttackAnimation extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
 
-        if (!changingSomething && g != null) {
+        if (g != null) {
 
             if (this.attack != null) {
 
@@ -160,12 +140,7 @@ public class PokemonAttackAnimation extends JPanel {
                     g.drawImage(this.attack[currentSprite], 0, 0, this);
                 }
 
-                if (drawingLocked) {
-                    drawingLocked = false;
-                }
             }
-        } else {
-            drawingLocked = true;
         }
     }
 

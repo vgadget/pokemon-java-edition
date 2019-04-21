@@ -14,7 +14,7 @@ public class Effectivity implements Serializable {
 
     public Effectivity(float effectivity, Type fromType, Type toType) throws Exception {
         setEffectivity(effectivity);
-        if (fromType != null && fromType != null) {
+        if (fromType != null && toType != null) {
             this.fromType = fromType;
             this.toType = toType;
         } else {

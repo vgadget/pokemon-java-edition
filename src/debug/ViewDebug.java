@@ -28,15 +28,20 @@ public class ViewDebug {
         BufferedImage[] animaton = new BufferedImage[1];
         animaton[0] = ImageIO.read(new File("example.png"));
 
-        Move one = new Move("firstMove", 10, 10, 10, null, fire, animaton);
+        Move one = new Move("fitstMove", 10, 10, 10, null, fire, animaton);
         Move two = new Move("secondMove", 20, 20, 20, null, water, animaton);
 
         MoveSet moveSet = new MoveSet();
         moveSet.add(one);
         moveSet.add(two);
 
+        Move m = moveSet.getMoves().next();
+        
+        moveSet.setRemainingPP(m, 5);
+        
+        
         List<CustomButton> buttons = ButtonFactory.moveSetButtons(moveSet);
-
+        
         buttons.forEach((cb) -> {
             panel.add(cb);
         });

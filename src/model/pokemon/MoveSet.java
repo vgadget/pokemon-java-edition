@@ -57,6 +57,19 @@ public class MoveSet implements Serializable {
         return -1;
     }
 
+    public void setRemainingPP(Move m, int pp) {
+        if (moveSet.contains(m)) {
+            
+            if (pp > m.getPp()){
+                pp = m.getPp();
+            } else if (pp < 0){
+                pp = 0;
+            }
+            
+            this.remainingPP[moveSet.indexOf(m)] = pp;
+        }
+    }
+
     public boolean add(Move m) {
 
         if (moveSet.size() < 4 && m != null && !moveSet.contains(m)) {
@@ -97,8 +110,8 @@ public class MoveSet implements Serializable {
 
         return removed && added;
     }
-    
-    public int availableMoves(){
+
+    public int availableMoves() {
         return this.moveSet.size();
     }
 
@@ -106,7 +119,5 @@ public class MoveSet implements Serializable {
     public String toString() {
         return "MoveSet{" + "moveSet=" + moveSet + ", remainingPP=" + Arrays.toString(remainingPP) + ", selectedMove=" + selectedMove + '}';
     }
-    
-    
 
 }

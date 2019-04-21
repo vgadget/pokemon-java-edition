@@ -31,9 +31,11 @@ public class Specie implements Serializable {
     private Integer minSpeed;
     private Float precision;
     private Float evasion;
-    private BufferedImage sprites[];
+    private Sprite sprite;
+   
+    
 
-    public Specie(String name, BufferedImage[] sprites, float height, float weight, int pokedexID,
+    public Specie(String name, Sprite sprites, float height, float weight, int pokedexID,
             int maxHP, int minHP, int maxAttack, int minAttack,
             int maxSpecialAttack, int minSpecialAttack, int maxDefense,
             int minDefense, int maxSpecialDefense, int minSpecialDefense,
@@ -47,7 +49,7 @@ public class Specie implements Serializable {
                 maxSpeed, minSpeed, precision, evasion)) {
 
             this.name = name;
-            this.sprites = sprites;
+            this.sprite = sprites;
             this.height = height;
             this.weight = weight;
             this.pokedexID = pokedexID;
@@ -70,7 +72,7 @@ public class Specie implements Serializable {
         }
     }
 
-    private boolean validateFields(String name, BufferedImage sprites[], float height, float weight, int pokedexID,
+    private boolean validateFields(String name, Sprite sprites, float height, float weight, int pokedexID,
             int maxHP, int minHP, int maxAttack, int minAttack,
             int maxSpecialAttack, int minSpecialAttack, int maxDefense,
             int minDefense, int maxSpecialDefense, int minSpecialDefense,
@@ -111,8 +113,8 @@ public class Specie implements Serializable {
         return name;
     }
 
-    public BufferedImage[] getSprites() {
-        return sprites;
+    public Sprite getSprite() {
+        return sprite;
     }
 
     public Float getHeight() {
@@ -181,24 +183,6 @@ public class Specie implements Serializable {
 
     public Float getEvasion() {
         return evasion;
-    }
-
-    private void writeObject(ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject(); // All fields will be saved normally.
-        out.writeInt(sprites.length); //How many images will be serialized
-
-        for (BufferedImage sprite : sprites) { // Serialze every image
-            ImageIO.write(sprite, "png", out);
-        }
-    }
-
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        int size = in.readInt(); // How many images will be read
-        sprites = new BufferedImage[size];
-        for (int i = 0; i < size; i++){
-            sprites[i] = ImageIO.read(in); // read image.
-        }
     }
 
 }

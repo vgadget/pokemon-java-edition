@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import model.pokemon.Pokemon;
 
 /**
  *
@@ -19,7 +20,7 @@ import javax.swing.JPanel;
 public class PokemonMainCharacterSprite extends JPanel {
 
     private static final String URI_MISSINGNO_SPRITE = "Resources/BattleHUD/Pokedex/MISSINGNO/Sprite/BACKMew";
-    private static final int SPRITE_SPEED = 80;
+    private int SPRITE_SPEED = 80;
 
     //PROPORTION: 1:1
     private static final Dimension spriteDimension720p = new Dimension(252, 252);
@@ -113,6 +114,11 @@ public class PokemonMainCharacterSprite extends JPanel {
             }
         }).start();
 
+    }
+
+    public PokemonMainCharacterSprite(Pokemon p) {
+        this(Dimensions.getSelectedResolution(), p.getSpecie().getSprite().getAnimation());
+        SPRITE_SPEED = p.getSpecie().getSprite().getRefreshRate();
     }
 
     public void play() {
