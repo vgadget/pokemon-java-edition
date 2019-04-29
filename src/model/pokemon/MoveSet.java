@@ -1,16 +1,16 @@
 package model.pokemon;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import model.Entity;
 
 /**
  *
  * @author Adrian Vazquez
  */
-public class MoveSet implements Serializable {
+public class MoveSet implements Entity<String> {
 
     private List<Move> moveSet;
     private int[] remainingPP;
@@ -59,13 +59,13 @@ public class MoveSet implements Serializable {
 
     public void setRemainingPP(Move m, int pp) {
         if (moveSet.contains(m)) {
-            
-            if (pp > m.getPp()){
+
+            if (pp > m.getPp()) {
                 pp = m.getPp();
-            } else if (pp < 0){
+            } else if (pp < 0) {
                 pp = 0;
             }
-            
+
             this.remainingPP[moveSet.indexOf(m)] = pp;
         }
     }
@@ -118,6 +118,32 @@ public class MoveSet implements Serializable {
     @Override
     public String toString() {
         return "MoveSet{" + "moveSet=" + moveSet + ", remainingPP=" + Arrays.toString(remainingPP) + ", selectedMove=" + selectedMove + '}';
+    }
+
+    @Override
+    public int compareTo(Entity o) {
+
+        if (o instanceof MoveSet) {
+
+            for (Move m : moveSet) {
+                for (Move n : ((MoveSet) o).moveSet) {
+
+                    if (m.compareTo(n) != 0) {
+                        return m.compareTo(n);
+                    }
+
+                }
+            }
+
+            return 0;
+        }
+
+        return this.getClass().getName().compareTo(o.getClass().getName());
+    }
+
+    @Override
+    public String getPK() {
+        return this.toString();
     }
 
 }

@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
  */
 public class Sprite implements Serializable {
 
-    private BufferedImage[] animation;
+    private transient BufferedImage[] animation;
     private int refreshRate;
 
     public Sprite(BufferedImage[] animation, int refreshRate) throws Exception {

@@ -4,14 +4,14 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import javax.imageio.ImageIO;
+import model.Entity;
 
 /**
  *
  * @author Adrian Vazquez
  */
-public class Move implements Serializable, Comparable {
+public class Move implements Entity<String> {
 
     private String name;
     private int precision;
@@ -19,11 +19,11 @@ public class Move implements Serializable, Comparable {
     private int pp;
     private StatusCondition secondaryEffect;
     private Type type;
-    private BufferedImage[] animation;
+    private Sprite animation;
 
     public Move(String name, int precision, int power, int pp,
             StatusCondition secondaryEffect, Type type,
-            BufferedImage[] animation) throws Exception {
+            Sprite animation) throws Exception {
 
         if (validateFields(name, precision, power, pp, type, animation)) {
             this.name = name;
@@ -40,7 +40,7 @@ public class Move implements Serializable, Comparable {
 
     private boolean validateFields(String name, int precision, int power,
             int pp, Type type,
-            BufferedImage[] animation) {
+            Sprite animation) {
 
         if (name == null || name.equals("")) {
             return false;
@@ -57,24 +57,6 @@ public class Move implements Serializable, Comparable {
         }
 
         return true;
-    }
-    
-        private void writeObject(ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject(); // All fields will be saved normally.
-        out.writeInt(animation.length); //How many images will be serialized
-
-        for (BufferedImage sprite : animation) { // Serialze every image
-            ImageIO.write(sprite, "png", out);
-        }
-    }
-
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        int size = in.readInt(); // How many images will be read
-        animation = new BufferedImage[size];
-        for (int i = 0; i < size; i++){
-            animation[i] = ImageIO.read(in); // read image.
-        }
     }
 
     public String getName() {
@@ -101,7 +83,7 @@ public class Move implements Serializable, Comparable {
         return type;
     }
 
-    public BufferedImage[] getAnimation() {
+    public Sprite getAnimation() {
         return animation;
     }
 
@@ -116,30 +98,35 @@ public class Move implements Serializable, Comparable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        
-        Move m = (Move) obj;
-        
-        return m.getName().equalsIgnoreCase(getName());
-    }
 
-    @Override
-    public int compareTo(Object o) {
-        if (equals(o)){
-            return 0;
-        } else{
-            return ((Move) o).getName().compareToIgnoreCase(getName());
-        }
+        Move m = (Move) obj;
+
+        return m.getName().equalsIgnoreCase(getName());
     }
 
     @Override
     public String toString() {
         return "Move{" + "name=" + name + ", pp=" + pp + ", type=" + type + '}';
     }
-    
-    
-    
-   
-    
-    
-    
+
+    @Override
+    public String getPK() {
+        return this.getName();
+    }
+
+    @Override
+    public int compareTo(Entity o) {
+
+        if (o instanceof Move) {
+
+            if (this.getType().compareTo(((Move) o).getType()) != 0) {
+                return this.getType().compareTo(((Move) o).getType());
+            }
+
+            return this.getPK().compareTo(((Move) o).getPK());
+        }
+
+        return this.getClass().getName().compareTo(o.getClass().getName());
+    }
+
 }

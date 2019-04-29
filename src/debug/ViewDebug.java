@@ -8,7 +8,10 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import model.pokemon.Move;
 import model.pokemon.MoveSet;
+import model.pokemon.Sprite;
 import model.pokemon.Type;
+import persistence.model.Dao;
+import persistence.model.FileDao;
 import view.components.AidPanel;
 import view.components.ButtonFactory;
 import view.components.CustomButton;
@@ -28,20 +31,26 @@ public class ViewDebug {
         BufferedImage[] animaton = new BufferedImage[1];
         animaton[0] = ImageIO.read(new File("example.png"));
 
-        Move one = new Move("fitstMove", 10, 10, 10, null, fire, animaton);
-        Move two = new Move("secondMove", 20, 20, 20, null, water, animaton);
+        Sprite s = new Sprite(animaton, 1);
+
+        persistence.model.Persistence.getInstance().getDao().save(water);
+        Move one = (Move) persistence.model.Persistence.getInstance().getDao().getAll(Move.class).get(0);
+        Move two = (Move) persistence.model.Persistence.getInstance().getDao().getAll(Move.class).get(1);
 
         MoveSet moveSet = new MoveSet();
         moveSet.add(one);
         moveSet.add(two);
 
+        Dao<Move, String> dao = new FileDao<>();
+        dao.save(one);
+        dao.save(two);
+
         Move m = moveSet.getMoves().next();
-        
+
         moveSet.setRemainingPP(m, 5);
-        
-        
+
         List<CustomButton> buttons = ButtonFactory.moveSetButtons(moveSet);
-        
+
         buttons.forEach((cb) -> {
             panel.add(cb);
         });

@@ -2,6 +2,8 @@ package main;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import persistence.model.Dao;
+import persistence.model.FileDao;
 import view.menu.MainMenu;
 
 /**
@@ -13,20 +15,16 @@ public class Main {
     public static void main(String[] args) throws Exception {
         
 
-       java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
+    
                 
-                try {
-                    new MainMenu();
-                    //debug.ViewDebug.test();
+                   //new MainMenu();
+                   debug.ViewDebug.test();
                     //debug.PokemonBattleViewDebug.test();
-                } catch (Exception ex) {
-                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-            }
-        });
+                    
+                    
+                    
+               
+        
 
                
     }

@@ -9,7 +9,6 @@ import javax.swing.*;
 import utilities.ImageUtil;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import view.battle.BattleViewImpl;
 import view.components.fonts.PokemonFont;
 
 /**

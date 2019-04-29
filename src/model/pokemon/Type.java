@@ -1,18 +1,13 @@
 package model.pokemon;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import javax.imageio.ImageIO;
+import model.Entity;
 
 /**
  *
  * @author Adrian Vazquez
  */
-public class Type implements Serializable {
+public class Type implements Entity<String> {
 
     private String name;
     private Color color;
@@ -38,7 +33,21 @@ public class Type implements Serializable {
     public String toString() {
         return "Type{" + "name=" + name + ", color=" + color + '}';
     }
-    
-    
+
+    @Override
+    public String getPK() {
+        return this.getName();
+    }
+
+    @Override
+    public int compareTo(Entity o) {
+        
+        if (o instanceof Type) {
+                       
+            return this.getPK().compareTo(((Type) o).getPK());
+        }
+
+        return this.getClass().getName().compareTo(o.getClass().getName());
+    }
 
 }

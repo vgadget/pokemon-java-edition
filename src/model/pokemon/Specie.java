@@ -6,12 +6,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import javax.imageio.ImageIO;
+import model.Entity;
 
 /**
  *
  * @author Adrian Vazquez
  */
-public class Specie implements Serializable {
+public class Specie implements Entity<String> {
 
     private String name;
     private Float height;
@@ -32,17 +33,16 @@ public class Specie implements Serializable {
     private Float precision;
     private Float evasion;
     private Sprite sprite;
-   
-    
+    private Type type;
 
-    public Specie(String name, Sprite sprites, float height, float weight, int pokedexID,
+    public Specie(String name, Type type, Sprite sprites, float height, float weight, int pokedexID,
             int maxHP, int minHP, int maxAttack, int minAttack,
             int maxSpecialAttack, int minSpecialAttack, int maxDefense,
             int minDefense, int maxSpecialDefense, int minSpecialDefense,
             int maxSpeed, int minSpeed, float precision, float evasion)
             throws Exception {
 
-        if (validateFields(name, sprites, height, weight, pokedexID,
+        if (validateFields(name, type ,sprites, height, weight, pokedexID,
                 maxHP, minHP, maxAttack, minAttack,
                 maxSpecialAttack, minSpecialAttack, maxDefense,
                 minDefense, maxSpecialDefense, minSpecialDefense,
@@ -67,12 +67,13 @@ public class Specie implements Serializable {
             this.minSpeed = minSpeed;
             this.precision = precision;
             this.evasion = evasion;
+            this.type = type;
         } else {
             throw new Exception("INVALID FIELDS.");
         }
     }
 
-    private boolean validateFields(String name, Sprite sprites, float height, float weight, int pokedexID,
+    private boolean validateFields(String name, Type t ,Sprite sprites, float height, float weight, int pokedexID,
             int maxHP, int minHP, int maxAttack, int minAttack,
             int maxSpecialAttack, int minSpecialAttack, int maxDefense,
             int minDefense, int maxSpecialDefense, int minSpecialDefense,
@@ -103,6 +104,8 @@ public class Specie implements Serializable {
         } else if (evasion <= 0) {
             return false;
         } else if (precision <= 0) {
+            return false;
+        } else if (t == null){
             return false;
         }
 
@@ -183,6 +186,31 @@ public class Specie implements Serializable {
 
     public Float getEvasion() {
         return evasion;
+    }
+
+    @Override
+    public String getPK() {
+        return name;
+    }
+
+    public Type getType() {
+        return type;
+    }
+    
+    
+    @Override
+    public int compareTo(Entity o) {
+
+        if (o instanceof Specie) {
+
+            if (this.getType().compareTo(((Specie) o).getType()) == 0) {
+                return this.getName().compareTo(((Specie) o).getName());
+            } else {
+                return this.getType().compareTo(((Specie) o).getType());
+            }
+        }
+
+        return this.getClass().getName().compareTo(o.getClass().getName());
     }
 
 }

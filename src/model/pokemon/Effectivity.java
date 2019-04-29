@@ -1,12 +1,13 @@
 package model.pokemon;
 
 import java.io.Serializable;
+import model.Entity;
 
 /**
  *
  * @author Adrian Vazquez
  */
-public class Effectivity implements Serializable {
+public class Effectivity implements Entity<String> {
 
     private float effectivity;
     private Type fromType;
@@ -40,6 +41,26 @@ public class Effectivity implements Serializable {
 
     public Type getToType() {
         return toType;
+    }
+
+    @Override
+    public String toString() {
+        return "Effectivity{" + "effectivity=" + effectivity + ", fromType=" + fromType + ", toType=" + toType + '}';
+    }
+
+    @Override
+    public String getPK() {
+        return this.toString();
+    }
+
+    @Override
+    public int compareTo(Entity o) {
+
+        if (o instanceof Effectivity) {
+            return this.getPK().compareTo(((Effectivity) o).getPK());
+        }
+
+        return this.getClass().getName().compareTo(o.getClass().getName());
     }
 
 }
