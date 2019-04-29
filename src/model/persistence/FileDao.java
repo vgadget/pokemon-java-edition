@@ -1,4 +1,4 @@
-package persistence.model;
+package model.persistence;
 
 import java.io.File;
 import java.io.FileInputStream;

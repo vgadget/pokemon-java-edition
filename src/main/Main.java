@@ -2,8 +2,8 @@ package main;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import persistence.model.Dao;
-import persistence.model.FileDao;
+import model.persistence.Dao;
+import model.persistence.FileDao;
 import view.menu.MainMenu;
 
 /**

@@ -10,8 +10,8 @@ import model.pokemon.Move;
 import model.pokemon.MoveSet;
 import model.pokemon.Sprite;
 import model.pokemon.Type;
-import persistence.model.Dao;
-import persistence.model.FileDao;
+import model.persistence.Dao;
+import model.persistence.FileDao;
 import view.components.AidPanel;
 import view.components.ButtonFactory;
 import view.components.CustomButton;
@@ -33,9 +33,9 @@ public class ViewDebug {
 
         Sprite s = new Sprite(animaton, 1);
 
-        persistence.model.Persistence.getInstance().getDao().save(water);
-        Move one = (Move) persistence.model.Persistence.getInstance().getDao().getAll(Move.class).get(0);
-        Move two = (Move) persistence.model.Persistence.getInstance().getDao().getAll(Move.class).get(1);
+        model.persistence.Persistence.getInstance().getDao().save(water);
+        Move one = (Move) model.persistence.Persistence.getInstance().getDao().getAll(Move.class).get(0);
+        Move two = (Move) model.persistence.Persistence.getInstance().getDao().getAll(Move.class).get(1);
 
         MoveSet moveSet = new MoveSet();
         moveSet.add(one);
