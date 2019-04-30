@@ -4,6 +4,6 @@ package view;
  *
  * @author Adrian Vazquez
  */
-public class View {
+public interface View {
     
 }

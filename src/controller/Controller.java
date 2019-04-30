@@ -4,6 +4,8 @@ package controller;
  *
  * @author Adrian Vazquez
  */
-public class Controller {
+public interface Controller {
+    
+    public void fireDataModelChanged();
     
 }

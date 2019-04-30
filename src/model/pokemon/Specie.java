@@ -1,11 +1,5 @@
 package model.pokemon;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import javax.imageio.ImageIO;
 import model.Entity;
 
 /**
@@ -34,15 +28,16 @@ public class Specie implements Entity<String> {
     private Float evasion;
     private Sprite sprite;
     private Type type;
+    private Type secondaryType;
 
-    public Specie(String name, Type type, Sprite sprites, float height, float weight, int pokedexID,
+    public Specie(String name, Type type, Type secondaryType, Sprite sprites, float height, float weight, int pokedexID,
             int maxHP, int minHP, int maxAttack, int minAttack,
             int maxSpecialAttack, int minSpecialAttack, int maxDefense,
             int minDefense, int maxSpecialDefense, int minSpecialDefense,
             int maxSpeed, int minSpeed, float precision, float evasion)
             throws Exception {
 
-        if (validateFields(name, type ,sprites, height, weight, pokedexID,
+        if (validateFields(name, type, secondaryType, sprites, height, weight, pokedexID,
                 maxHP, minHP, maxAttack, minAttack,
                 maxSpecialAttack, minSpecialAttack, maxDefense,
                 minDefense, maxSpecialDefense, minSpecialDefense,
@@ -68,12 +63,13 @@ public class Specie implements Entity<String> {
             this.precision = precision;
             this.evasion = evasion;
             this.type = type;
+            this.secondaryType = secondaryType;
         } else {
             throw new Exception("INVALID FIELDS.");
         }
     }
 
-    private boolean validateFields(String name, Type t ,Sprite sprites, float height, float weight, int pokedexID,
+    private boolean validateFields(String name, Type type, Type secondaryType, Sprite sprites, float height, float weight, int pokedexID,
             int maxHP, int minHP, int maxAttack, int minAttack,
             int maxSpecialAttack, int minSpecialAttack, int maxDefense,
             int minDefense, int maxSpecialDefense, int minSpecialDefense,
@@ -105,7 +101,7 @@ public class Specie implements Entity<String> {
             return false;
         } else if (precision <= 0) {
             return false;
-        } else if (t == null){
+        } else if (type == null) {
             return false;
         }
 
@@ -196,8 +192,11 @@ public class Specie implements Entity<String> {
     public Type getType() {
         return type;
     }
-    
-    
+
+    public Type getSecondaryType() {
+        return secondaryType;
+    }
+
     @Override
     public int compareTo(Entity o) {
 

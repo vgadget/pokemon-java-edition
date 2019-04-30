@@ -37,6 +37,8 @@ public class ViewDebug {
         Move one = (Move) model.persistence.Persistence.getInstance().getDao().getAll(Move.class).get(0);
         Move two = (Move) model.persistence.Persistence.getInstance().getDao().getAll(Move.class).get(1);
 
+
+
         MoveSet moveSet = new MoveSet();
         moveSet.add(one);
         moveSet.add(two);

@@ -25,7 +25,7 @@ public interface Dao<E extends Entity, PK extends Comparable> {
 
     void save(E t) throws IOException;
 
-    void update(E t);
+    void update(E t) throws IOException;
 
     void delete(E t);
 

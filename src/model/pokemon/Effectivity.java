@@ -50,7 +50,7 @@ public class Effectivity implements Entity<String> {
 
     @Override
     public String getPK() {
-        return this.toString();
+        return this.getFromType().getName() + "-" + this.getToType().getName();
     }
 
     @Override

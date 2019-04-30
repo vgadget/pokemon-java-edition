@@ -42,14 +42,20 @@ public class FileDao<E extends Entity, PK extends Comparable> implements Dao<E, 
     @Override
     public List<E> getAll(Class c) throws IOException, ClassNotFoundException {
 
-        List<E> allElements = getAll();
+        List<E> allElements = new LinkedList<>();
+        List<String> pathnames = listOfFiles();
 
-        for (E element : allElements) {
-            if (!element.getClass().equals(c)) {
-                allElements.remove(element);
+        for (String pathname : pathnames) {
+            if (pathname.contains(c.getName())) {
+                allElements.add(readObject(pathname));
             }
         }
 
+//        for (E element : allElements) {
+//            if (!element.getClass().equals(c)) {
+//                allElements.remove(element);
+//            }
+//        }
         return allElements;
     }
 
@@ -92,13 +98,22 @@ public class FileDao<E extends Entity, PK extends Comparable> implements Dao<E, 
     }
 
     @Override
-    public void update(E t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void update(E t) throws IOException {
+
+        delete(t);
+        save(t);
+
     }
 
     @Override
     public void delete(E t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        String file = URI_SAVEGAME_FOLDER + t.getClass().getName() + "." + t.getPK() + getFileExtension();
+
+        File f = new File(file);
+
+        f.delete();
+
     }
 
     private List<String> listOfFiles() {
@@ -115,7 +130,7 @@ public class FileDao<E extends Entity, PK extends Comparable> implements Dao<E, 
     }
 
     public static String getFileExtension() {
-        return ".pipo";
+        return ".sav";
     }
 
 }
