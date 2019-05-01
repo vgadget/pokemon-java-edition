@@ -7,7 +7,7 @@ package model.persistence;
 
 import java.io.IOException;
 import java.util.List;
-import model.Entity;
+import model.entities.Entity;
 
 /**
  *

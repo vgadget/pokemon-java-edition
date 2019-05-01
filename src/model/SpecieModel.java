@@ -6,13 +6,13 @@
 package model;
 
 import controller.Controller;
-import model.pokemon.Specie;
+import model.entities.Specie;
 
 /**
  *
  * @author Adrian Vazquez
  */
-public class SpecieModel extends Model<Controller, Specie, Comparable>{
+public class SpecieModel extends EntityModelImpl<Controller, Specie, Comparable>{
 
     public SpecieModel(Controller controller) {
         super(controller, Specie.class);

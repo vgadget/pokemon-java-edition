@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import model.pokemon.Pokemon;
+import model.entities.Pokemon;
 
 /**
  *
@@ -100,8 +100,8 @@ public class PokemonOpponentSprite extends JPanel {
     
     public PokemonOpponentSprite(Pokemon p){
         
-        this(Dimensions.getSelectedResolution(), p.getSpecie().getSprite().getAnimation());
-        SPRITE_SPEED = p.getSpecie().getSprite().getRefreshRate();
+        this(Dimensions.getSelectedResolution(), p.getSpecie().getFrontSprite().getAnimation());
+        SPRITE_SPEED = p.getSpecie().getFrontSprite().getRefreshRate();
         
     }
 

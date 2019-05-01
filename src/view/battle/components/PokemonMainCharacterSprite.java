@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import model.pokemon.Pokemon;
+import model.entities.Pokemon;
 
 /**
  *
@@ -117,8 +117,8 @@ public class PokemonMainCharacterSprite extends JPanel {
     }
 
     public PokemonMainCharacterSprite(Pokemon p) {
-        this(Dimensions.getSelectedResolution(), p.getSpecie().getSprite().getAnimation());
-        SPRITE_SPEED = p.getSpecie().getSprite().getRefreshRate();
+        this(Dimensions.getSelectedResolution(), p.getSpecie().getBackSprite().getAnimation());
+        SPRITE_SPEED = p.getSpecie().getBackSprite().getRefreshRate();
     }
 
     public void play() {
