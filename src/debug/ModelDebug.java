@@ -1,23 +1,15 @@
 package debug;
 
-import controller.Controller;
 import controller.ControllerImpl;
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import model.SpecieModel;
 import model.TypeModel;
 import model.entities.Effectiveness;
 import model.entities.Specie;
-import model.entities.Sprite;
 import model.entities.Type;
-import view.components.AidPanel;
 
 /**
  *
@@ -442,23 +434,23 @@ public class ModelDebug {
 
         SpecieModel sm = new SpecieModel(new ControllerImpl());
 
-        TypeModel tm = new TypeModel(new ControllerImpl());
-
-        BufferedImage frontSprite[] = new BufferedImage[20];
-        BufferedImage backSprite[] = new BufferedImage[20];
-
-        for (int i = 0; i < 20; i++) {
-            try {
-                frontSprite[i] = ImageIO.read(new File("Resources/BattleHUD/Pokedex/MISSINGNO/Sprite/FRONT/tile(" + i + ").png"));
-                backSprite[i] = ImageIO.read(new File("Resources/BattleHUD/Pokedex/MISSINGNO/Sprite/BACK/tile(" + i + ").png"));
-                
-            } catch (Exception ex) {
-                System.err.println(ex);
-            }
-
-        }
-
-        sm.newEntity(new Specie("Mew", tm.getEntity("Psychic"), null, new Sprite(frontSprite, 80), new Sprite(backSprite, 80), 10, 10, 151, 20, 10, 20, 10, 20, 10, 20, 10, 20, 10, 20, 10, 1, 1));
+//        TypeModel tm = new TypeModel(new ControllerImpl());
+//
+//        BufferedImage frontSprite[] = new BufferedImage[20];
+//        BufferedImage backSprite[] = new BufferedImage[20];
+//
+//        for (int i = 0; i < 20; i++) {
+////            try {
+////                frontSprite[i] = ImageIO.read(new File("Resources/BattleHUD/Pokedex/MISSINGNO/Sprite/FRONT/tile(" + i + ").png"));
+////                backSprite[i] = ImageIO.read(new File("Resources/BattleHUD/Pokedex/MISSINGNO/Sprite/BACK/tile(" + i + ").png"));
+////                
+////            } catch (Exception ex) {
+////                System.err.println(ex);
+////            }
+////
+////        }
+//
+//        sm.newEntity(new Specie("Mew", tm.getEntity("Psychic"), null, new Sprite(frontSprite, 80), new Sprite(backSprite, 80), 10, 10, 151, 20, 10, 20, 10, 20, 10, 20, 10, 20, 10, 20, 10, 1, 1));
 
         System.out.println(sm.getAll().get(0).getBackSprite().getRefreshRate());
         
