@@ -15,23 +15,23 @@ import utilities.DisplayMessage;
  * @param <E> Entity - Extends Entity.
  * @param <PK> PK - PRYMARY KEY - Extends Comparable.
  */
-public abstract class EntityModelImpl<C extends Controller, E extends Entity, PK extends Comparable> implements EntityModel<E, PK> {
+public abstract class AbstractModel<C extends Controller, E extends Entity, PK extends Comparable> implements Model<C, E, PK> {
 
-    private Controller controller;
+    private C controller;
     private Class c;
 
-    public EntityModelImpl(Controller controller, Class c) {
+    public AbstractModel(C controller, Class c) {
         setController(controller);
         this.c = c;
     }
 
     @Override
-    public void setController(Controller controller) {
+    public void setController(C controller) {
         this.controller = controller;
     }
 
     @Override
-    public Controller getController() {
+    public C getController() {
         return this.controller;
     }
 

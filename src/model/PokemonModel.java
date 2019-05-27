@@ -12,12 +12,12 @@ import utilities.DisplayMessage;
  *
  * @author Adrian Vazquez
  */
-public class PokemonModel extends EntityModelImpl<Controller, Pokemon, Comparable> {
-
-    private Controller controller;
+public class PokemonModel extends AbstractModel<Controller, Pokemon, Comparable> {
 
     public PokemonModel(Controller controller) {
         super(controller, Pokemon.class);
+        
+        
     }
 
     

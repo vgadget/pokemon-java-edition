@@ -8,7 +8,7 @@ import model.entities.Type;
  *
  * @author Adrian Vazquez
  */
-public class TypeModel extends EntityModelImpl<Controller, Type, Comparable>{
+public class TypeModel extends AbstractModel<Controller, Type, Comparable>{
     
     public TypeModel(Controller controller) {
         super(controller, Type.class);

@@ -10,11 +10,11 @@ import java.util.List;
  * @param <E>
  * @param <PK>
  */
-public interface EntityModel<E extends Entity, PK extends Comparable> {
+public interface Model<C extends Controller, E extends Entity, PK extends Comparable> {
 
     List<E> getAll();
 
-    Controller getController();
+    C getController();
 
     E getEntity(PK pk);
 
@@ -22,7 +22,7 @@ public interface EntityModel<E extends Entity, PK extends Comparable> {
 
     void removeEntity(E entity);
 
-    void setController(Controller controller);
+    void setController(C controller);
 
     void updateEntity(E entity);
     

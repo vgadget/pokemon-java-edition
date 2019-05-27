@@ -12,7 +12,7 @@ import model.entities.Specie;
  *
  * @author Adrian Vazquez
  */
-public class SpecieModel extends EntityModelImpl<Controller, Specie, Comparable>{
+public class SpecieModel extends AbstractModel<Controller, Specie, String>{
 
     public SpecieModel(Controller controller) {
         super(controller, Specie.class);

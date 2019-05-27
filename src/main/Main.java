@@ -1,5 +1,8 @@
 package main;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Adrian Vazquez
@@ -11,9 +14,15 @@ public class Main {
         //new MainMenu();
         //debug.ModelDebug.testTypeModel();
         
-        debug.ModelDebug.testSpecie();
+        //debug.ModelDebug.testSpecie();
         
         //debug.PokemonBattleViewDebug.test();
+        
+        List<String> l = new ArrayList<>();
+        
+        
+        
+        
     }
 
 }
