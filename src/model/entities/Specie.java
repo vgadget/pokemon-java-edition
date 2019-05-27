@@ -29,11 +29,11 @@ public class Specie implements Entity<String> {
     private Type type;
     private Type secondaryType;
 
-    public Specie(String name, Type type, Type secondaryType, Sprite front, Sprite back ,float height, float weight, int pokedexID,
-            int maxHP, int minHP, int maxAttack, int minAttack,
-            int maxSpecialAttack, int minSpecialAttack, int maxDefense,
-            int minDefense, int maxSpecialDefense, int minSpecialDefense,
-            int maxSpeed, int minSpeed, float precision, float evasion)
+    public Specie(String name, Type type, Type secondaryType, Sprite front, Sprite back ,Float height, Float weight, Integer pokedexID,
+            Integer maxHP, Integer minHP, Integer maxAttack, Integer minAttack,
+            Integer maxSpecialAttack, Integer minSpecialAttack, Integer maxDefense,
+            Integer minDefense, Integer maxSpecialDefense, Integer minSpecialDefense,
+            Integer maxSpeed, Integer minSpeed, Float precision, Float evasion)
             throws Exception {
 
         if (validateFields(name, type, secondaryType, front, back ,height, weight, pokedexID,
@@ -69,11 +69,11 @@ public class Specie implements Entity<String> {
         }
     }
 
-    private boolean validateFields(String name, Type type, Type secondaryType, Sprite front, Sprite back ,float height, float weight, int pokedexID,
-            int maxHP, int minHP, int maxAttack, int minAttack,
-            int maxSpecialAttack, int minSpecialAttack, int maxDefense,
-            int minDefense, int maxSpecialDefense, int minSpecialDefense,
-            int maxSpeed, int minSpeed, float precision, float evasion) {
+    private boolean validateFields(String name, Type type, Type secondaryType, Sprite front, Sprite back ,Float height, Float weight, Integer pokedexID,
+            Integer maxHP, Integer minHP, Integer maxAttack, Integer minAttack,
+            Integer maxSpecialAttack, Integer minSpecialAttack, Integer maxDefense,
+            Integer minDefense, Integer maxSpecialDefense, Integer minSpecialDefense,
+            Integer maxSpeed, Integer minSpeed, Float precision, Float evasion) {
 
         if (name == null || name.equals("")) {
             return false;
@@ -192,7 +192,7 @@ public class Specie implements Entity<String> {
 
     @Override
     public String getPK() {
-        return name;
+        return pokedexID+"_"+name;
     }
 
     public Type getType() {
@@ -208,11 +208,7 @@ public class Specie implements Entity<String> {
 
         if (o instanceof Specie) {
 
-            if (this.getType().compareTo(((Specie) o).getType()) == 0) {
-                return this.getName().compareTo(((Specie) o).getName());
-            } else {
-                return this.getType().compareTo(((Specie) o).getType());
-            }
+            return this.getPokedexID().compareTo(((Specie) o).getPokedexID());
         }
 
         return this.getClass().getName().compareTo(o.getClass().getName());
