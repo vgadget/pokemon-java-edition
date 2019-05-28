@@ -52,8 +52,9 @@ public class SpecieController extends AbstractController<SpecieModel, View, Spec
             Integer minSpeed = (Integer) data.get(19);
             Float precision = (Float) data.get(20);
             Float evasion = (Float) data.get(21);
+            String description = (String) data.get(22);
 
-            specie = new Specie(name, type, secondaryType, front, back, height, weight, pokedexID, maxHP, minHP, maxAttack, minAttack, maxSpecialAttack, minSpecialAttack, maxDefense, minDefense, maxSpecialDefense, minSpecialDefense, maxSpeed, minSpeed, precision, evasion);
+            specie = new Specie(name, type, secondaryType, front, back, height, weight, pokedexID, maxHP, minHP, maxAttack, minAttack, maxSpecialAttack, minSpecialAttack, maxDefense, minDefense, maxSpecialDefense, minSpecialDefense, maxSpeed, minSpeed, precision, evasion, description);
 
         } catch (Exception e) {
             utilities.DisplayMessage.showErrorDialog("SPECIE CONTROLLER createEntity() INVALID FIELDS");

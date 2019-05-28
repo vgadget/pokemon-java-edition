@@ -1,7 +1,7 @@
 package view.battle.components;
 
-import utilities.Dimensions;
-import utilities.ImageUtil;
+import utilities.image.Dimensions;
+import utilities.image.ImageUtil;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;

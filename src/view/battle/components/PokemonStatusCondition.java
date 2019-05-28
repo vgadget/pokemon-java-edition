@@ -71,7 +71,7 @@ public class PokemonStatusCondition extends JPanel {
         for (int i = 0; i < stateSprites.length; i++) {
             try {
                 stateSprites[i] = ImageIO.read(new File(URI_DEFAULT_STATE + "/tile(" + i + ").png"));
-                stateSprites[i] = utilities.ImageUtil.resize(stateSprites[i], (int) spriteDimension.getWidth(), (int) spriteDimension.getHeight());
+                stateSprites[i] = utilities.image.ImageUtil.resize(stateSprites[i], (int) spriteDimension.getWidth(), (int) spriteDimension.getHeight());
             } catch (IOException ex) {
                 Logger.getLogger(PokemonStatusCondition.class.getName()).log(Level.SEVERE, null, ex);
             }

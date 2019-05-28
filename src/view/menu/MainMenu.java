@@ -13,7 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import languajes.ButtonText;
 import languajes.LabelText;
-import utilities.Dimensions;
+import utilities.image.Dimensions;
 import view.components.ButtonFactory;
 import view.components.AidPanel;
 import view.components.CustomButton;
@@ -52,7 +52,7 @@ public class MainMenu extends JFrame {
         Dimension buttonSize = singlePlayer.getSize();
 
         START_POINT_Y = (int) (buttonSize.height / 2);
-        START_POINT_X = (int) (utilities.Dimensions.getMainMenuResolution().getWidth() - (buttonSize.width + buttonSize.width / 6));
+        START_POINT_X = (int) (utilities.image.Dimensions.getMainMenuResolution().getWidth() - (buttonSize.width + buttonSize.width / 6));
 
         setPosition(singlePlayer, START_POINT_X, START_POINT_Y);
         panel.add(singlePlayer);

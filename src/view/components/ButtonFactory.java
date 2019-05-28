@@ -15,7 +15,7 @@ import javax.imageio.ImageIO;
 import languajes.ButtonText;
 import model.entities.Move;
 import model.entities.MoveSet;
-import utilities.RGB;
+import utilities.image.RGB;
 import view.components.fonts.PokemonFont;
 
 /**
@@ -88,11 +88,11 @@ public class ButtonFactory {
         BufferedImage foreground = ImageIO.read(new File(URI_BUTTON_BATTLE)); // Loads the button texture. - SECOND LAYER
 
         // CHANGE EVERY COLOR OF THE BACKGROUND TO USE THE PROPERLY COLOR BASE IN MOVEMENT TYPE.
-        background = utilities.ImageUtil.changeEveryColor(background, new RGB(backgroundColor.getRed(), backgroundColor.getGreen(), backgroundColor.getBlue()));
+        background = utilities.image.ImageUtil.changeEveryColor(background, new RGB(backgroundColor.getRed(), backgroundColor.getGreen(), backgroundColor.getBlue()));
 
-        BufferedImage buttonImage = utilities.ImageUtil.overlayImages(background, foreground); // OVERLAY BACKGROUND AND TEXTURE AND MERGE BOTH INTO THE SAME IMAGE
+        BufferedImage buttonImage = utilities.image.ImageUtil.overlayImages(background, foreground); // OVERLAY BACKGROUND AND TEXTURE AND MERGE BOTH INTO THE SAME IMAGE
 
-        buttonImage = utilities.ImageUtil.resizeProportional(buttonImage, 2); // RESIZE, MAKE THE BUTTON TWO TIMES BIGGER 
+        buttonImage = utilities.image.ImageUtil.resizeProportional(buttonImage, 2); // RESIZE, MAKE THE BUTTON TWO TIMES BIGGER 
 
         Dimension buttonSize = new Dimension(
                 buttonImage.getWidth(), //Button width
@@ -114,14 +114,14 @@ public class ButtonFactory {
         int namePositionX = (int) ((buttonSize.getWidth() - fm.stringWidth(name)) / 2);
         int namePositionY = (int) (fm.getHeight());
 
-        buttonImage = utilities.ImageUtil.addText(buttonImage, name, namePositionX, namePositionY, font, Color.WHITE);
+        buttonImage = utilities.image.ImageUtil.addText(buttonImage, name, namePositionX, namePositionY, font, Color.WHITE);
 
         //PLACE TYPE PROPERLY - MORE MATHS.
         type = type.toUpperCase();
         int typePositionX = (int) ((buttonSize.getWidth() - fm.stringWidth(type)) / 2);
         int typePositionY = (int) (buttonSize.getHeight() - 1.5f * fm.getHeight());
 
-        buttonImage = utilities.ImageUtil.addText(buttonImage, type, typePositionX, typePositionY, font, backgroundColor.brighter());
+        buttonImage = utilities.image.ImageUtil.addText(buttonImage, type, typePositionX, typePositionY, font, backgroundColor.brighter());
 
         // PLACE PPs PROPERLY. - MORE MATHS, AGAIN.
         String PP = " PP  " + minimumPP + "/" + maximunPP;
@@ -129,7 +129,7 @@ public class ButtonFactory {
         int ppPositionY = (int) (buttonSize.getHeight() - (fm.getHeight() / 2));
 
         Font f = font.deriveFont(font.getSize() + 3);
-        buttonImage = utilities.ImageUtil.addText(buttonImage, PP, ppPositionX, ppPositionY, f, Color.WHITE);
+        buttonImage = utilities.image.ImageUtil.addText(buttonImage, PP, ppPositionX, ppPositionY, f, Color.WHITE);
 
         /* 
             We have set up a button with 3 kinds of custom text placed over one image. So we can't use 

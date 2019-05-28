@@ -28,19 +28,20 @@ public class Specie implements Entity<String> {
     private Sprite backSprite;
     private Type type;
     private Type secondaryType;
+    private String description;
 
     public Specie(String name, Type type, Type secondaryType, Sprite front, Sprite back ,Float height, Float weight, Integer pokedexID,
             Integer maxHP, Integer minHP, Integer maxAttack, Integer minAttack,
             Integer maxSpecialAttack, Integer minSpecialAttack, Integer maxDefense,
             Integer minDefense, Integer maxSpecialDefense, Integer minSpecialDefense,
-            Integer maxSpeed, Integer minSpeed, Float precision, Float evasion)
+            Integer maxSpeed, Integer minSpeed, Float precision, Float evasion, String description)
             throws Exception {
 
         if (validateFields(name, type, secondaryType, front, back ,height, weight, pokedexID,
                 maxHP, minHP, maxAttack, minAttack,
                 maxSpecialAttack, minSpecialAttack, maxDefense,
                 minDefense, maxSpecialDefense, minSpecialDefense,
-                maxSpeed, minSpeed, precision, evasion)) {
+                maxSpeed, minSpeed, precision, evasion, description)) {
 
             this.name = name;
             this.frontSprite = front;
@@ -64,6 +65,7 @@ public class Specie implements Entity<String> {
             this.evasion = evasion;
             this.type = type;
             this.secondaryType = secondaryType;
+            this.description = description;
         } else {
             throw new Exception("INVALID FIELDS.");
         }
@@ -73,7 +75,7 @@ public class Specie implements Entity<String> {
             Integer maxHP, Integer minHP, Integer maxAttack, Integer minAttack,
             Integer maxSpecialAttack, Integer minSpecialAttack, Integer maxDefense,
             Integer minDefense, Integer maxSpecialDefense, Integer minSpecialDefense,
-            Integer maxSpeed, Integer minSpeed, Float precision, Float evasion) {
+            Integer maxSpeed, Integer minSpeed, Float precision, Float evasion, String description) {
 
         if (name == null || name.equals("")) {
             return false;
@@ -97,11 +99,13 @@ public class Specie implements Entity<String> {
             return false;
         } else if (maxSpeed < minSpeed || Math.min(maxSpeed, minSpeed) <= 0) {
             return false;
-        } else if (evasion <= 0 || evasion > 1) {
+        } else if (evasion <= 0 || evasion > 6) {
             return false;
-        } else if (precision <= 0 || evasion > 1) {
+        } else if (precision < 0.3 || precision > 1) {
             return false;
         } else if (type == null) {
+            return false;
+        } else if (description == null || description.equals("")){
             return false;
         }
 
@@ -201,6 +205,10 @@ public class Specie implements Entity<String> {
 
     public Type getSecondaryType() {
         return secondaryType;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     @Override

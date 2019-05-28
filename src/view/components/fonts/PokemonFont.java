@@ -8,6 +8,8 @@ package view.components.fonts;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 
 /**
@@ -25,8 +27,14 @@ public class PokemonFont {
         return f;
     }
     
-    public static Font getFont(int size) throws Exception{
-        return new PokemonFont().createFont(size);
+    public static Font getFont(int size){
+        try {
+            return new PokemonFont().createFont(size);
+        } catch (Exception ex) {
+            Logger.getLogger(PokemonFont.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;
     }
     
     public static FontMetrics getFontMetrics(Font f){

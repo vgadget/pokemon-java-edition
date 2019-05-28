@@ -8,7 +8,7 @@ import view.battle.components.TextBox;
 import view.battle.components.PokemonMainCharacterSprite;
 import view.battle.components.Weather;
 import view.battle.components.PokemonOpponentHealthHud;
-import utilities.Dimensions;
+import utilities.image.Dimensions;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -79,21 +79,21 @@ public class BattleViewImpl extends BattleView {
 
             if (this.resolution.equals(Dimensions.frameDimension1080p)) {
 
-                this.background = utilities.ImageUtil.resizeProportional(background, 6);
-                this.croppedBackground = utilities.ImageUtil.resizeProportional(croppedBackground, 6);
+                this.background = utilities.image.ImageUtil.resizeProportional(background, 6);
+                this.croppedBackground = utilities.image.ImageUtil.resizeProportional(croppedBackground, 6);
 
-                this.ground = utilities.ImageUtil.resize(ground, (int) (313 * 4.6f), 168 * 4);
+                this.ground = utilities.image.ImageUtil.resize(ground, (int) (313 * 4.6f), 168 * 4);
 
                 this.groundLocationX = 0;
                 this.groundLocationY = 130;
 
             } else if (this.resolution.equals(Dimensions.frameDimension720p)) {
 
-                this.background = utilities.ImageUtil.resizeProportional(background, 4);
+                this.background = utilities.image.ImageUtil.resizeProportional(background, 4);
 
-                this.croppedBackground = utilities.ImageUtil.resizeProportional(croppedBackground, 4);
+                this.croppedBackground = utilities.image.ImageUtil.resizeProportional(croppedBackground, 4);
 
-                this.ground = utilities.ImageUtil.resizeProportional(ground, 3);
+                this.ground = utilities.image.ImageUtil.resizeProportional(ground, 3);
 
                 this.groundLocationX = 0;
                 this.groundLocationY = 20;

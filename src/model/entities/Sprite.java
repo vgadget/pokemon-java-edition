@@ -32,6 +32,7 @@ public class Sprite implements Serializable {
 
         return imgs;
     }
+    
 
     public void setAnimation(BufferedImage[] animation) {
 

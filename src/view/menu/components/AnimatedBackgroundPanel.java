@@ -105,7 +105,7 @@ public class AnimatedBackgroundPanel extends AidPanel {
         try {
             int i = new Random().nextInt(AVAILABLE_IMAGES);
             background = ImageIO.read(new File(URI_BACKGROUNDS + "/tile(" + i + ").png"));
-            background = utilities.ImageUtil.resizeProportional(background, utilities.ImageUtil.getProportion(frameDimension) * 1.5f);
+            background = utilities.image.ImageUtil.resizeProportional(background, utilities.image.ImageUtil.getProportion(frameDimension) * 1.5f);
         } catch (IOException ex) {
             Logger.getLogger(AnimatedBackgroundPanel.class.getName()).log(Level.SEVERE, null, ex);
         }

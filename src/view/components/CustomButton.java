@@ -84,24 +84,24 @@ public class CustomButton extends JButton implements AidComponent {
     public CustomButton(String text, int fontSize, Color fontColor, BufferedImage backgroundIdle, BufferedImage backgroundMouseEntered, Dimension buttonSize) throws Exception {
 
         this(text, fontSize, fontColor, backgroundIdle, buttonSize);
-        mouseEntered = utilities.ImageUtil.resize(backgroundMouseEntered, buttonSize.width, buttonSize.height);
-        mouseEntered = utilities.ImageUtil.addText(mouseEntered, text, PokemonFont.getFont(fontSize), fontColor);
-        mouseEntered = utilities.ImageUtil.setBrightness(mouseEntered, BRIGHTNESS_RATE);
+        mouseEntered = utilities.image.ImageUtil.resize(backgroundMouseEntered, buttonSize.width, buttonSize.height);
+        mouseEntered = utilities.image.ImageUtil.addText(mouseEntered, text, PokemonFont.getFont(fontSize), fontColor);
+        mouseEntered = utilities.image.ImageUtil.setBrightness(mouseEntered, BRIGHTNESS_RATE);
 
     }
 
     public void setImage(String text, int fontSize, Color fontColor, BufferedImage background, Dimension buttonSize) throws Exception {
         this.text = text;
 
-        this.idle = utilities.ImageUtil.resize(background, buttonSize.width, buttonSize.height);
+        this.idle = utilities.image.ImageUtil.resize(background, buttonSize.width, buttonSize.height);
 
-        this.idle = utilities.ImageUtil.addText(this.idle, text, PokemonFont.getFont(fontSize), fontColor);
+        this.idle = utilities.image.ImageUtil.addText(this.idle, text, PokemonFont.getFont(fontSize), fontColor);
 
         this.displayedImage = idle;
 
-        mouseEntered = utilities.ImageUtil.setBrightness(displayedImage, BRIGHTNESS_RATE);
+        mouseEntered = utilities.image.ImageUtil.setBrightness(displayedImage, BRIGHTNESS_RATE);
 
-        mousePressed = utilities.ImageUtil.setBrightness(displayedImage, -BRIGHTNESS_RATE);
+        mousePressed = utilities.image.ImageUtil.setBrightness(displayedImage, -BRIGHTNESS_RATE);
     }
 
     @Override

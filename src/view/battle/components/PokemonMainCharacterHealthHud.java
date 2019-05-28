@@ -1,12 +1,12 @@
 package view.battle.components;
 
-import utilities.Dimensions;
+import utilities.image.Dimensions;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import utilities.ImageUtil;
+import utilities.image.ImageUtil;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import view.battle.BattleViewImpl;

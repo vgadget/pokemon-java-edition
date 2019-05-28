@@ -1,7 +1,7 @@
 package debug;
 
 import view.battle.BattleView;
-import utilities.Dimensions;
+import utilities.image.Dimensions;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;

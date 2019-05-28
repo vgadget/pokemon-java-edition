@@ -38,7 +38,7 @@ public class PokeballAnimation extends JPanel {
 
         for (int i = 0; i < numberOfSprites; i++) {
             sprites[i] = ImageIO.read(new File(URI_POKEBALL_SPRITES + "/tile(" + i + ").png"));
-            sprites[i] = utilities.ImageUtil.resizeProportional(sprites[i], utilities.ImageUtil.getProportion(frameSize));
+            sprites[i] = utilities.image.ImageUtil.resizeProportional(sprites[i], utilities.image.ImageUtil.getProportion(frameSize));
         }
 
         currentSprite = numberOfSprites;
