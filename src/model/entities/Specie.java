@@ -1,5 +1,7 @@
 package model.entities;
 
+import utilities.sound.Sound;
+
 /**
  *
  * @author Adrian Vazquez
@@ -29,19 +31,20 @@ public class Specie implements Entity<String> {
     private Type type;
     private Type secondaryType;
     private String description;
+    private Sound cry;
 
     public Specie(String name, Type type, Type secondaryType, Sprite front, Sprite back ,Float height, Float weight, Integer pokedexID,
             Integer maxHP, Integer minHP, Integer maxAttack, Integer minAttack,
             Integer maxSpecialAttack, Integer minSpecialAttack, Integer maxDefense,
             Integer minDefense, Integer maxSpecialDefense, Integer minSpecialDefense,
-            Integer maxSpeed, Integer minSpeed, Float precision, Float evasion, String description)
+            Integer maxSpeed, Integer minSpeed, Float precision, Float evasion, String description, Sound cry)
             throws Exception {
 
         if (validateFields(name, type, secondaryType, front, back ,height, weight, pokedexID,
                 maxHP, minHP, maxAttack, minAttack,
                 maxSpecialAttack, minSpecialAttack, maxDefense,
                 minDefense, maxSpecialDefense, minSpecialDefense,
-                maxSpeed, minSpeed, precision, evasion, description)) {
+                maxSpeed, minSpeed, precision, evasion, description, cry)) {
 
             this.name = name;
             this.frontSprite = front;
@@ -66,6 +69,7 @@ public class Specie implements Entity<String> {
             this.type = type;
             this.secondaryType = secondaryType;
             this.description = description;
+            this.cry = cry;
         } else {
             throw new Exception("INVALID FIELDS.");
         }
@@ -75,13 +79,13 @@ public class Specie implements Entity<String> {
             Integer maxHP, Integer minHP, Integer maxAttack, Integer minAttack,
             Integer maxSpecialAttack, Integer minSpecialAttack, Integer maxDefense,
             Integer minDefense, Integer maxSpecialDefense, Integer minSpecialDefense,
-            Integer maxSpeed, Integer minSpeed, Float precision, Float evasion, String description) {
+            Integer maxSpeed, Integer minSpeed, Float precision, Float evasion, String description, Sound cry) {
 
         if (name == null || name.equals("")) {
             return false;
         } else if (front == null || back == null) {
             return false;
-        } else if (maxHP < minHP || Math.min(maxHP, minHP) <= 0) {
+        } else if (maxHP < minHP || Math.min(maxHP, minHP) <= 0 ||  999 <= Math.max(minHP, maxHP)) {
             return false;
         } else if (maxAttack < minAttack || Math.min(maxAttack, minAttack) <= 0) {
             return false;
@@ -106,6 +110,8 @@ public class Specie implements Entity<String> {
         } else if (type == null) {
             return false;
         } else if (description == null || description.equals("")){
+            return false;
+        } else if (cry == null){
             return false;
         }
 

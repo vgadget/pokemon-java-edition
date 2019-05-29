@@ -3,21 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package view.Pokedex;
 
-import controller.Controller;
-import model.entities.Specie;
+import model.TypeModel;
 
 /**
  *
  * @author Adrian Vazquez
  */
-public class SpecieModel extends AbstractModel<Controller, Specie, String>{
-
-    public SpecieModel() {
-        super(Specie.class);
-    }
-   
+public class SecondaryTypeComboBoxModel extends TypeComboBoxModel{
     
+    public SecondaryTypeComboBoxModel(TypeModel tm) {
+        super(tm);
+        getTypeList().add(null);
+    }
     
 }

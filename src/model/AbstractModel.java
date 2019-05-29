@@ -20,8 +20,7 @@ public abstract class AbstractModel<C extends Controller, E extends Entity, PK e
     private C controller;
     private Class c;
 
-    public AbstractModel(C controller, Class c) {
-        setController(controller);
+    public AbstractModel(Class c) {
         this.c = c;
     }
 

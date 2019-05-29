@@ -10,8 +10,8 @@ import model.entities.Type;
  */
 public class TypeModel extends AbstractModel<Controller, Type, Comparable>{
     
-    public TypeModel(Controller controller) {
-        super(controller, Type.class);
+    public TypeModel() {
+        super(Type.class);
     }
     
     public EffectivenessGraph getEffectivenessGraph(){

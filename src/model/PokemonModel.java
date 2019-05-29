@@ -14,8 +14,8 @@ import utilities.DisplayMessage;
  */
 public class PokemonModel extends AbstractModel<Controller, Pokemon, Comparable> {
 
-    public PokemonModel(Controller controller) {
-        super(controller, Pokemon.class);
+    public PokemonModel() {
+        super(Pokemon.class);
         
         
     }

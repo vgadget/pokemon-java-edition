@@ -1,13 +1,20 @@
 package main;
 
+import controller.SpecieController;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import model.SpecieModel;
+import model.TypeModel;
 import utilities.sound.Sound;
-import view.Pokedex.CreateSpecie;
+import view.Pokedex.CreateSpecieView;
+import view.View;
 
 /**
  *
@@ -18,11 +25,28 @@ public class Main {
     public static void main(String[] args) throws Exception {
         
         
+        
+        SpecieModel specieModel = new SpecieModel();
+        TypeModel typeModel = new TypeModel();
+        
+        CreateSpecieView p = new CreateSpecieView(specieModel, typeModel);
+        
+        List<View> views = new ArrayList<>();
+        views.add(p);
+        
+        SpecieController specieController = new SpecieController();
+        specieController.setup(specieModel, views);
+        
+        
         JFrame frame = new JFrame("Create new specie");
         
-        frame.add(new CreateSpecie());
         
-        frame.setSize(1050, 600);
+        
+        
+        
+        frame.add(p);
+        
+        frame.setSize(p.getPreferredSize());
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);

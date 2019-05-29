@@ -9,8 +9,8 @@ import model.entities.Move;
  */
 public class MoveModel extends AbstractModel<Controller, Move, Comparable> {
 
-    public MoveModel(Controller controller) {
-        super(controller, Move.class);
+    public MoveModel() {
+        super(Move.class);
     }
 
     public static Move getDefaultMove() {
