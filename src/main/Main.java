@@ -10,8 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import languajes.StringResourceMultilingualManager;
 import model.SpecieModel;
 import model.TypeModel;
+import utilities.CSVReader;
 import utilities.sound.Sound;
 import view.Pokedex.CreateSpecieView;
 import view.View;
@@ -25,8 +27,25 @@ public class Main {
     public static void main(String[] args) throws Exception {
         
         
+     //   CSVReader reader = new CSVReader(new File("Resources\\languages\\translations.csv"));
         
-        SpecieModel specieModel = new SpecieModel();
+        StringResourceMultilingualManager s = StringResourceMultilingualManager.getInstance();
+        
+        //System.out.println(s.getAvailableLanguages());
+        
+        s.addKey("SALUDO2");
+        
+        s.setDefaultLanguage("ENGLISH");
+        
+        s.setResource("SALUDO2", "Bye");
+        
+        System.out.println(s.getAvailableKeys());
+        
+        //System.out.println(s.getResource("SALUDO", "ESPAÑOL"));
+        
+        
+        
+        /*SpecieModel specieModel = new SpecieModel();
         TypeModel typeModel = new TypeModel();
         
         CreateSpecieView p = new CreateSpecieView(specieModel, typeModel);
@@ -49,7 +68,7 @@ public class Main {
         frame.setSize(p.getPreferredSize());
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
+        frame.setVisible(true); */
 
         //new MainMenu();
         //debug.ModelDebug.testTypeModel();
