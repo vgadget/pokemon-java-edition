@@ -296,6 +296,7 @@ public class CreateSpecieView extends PokedexView {
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
+        jTextArea1.setText("Mew is said to possess the genetic composition of all Pokémon. It is capable of making itself invisible at will, so it entirely avoids notice even if it approaches people.");
         jTextArea1.setWrapStyleWord(true);
         jTextArea1.setLineWrap(true);
         jScrollPane1.setViewportView(jTextArea1);

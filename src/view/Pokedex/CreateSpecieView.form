@@ -582,6 +582,7 @@
               <Properties>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="rows" type="int" value="5"/>
+                <Property name="text" type="java.lang.String" value="Mew is said to possess the genetic composition of all Pok&#xe9;mon. It is capable of making itself invisible at will, so it entirely avoids notice even if it approaches people."/>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTextArea1.setWrapStyleWord(true);&#xa;jTextArea1.setLineWrap(true);"/>
