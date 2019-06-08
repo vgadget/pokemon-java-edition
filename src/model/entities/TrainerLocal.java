@@ -144,11 +144,12 @@ public class TrainerLocal implements Trainer {
 
     @Override
     public String getPK() {
-        return "SINGLETON";
+        return "SINGLETON-TRAINER";
     }
 
     @Override
     public int compareTo(Entity o) {
+        
         if (o instanceof Trainer) {
             return this.getPK().compareTo(((Trainer) o).getPK());
         }

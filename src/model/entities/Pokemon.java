@@ -56,15 +56,17 @@ public class Pokemon implements Entity<String> {
     }
 
     public String getNickname() {
+        
+        if (this.nickname.isEmpty()){
+            return this.getSpecie().getName();
+        }
+        
         return nickname;
     }
 
     public void setNickname(String nickname) throws Exception {
-        if (nickname != null && !nickname.equals("")) {
-            this.nickname = nickname;
-        } else {
-            throw new Exception("INVALID POKEMON NICKNAME: " + nickname);
-        }
+        
+        this.nickname = nickname.trim();
     }
 
     public Specie getSpecie() {

@@ -18,7 +18,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public class Sound implements Serializable {
 
     private byte data[]; // Audio file bytes
-    private String name;
+    private String filename;
 
     private transient Clip clip;
     private transient AudioInputStream audioInputStream;
@@ -26,9 +26,9 @@ public class Sound implements Serializable {
 
     public Sound(File file) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 
-        if (file.exists()) {
+        if (file.exists()) { // Transform audio file into byte array (serializable)
 
-            name = file.getName();
+            filename = file.getName();
 
             data = new byte[(int) file.length()];
 
@@ -44,9 +44,9 @@ public class Sound implements Serializable {
 
     public Clip getClip() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 
-        if (clip == null) {
+        if (clip == null) { // If the audio is only available in byte array (serializable) we have to rebuild the audio file. 
 
-            tempFile = File.createTempFile(name, null);
+            tempFile = File.createTempFile(filename, null);
 
             if (tempFile.exists()) {
                 tempFile.delete();
@@ -68,6 +68,10 @@ public class Sound implements Serializable {
 
         clip.setFramePosition(0);
         return clip;
+    }
+    
+    public File getResourceFile(){
+        return tempFile;
     }
 
     public void start(int framePosition, int loops) throws Exception {
@@ -100,10 +104,12 @@ public class Sound implements Serializable {
     private void freeMemory() throws IOException {
 
         audioInputStream.close();
-        clip.drain();
-        clip.stop();
-        clip.close();
-        clip = null;
+        if (clip != null) {
+            clip.drain();
+            clip.stop();
+            clip.close();
+            clip = null;
+        }
         tempFile.delete();
     }
 

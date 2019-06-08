@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import languajes.ButtonText;
+import languajes.ButtonTexts;
 import model.entities.Move;
 import model.entities.MoveSet;
 import utilities.image.RGB;
@@ -139,7 +139,7 @@ public class ButtonFactory {
          */
         CustomButton cb = new CustomButton("", 0, Color.WHITE, buttonImage, buttonSize);
 
-        cb.setDescription(ButtonText.getInstance().attackButtonDescription(name, type, minimumPP, maximunPP)); // SET CUSTOM NARRATOR DESCRIPTION FOR THE BUTTON.
+        cb.setDescription(ButtonTexts.getInstance().attackButtonDescription(name, type, minimumPP, maximunPP)); // SET CUSTOM NARRATOR DESCRIPTION FOR THE BUTTON.
 
         return cb;
 

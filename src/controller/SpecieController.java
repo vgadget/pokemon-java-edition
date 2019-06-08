@@ -6,7 +6,7 @@ import model.entities.Specie;
 import model.entities.Sprite;
 import model.entities.Type;
 import utilities.sound.Sound;
-import view.Pokedex.PokedexView;
+import view.pokedex.PokedexView;
 import view.View;
 
 /**
@@ -49,13 +49,15 @@ public class SpecieController extends AbstractController<SpecieModel, View, Spec
             Integer maxDefense = (Integer) data.get(14);
             Integer minDefense = (Integer) data.get(15);
             Integer maxSpecialDefense = (Integer) data.get(16);
-            Integer minSpecialDefense = (Integer) data.get(17);
+            Integer minSpecialDefense = (Integer) data.get(17);            
             Integer maxSpeed = (Integer) data.get(18);
             Integer minSpeed = (Integer) data.get(19);
             Float precision = (Float) data.get(20);
             Float evasion = (Float) data.get(21);
             String description = (String) data.get(22);
             Sound cry = (Sound) data.get(23);
+            
+            
 
             specie = new Specie(name, type, secondaryType, front, back, height, weight, pokedexID, maxHP, minHP, maxAttack, minAttack, maxSpecialAttack, minSpecialAttack, maxDefense, minDefense, maxSpecialDefense, minSpecialDefense, maxSpeed, minSpeed, precision, evasion, description, cry);
 

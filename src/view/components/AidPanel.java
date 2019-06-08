@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import languajes.NarratorText;
+import languajes.NarratorTexts;
 import texttospeech.Narrator;
 
 public class AidPanel extends JPanel {
@@ -118,14 +118,14 @@ public class AidPanel extends JPanel {
             for (int i = 0; i < aidComponents.size(); i++) {
 
                 int n = i + 1;
-                r += NarratorText.pressKeyTo(n + "", aidComponents.get(i).getDescription()) + "\n";
+                r += NarratorTexts.pressKeyTo(n + "", aidComponents.get(i).getDescription()) + "\n";
             }
 
             if (!r.equalsIgnoreCase("")) {
-                r += "\n" + NarratorText.pressSpaceToRepeat();
+                r += "\n" + NarratorTexts.pressSpaceToRepeat();
                 Narrator.getInstance().speak(r);
             } else {
-                Narrator.getInstance().speak(NarratorText.pressSpaceToGetAudibleDescriptions());
+                Narrator.getInstance().speak(NarratorTexts.pressSpaceToGetAudibleDescriptions());
             }
 
             inputDetector.requestFocus();

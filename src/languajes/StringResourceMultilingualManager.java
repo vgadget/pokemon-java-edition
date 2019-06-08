@@ -79,7 +79,7 @@ public class StringResourceMultilingualManager {
         return null;
     }
 
-    private String getResource(String key, String language) {
+    public String getResource(String key, String language) {
 
         String resource = "";
 
@@ -92,9 +92,11 @@ public class StringResourceMultilingualManager {
                 if (line.get(0).equalsIgnoreCase(key)) {
 
                     resource = line.get(getLanguageIndex(language));
-
+                    
+                    resource = resource.replace("\"", "");
+                    
                     int i = 1;
-                    while ((resource.equalsIgnoreCase(key) || resource.isEmpty()) && i < line.size()) {
+                    while ((resource.equalsIgnoreCase(key) || resource.isEmpty() || resource.equalsIgnoreCase(" ")) && i < line.size()) {
                         resource = line.get(i);
                         i++;
                     }
@@ -108,6 +110,8 @@ public class StringResourceMultilingualManager {
             //utilities.DisplayMessage.showErrorDialog(ex.getMessage());
         }
 
+        
+        
         return key;
     }
 
@@ -231,7 +235,7 @@ public class StringResourceMultilingualManager {
         return false;
     }
 
-    private boolean keyExist(String key) {
+    public boolean keyExist(String key) {
 
         try {
 
@@ -247,5 +251,7 @@ public class StringResourceMultilingualManager {
 
         return false;
     }
+    
+    
 
 }

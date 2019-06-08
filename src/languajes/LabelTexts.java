@@ -4,20 +4,20 @@ package languajes;
  *
  * @author Adrian Vazquez
  */
-public class LabelText {
+public class LabelTexts {
 
-    private static LabelText instance = null;
+    private static LabelTexts instance = null;
 
-    public static LabelText getInstance() {
+    public static LabelTexts getInstance() {
 
         if (instance == null) {
-            instance = new LabelText();
+            instance = new LabelTexts();
         }
 
         return instance;
     }
 
-    private LabelText() {
+    private LabelTexts() {
         
     }
 

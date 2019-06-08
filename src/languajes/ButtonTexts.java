@@ -4,20 +4,20 @@ package languajes;
  *
  * @author Adrian Vazquez
  */
-public class ButtonText {
+public class ButtonTexts {
 
-    private static ButtonText instance = null;
+    private static ButtonTexts instance = null;
 
-    public static ButtonText getInstance() {
+    public static ButtonTexts getInstance() {
 
         if (instance == null) {
-            instance = new ButtonText();
+            instance = new ButtonTexts();
         }
 
         return instance;
     }
 
-    private ButtonText() {
+    private ButtonTexts() {
 
     }
 

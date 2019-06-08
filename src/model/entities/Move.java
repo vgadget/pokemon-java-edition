@@ -1,5 +1,7 @@
 package model.entities;
 
+import languajes.StringResourceMultilingualManager;
+
 /**
  *
  * @author Adrian Vazquez
@@ -55,6 +57,16 @@ public class Move implements Entity<String> {
     }
 
     public String getName() {
+
+        String key = this.getClass().getCanonicalName() + " - " + getPK() + " - getName()";
+
+        if (StringResourceMultilingualManager.getInstance().keyExist(key)) {
+            return StringResourceMultilingualManager.getInstance().getResource(key);
+        } else {
+            StringResourceMultilingualManager.getInstance().addKey(key);
+            StringResourceMultilingualManager.getInstance().setResource(key, name);
+        }
+
         return name;
     }
 
@@ -85,9 +97,7 @@ public class Move implements Entity<String> {
     public Sprite getBackAnimation() {
         return backAnimation;
     }
-    
-    
-    
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -112,7 +122,7 @@ public class Move implements Entity<String> {
 
     @Override
     public String getPK() {
-        return this.getName();
+        return this.name;
     }
 
     @Override

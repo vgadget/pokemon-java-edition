@@ -4,7 +4,7 @@ package languajes;
  *
  * @author Adrian Vazquez
  */
-public class NarratorText {
+public class NarratorTexts {
 
     /*
         KEYWORDS - ARGUMENTS

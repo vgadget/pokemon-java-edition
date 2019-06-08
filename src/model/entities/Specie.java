@@ -1,5 +1,6 @@
 package model.entities;
 
+import languajes.StringResourceMultilingualManager;
 import utilities.sound.Sound;
 
 /**
@@ -33,14 +34,14 @@ public class Specie implements Entity<String> {
     private String description;
     private Sound cry;
 
-    public Specie(String name, Type type, Type secondaryType, Sprite front, Sprite back ,Float height, Float weight, Integer pokedexID,
+    public Specie(String name, Type type, Type secondaryType, Sprite front, Sprite back, Float height, Float weight, Integer pokedexID,
             Integer maxHP, Integer minHP, Integer maxAttack, Integer minAttack,
             Integer maxSpecialAttack, Integer minSpecialAttack, Integer maxDefense,
             Integer minDefense, Integer maxSpecialDefense, Integer minSpecialDefense,
             Integer maxSpeed, Integer minSpeed, Float precision, Float evasion, String description, Sound cry)
             throws Exception {
-
-        if (validateFields(name, type, secondaryType, front, back ,height, weight, pokedexID,
+        
+        if (validateFields(name, type, secondaryType, front, back, height, weight, pokedexID,
                 maxHP, minHP, maxAttack, minAttack,
                 maxSpecialAttack, minSpecialAttack, maxDefense,
                 minDefense, maxSpecialDefense, minSpecialDefense,
@@ -75,17 +76,17 @@ public class Specie implements Entity<String> {
         }
     }
 
-    private boolean validateFields(String name, Type type, Type secondaryType, Sprite front, Sprite back ,Float height, Float weight, Integer pokedexID,
+    private boolean validateFields(String name, Type type, Type secondaryType, Sprite front, Sprite back, Float height, Float weight, Integer pokedexID,
             Integer maxHP, Integer minHP, Integer maxAttack, Integer minAttack,
             Integer maxSpecialAttack, Integer minSpecialAttack, Integer maxDefense,
             Integer minDefense, Integer maxSpecialDefense, Integer minSpecialDefense,
             Integer maxSpeed, Integer minSpeed, Float precision, Float evasion, String description, Sound cry) {
 
-        if (name == null || name.equals("")) {
+        if (name == null || name.equals("")) {           
             return false;
         } else if (front == null || back == null) {
             return false;
-        } else if (maxHP < minHP || Math.min(maxHP, minHP) <= 0 ||  999 <= Math.max(minHP, maxHP)) {
+        } else if (maxHP < minHP || Math.min(maxHP, minHP) <= 0 || 999 <= Math.max(minHP, maxHP)) {
             return false;
         } else if (maxAttack < minAttack || Math.min(maxAttack, minAttack) <= 0) {
             return false;
@@ -102,23 +103,37 @@ public class Specie implements Entity<String> {
         } else if (maxSpecialDefense < minSpecialDefense || Math.min(maxSpecialDefense, minSpecialDefense) <= 0) {
             return false;
         } else if (maxSpeed < minSpeed || Math.min(maxSpeed, minSpeed) <= 0) {
+                    System.out.println("DEBUG");
             return false;
         } else if (evasion <= 0 || evasion > 6) {
+                    System.out.println("DEBUG");
             return false;
         } else if (precision < 0.3 || precision > 1) {
+                    System.out.println("DEBUG");
             return false;
         } else if (type == null) {
+                    System.out.println("DEBUG");
             return false;
-        } else if (description == null || description.equals("")){
+        } else if (description == null || description.equals("")) {
             return false;
-        } else if (cry == null){
+        } else if (cry == null) {
             return false;
         }
-
+        
         return true;
     }
 
     public String getName() {
+
+        String key = this.getClass().getCanonicalName() + " - " + getPK() + " - getName()";
+
+        if (StringResourceMultilingualManager.getInstance().keyExist(key)) {
+            return StringResourceMultilingualManager.getInstance().getResource(key);
+        } else {
+            StringResourceMultilingualManager.getInstance().addKey(key);
+            StringResourceMultilingualManager.getInstance().setResource(key, name);
+        }
+
         return name;
     }
 
@@ -130,7 +145,9 @@ public class Specie implements Entity<String> {
         return backSprite;
     }
 
-    
+    public Sound getCry() {
+        return cry;
+    }
 
     public Float getHeight() {
         return height;
@@ -202,7 +219,7 @@ public class Specie implements Entity<String> {
 
     @Override
     public String getPK() {
-        return pokedexID+"_"+name;
+        return pokedexID + "_" + name;
     }
 
     public Type getType() {
@@ -214,6 +231,16 @@ public class Specie implements Entity<String> {
     }
 
     public String getDescription() {
+
+        String key = this.getClass().getCanonicalName() + " - " + getPK() + " - getDescription()";
+
+        if (StringResourceMultilingualManager.getInstance().keyExist(key)) {
+            return StringResourceMultilingualManager.getInstance().getResource(key);
+        } else {
+            StringResourceMultilingualManager.getInstance().addKey(key);
+            StringResourceMultilingualManager.getInstance().setResource(key, description);
+        }
+
         return description;
     }
 

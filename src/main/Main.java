@@ -15,7 +15,7 @@ import model.SpecieModel;
 import model.TypeModel;
 import utilities.CSVReader;
 import utilities.sound.Sound;
-import view.Pokedex.CreateSpecieView;
+import view.pokedex.CreateSpecieView;
 import view.View;
 
 /**
@@ -27,33 +27,29 @@ public class Main {
     public static void main(String[] args) throws Exception {
         
         
-     //   CSVReader reader = new CSVReader(new File("Resources\\languages\\translations.csv"));
-        
-        StringResourceMultilingualManager s = StringResourceMultilingualManager.getInstance();
-        
-        //System.out.println(s.getAvailableLanguages());
-        
-        s.addKey("SALUDO2");
-        
-        s.setDefaultLanguage("ENGLISH");
-        
-        s.setResource("SALUDO2", "Bye");
-        
-        System.out.println(s.getAvailableKeys());
-        
-        //System.out.println(s.getResource("SALUDO", "ESPAÑOL"));
+        StringResourceMultilingualManager.getInstance().setDefaultLanguage("ESPAÑOL");
         
         
+        SpecieModel specieModel;
+        TypeModel typeModel;
+        CreateSpecieView createSpecieView;
+        SpecieController specieController;
         
-        /*SpecieModel specieModel = new SpecieModel();
-        TypeModel typeModel = new TypeModel();
+        specieModel = new SpecieModel();
+        typeModel = new TypeModel();
         
-        CreateSpecieView p = new CreateSpecieView(specieModel, typeModel);
+        specieController = new SpecieController();
         
+        specieModel.setController(specieController);
+        specieController.setModel(specieModel);
+        
+        createSpecieView = new CreateSpecieView(typeModel, specieController);
+        
+                
         List<View> views = new ArrayList<>();
-        views.add(p);
+        views.add(createSpecieView);
         
-        SpecieController specieController = new SpecieController();
+        
         specieController.setup(specieModel, views);
         
         
@@ -63,12 +59,12 @@ public class Main {
         
         
         
-        frame.add(p);
+        frame.add(createSpecieView);
         
-        frame.setSize(p.getPreferredSize());
+        frame.setSize(createSpecieView.getPreferredSize());
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true); */
+        frame.setVisible(true); 
 
         //new MainMenu();
         //debug.ModelDebug.testTypeModel();

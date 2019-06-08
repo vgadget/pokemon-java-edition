@@ -1,4 +1,4 @@
-package view.Pokedex;
+package view.pokedex.components;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -49,7 +49,7 @@ public class TypeComboBoxModel implements ComboBoxModel {
 
     @Override
     public Object getSelectedItem() {
-        return selectedItem != null ? selectedItem.getName() : "None";
+        return selectedItem != null ? selectedItem.getName() : "---";
     }
 
     @Override
@@ -59,7 +59,7 @@ public class TypeComboBoxModel implements ComboBoxModel {
 
     @Override
     public String getElementAt(int index) {
-        return this.typeList.get(index) != null ? this.typeList.get(index).getName() : "None";
+        return this.typeList.get(index) != null ? this.typeList.get(index).getName() : "---";
     }
 
     @Override
