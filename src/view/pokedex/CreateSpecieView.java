@@ -7,7 +7,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -15,15 +14,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import languajes.StringResourceMultilingualManager;
 import model.TypeModel;
 import model.entities.Specie;
 import model.entities.Sprite;
@@ -69,8 +64,8 @@ public class CreateSpecieView extends PokedexView {
 
         try {
             // SETUP EXAMPLE SPRITE
-            ((SpriteJLabel) (this.jLabelBackImageSprite)).setup(generateSprite("Resources\\BattleHUD\\Pokedex\\MISSINGNO\\Sprite\\BACK"));
-            ((SpriteJLabel) (this.jLabelFrontImageSprite)).setup(generateSprite("Resources\\BattleHUD\\Pokedex\\MISSINGNO\\Sprite\\FRONT"));
+            ((SpriteJLabel) (this.jLabelBackImageSprite)).setup(generateDefaultSprite("Resources\\BattleHUD\\Pokedex\\MISSINGNO\\Sprite\\BACK"));
+            ((SpriteJLabel) (this.jLabelFrontImageSprite)).setup(generateDefaultSprite("Resources\\BattleHUD\\Pokedex\\MISSINGNO\\Sprite\\FRONT"));
 
             // SETUP EXAMPLE CRY
             this.loadedCry = new Sound(new File("Resources\\BattleHUD\\Pokedex\\MISSINGNO\\Sound\\151-Mew.wav"));
@@ -99,7 +94,7 @@ public class CreateSpecieView extends PokedexView {
 
     }
 
-    private Sprite generateSprite(String pathname) throws Exception {
+    private Sprite generateDefaultSprite(String pathname) throws Exception {
 
         File f = new File(pathname);
 
@@ -132,7 +127,7 @@ public class CreateSpecieView extends PokedexView {
 
         for (int i = 0; i < animation.size(); i++) {
 
-            imgs[i] = utilities.image.ImageUtil.resize(animation.get(i), 150, 150);
+            imgs[i] = utilities.image.ImageUtil.resize(animation.get(i), 300, 300);
 
         }
 
@@ -209,7 +204,7 @@ public class CreateSpecieView extends PokedexView {
         jButton4 = new javax.swing.JButton();
         jButtonCreateSpecie = new javax.swing.JButton();
 
-        setPreferredSize(new java.awt.Dimension(1118, 630));
+        setPreferredSize(new java.awt.Dimension(1350, 800));
 
         jLabelFrontImageSprite.setText("frontImageSprite");
         jLabelFrontImageSprite.setPreferredSize(new java.awt.Dimension(200, 200));
@@ -460,7 +455,7 @@ public class CreateSpecieView extends PokedexView {
                         .addComponent(jLabelSpriteSpeed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jSliderRefreshRate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1))
-                .addGap(172, 172, 172))
+                .addGap(74, 74, 74))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -558,7 +553,7 @@ public class CreateSpecieView extends PokedexView {
                     .addComponent(jLabel20)
                     .addComponent(jButton4)
                     .addComponent(jLabel18))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         jButtonCreateSpecie.setText("Create specie");
@@ -574,17 +569,16 @@ public class CreateSpecieView extends PokedexView {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabelBackImageSprite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabelFrontImageSprite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonLoadFrontSidePokemon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonLoadBackSidePokemon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 861, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButtonCreateSpecie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonCreateSpecie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelFrontImageSprite, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                            .addComponent(jLabelBackImageSprite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonLoadBackSidePokemon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonLoadFrontSidePokemon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(118, 118, 118)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(28, 28, 28))
         );
         layout.setVerticalGroup(
@@ -593,28 +587,77 @@ public class CreateSpecieView extends PokedexView {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(14, 14, 14)
-                        .addComponent(jLabelFrontImageSprite, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonLoadFrontSidePokemon)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabelBackImageSprite, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabelFrontImageSprite, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonLoadBackSidePokemon))
+                        .addComponent(jButtonLoadFrontSidePokemon)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                        .addComponent(jLabelBackImageSprite, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(jButtonLoadBackSidePokemon)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonCreateSpecie)
                 .addGap(31, 31, 31))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void loadSprite(SpriteJLabel spriteLabel) {
+        String desktopDir = System.getProperty("user.home") + "/Desktop";
+
+        JFileChooser fileChooser = new JFileChooser(desktopDir);
+
+        fileChooser.setMultiSelectionEnabled(true);
+
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Portable Network Graphics (.PNG)", "PNG"));
+
+        if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+
+            File[] files = fileChooser.getSelectedFiles();
+            
+            Arrays.sort(files, new Comparator<File>() {
+            @Override
+            public int compare(File o1, File o2) {
+
+                return new StringComparator().compare(o1.getName(), o2.getName());
+            }
+        });
+
+            if (files.length > 1) {
+
+                BufferedImage[] imgs = new BufferedImage[files.length];
+                try {
+                    for (int i = 0; i < files.length; i++) {
+
+                        imgs[i] = ImageIO.read(files[i]);
+                        imgs[i] = utilities.image.ImageUtil.resize(imgs[i], 300, 300);
+                    }
+
+                    Sprite sprite = new Sprite(imgs, this.jSliderRefreshRate.getModel().getMaximum() - ((int) Long.parseLong(this.jLabelSpriteSpeed.getText())) + 1);
+
+                    spriteLabel.setup(sprite);
+
+                } catch (Exception ex) {
+                    utilities.DisplayMessage.showErrorDialog(ex.getLocalizedMessage());
+                }
+
+            } else {
+                utilities.DisplayMessage.showErrorDialog("ERROR: SELECT AT LEAST 2 IMAGES (CTRL + CLICK)");
+            }
+
+        }
+    }
+
     private void jButtonLoadFrontSidePokemonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoadFrontSidePokemonActionPerformed
-        // TODO add your handling code here:
+
+        loadSprite((SpriteJLabel) this.jLabelFrontImageSprite);
+
     }//GEN-LAST:event_jButtonLoadFrontSidePokemonActionPerformed
 
     private void jButtonLoadBackSidePokemonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoadBackSidePokemonActionPerformed
-        // TODO add your handling code here:
+        loadSprite((SpriteJLabel) this.jLabelBackImageSprite);
     }//GEN-LAST:event_jButtonLoadBackSidePokemonActionPerformed
 
     private void jTextFieldNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNameActionPerformed
@@ -630,6 +673,9 @@ public class CreateSpecieView extends PokedexView {
 
             back.setRefreshRate(this.jSliderRefreshRate.getModel().getMaximum() - this.jSliderRefreshRate.getModel().getValue() + 1);
             front.setRefreshRate(this.jSliderRefreshRate.getModel().getMaximum() - this.jSliderRefreshRate.getModel().getValue() + 1);
+            
+            
+            
 
             this.jLabelSpriteSpeed.setText((this.jSliderRefreshRate.getModel().getValue()) + "");
         } catch (Exception ex) {
@@ -647,9 +693,9 @@ public class CreateSpecieView extends PokedexView {
         Type secondaryType = null;
 
         List<Type> listOfTypes = this.typeModel.getAll();
-        
-        for (int i = 0; i < listOfTypes.size() && (type == null || secondaryType == null); i++) {
-                        
+
+        for (int i = 0; ((i < listOfTypes.size()) && (type == null || secondaryType == null)); i++) {
+
             if (listOfTypes.get(i).getName().equalsIgnoreCase(((String) this.jComboBoxType.getModel().getSelectedItem()))) {
                 type = listOfTypes.get(i);
             } else if (listOfTypes.get(i).getName().equalsIgnoreCase(((String) this.jComboBoxSecondaryType.getModel().getSelectedItem()))) {
@@ -657,9 +703,6 @@ public class CreateSpecieView extends PokedexView {
             }
 
         }
-        
-   
-        
 
         Sprite front = ((SpriteJLabel) this.jLabelFrontImageSprite).getSprite();
         Sprite back = ((SpriteJLabel) this.jLabelBackImageSprite).getSprite();
@@ -825,6 +868,8 @@ class SpriteJLabel extends JLabel {
 
     private Sprite sprite;
     private Thread repainter = null;
+    
+    private  Icon iconAnimation[];
 
     public SpriteJLabel() {
 
@@ -838,50 +883,48 @@ class SpriteJLabel extends JLabel {
         setText("");
         BufferedImage[] animation = s.getAnimation();
 
-        Icon iconAnimation[] = new Icon[animation.length];
+        iconAnimation = new Icon[animation.length];
 
         for (int i = 0; i < animation.length; i++) {
             iconAnimation[i] = new ImageIcon(animation[i]);
         }
 
-        if (repainter != null) {
-            repainter.interrupt();
+        if (repainter == null) {
+            repainter = new Thread(() -> {
+
+                int i = 0;
+                boolean backwards = false;
+
+                while (!Thread.interrupted()) {
+
+                    if (i < 0) {
+                        i = 0;
+                        backwards = false;
+                    } else if (i >= iconAnimation.length) {
+                        i = iconAnimation.length - 1;
+                        backwards = true;
+                    }
+
+                    setIcon(iconAnimation[i]);
+                    repaint(); //DEBUG
+
+                    if (backwards) {
+                        i--;
+                    } else {
+                        i++;
+                    }
+
+                    try {
+                        Thread.sleep(sprite.getRefreshRate());
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(SpriteJLabel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
+            });
+
+            repainter.start();
         }
-
-        repainter = new Thread(() -> {
-
-            int i = 0;
-            boolean backwards = false;
-
-            while (!Thread.interrupted()) {
-
-                if (i < 0) {
-                    i = 0;
-                    backwards = false;
-                } else if (i >= iconAnimation.length) {
-                    i = iconAnimation.length - 1;
-                    backwards = true;
-                }
-
-                setIcon(iconAnimation[i]);
-                repaint(); //DEBUG
-
-                if (backwards) {
-                    i--;
-                } else {
-                    i++;
-                }
-
-                try {
-                    Thread.sleep(s.getRefreshRate());
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(SpriteJLabel.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-
-        });
-
-        repainter.start();
     }
 
     public Sprite getSprite() {
