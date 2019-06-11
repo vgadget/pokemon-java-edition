@@ -17,3 +17,5 @@ model.entities.Type - Psychic,Psychic,Psíquico,Psichico,サイキック,精神
 model.entities.Type - Rock,Rock,Roca,Roccia,岩,岩石
 model.entities.Type - Steel,Steel,Acero,Acciaio,鋼,钢
 model.entities.Type - Water,Water,Agua,acqua,水,水
+model.entities.Specie - 151_Mew - getDescription(),"Mew is said to possess the genetic composition of all Pokémon. It is capable of making itself invisible at will, so it entirely avoids notice even if it approaches people.",, , , 
+model.entities.Specie - 151_Mew - getName(),Mew, , , , 

@@ -6,11 +6,12 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import languajes.NarratorTexts;
 import texttospeech.Narrator;
 
-public class AidPanel extends JPanel {
+public class AidPanel extends JLayeredPane {
 
     private final List<AidComponent> aidComponents = new ArrayList<>();
     private final List<String> additionalDescriptions = new ArrayList<>();

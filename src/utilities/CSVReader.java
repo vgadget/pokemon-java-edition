@@ -75,13 +75,36 @@ public class CSVReader {
 
         scanner.close();
 
-        String[] data = buffer.split(",");
+        //String[] data = buffer.split(",");
 
-        line.addAll(Arrays.asList(data));
-        
+        line.addAll(split(buffer));
+
         return line;
     }
-    
+
+    private static List<String> split(String l) {
+
+        List<String> line = new LinkedList<>();
+
+        boolean canSplit = true;
+        
+        String buffer = "";
+        for (int i = 0; i < l.length(); i++) {
+
+            if (l.charAt(i) == '\"') {
+                canSplit = !canSplit;
+            } else if (l.charAt(i) == ',' && canSplit) {
+                line.add(buffer);
+                buffer = "";
+            } else {
+                buffer += l.charAt(i);
+            }
+
+        }
+
+        return line;
+    }
+
     public List<List<String>> getAll() throws FileNotFoundException {
 
         int lines = getLineCount();

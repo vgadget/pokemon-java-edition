@@ -30,6 +30,10 @@ public class AnimatedBackgroundPanel extends AidPanel {
     private int dx, dy; // Background location trajectory.
 
     Random rnd = new Random();
+    
+    public AnimatedBackgroundPanel(){
+        this(utilities.image.Dimensions.getMainMenuResolution());
+    } 
 
     public AnimatedBackgroundPanel(Dimension frameDimension) {
 

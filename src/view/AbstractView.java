@@ -1,14 +1,16 @@
 package view;
 
 import controller.Controller;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import model.Model;
+import view.components.AidPanel;
 
 /**
  *
  * @author Adrian Vazquez
  */
-public abstract class AbstractView<M extends Model, C extends Controller> extends JPanel implements View<M, C>{
+public abstract class AbstractView<M extends Model, C extends Controller> extends AidPanel implements View<M, C>{
 
     private M model;
     private C controller;

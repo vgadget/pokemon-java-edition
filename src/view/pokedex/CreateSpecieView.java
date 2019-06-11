@@ -23,7 +23,7 @@ import model.TypeModel;
 import model.entities.Specie;
 import model.entities.Sprite;
 import model.entities.Type;
-import utilities.StringComparator;
+import utilities.string.StringComparator;
 import utilities.sound.SoundPlayer;
 import utilities.sound.Sound;
 

@@ -17,6 +17,8 @@ import utilities.CSVReader;
 import utilities.sound.Sound;
 import view.pokedex.CreateSpecieView;
 import view.View;
+import view.menu.MainMenu;
+import view.pokedex.PokedexEntry;
 
 /**
  *
@@ -56,21 +58,20 @@ public class Main {
         JFrame frame = new JFrame("Create new specie");
         
         
+        PokedexEntry pokedexEntry = new PokedexEntry();
         
+        pokedexEntry.setSpecie(specieModel.getAll().get(0));
         
+        frame.add(pokedexEntry);
         
-        frame.add(createSpecieView);
-        
-        frame.setSize(createSpecieView.getPreferredSize());
+        frame.setSize(pokedexEntry.getPreferredSize());
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
+        frame.setResizable(true);
         frame.setVisible(true); 
 
         //new MainMenu();
-        //debug.ModelDebug.testTypeModel();
-        //debug.ModelDebug.testSpecie();
-        //debug.PokemonBattleViewDebug.test();
+        
         
         
         
