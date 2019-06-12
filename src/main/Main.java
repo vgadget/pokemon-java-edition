@@ -1,6 +1,7 @@
 package main;
 
 import controller.SpecieController;
+import java.awt.Dimension;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -18,7 +19,10 @@ import utilities.sound.Sound;
 import view.pokedex.CreateSpecieView;
 import view.View;
 import view.menu.MainMenu;
-import view.pokedex.PokedexEntry;
+import view.pokedex.PokedexEntryView;
+import view.pokedex.PokedexSpecieListView;
+import view.pokedex.PokedexView;
+import view.pokedex.PokedexViewImpl;
 
 /**
  *
@@ -45,11 +49,10 @@ public class Main {
         specieModel.setController(specieController);
         specieController.setModel(specieModel);
         
-        createSpecieView = new CreateSpecieView(typeModel, specieController);
+        PokedexView view = new PokedexViewImpl(specieController, typeModel);
         
-                
         List<View> views = new ArrayList<>();
-        views.add(createSpecieView);
+        views.add(view);
         
         
         specieController.setup(specieModel, views);
@@ -57,14 +60,11 @@ public class Main {
         
         JFrame frame = new JFrame("Create new specie");
         
+       
         
-        PokedexEntry pokedexEntry = new PokedexEntry();
+        frame.add(view);
         
-        pokedexEntry.setSpecie(specieModel.getAll().get(0));
-        
-        frame.add(pokedexEntry);
-        
-        frame.setSize(pokedexEntry.getPreferredSize());
+        frame.setSize(view.getPreferredSize());
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(true);

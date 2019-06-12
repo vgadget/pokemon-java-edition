@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
 import languajes.NarratorTexts;
 import texttospeech.Narrator;
 
@@ -18,9 +17,21 @@ public class AidPanel extends JLayeredPane {
 
     private JLabel inputDetector = new JLabel();
 
+    private boolean enabledAudioDescription;
+
     public AidPanel() {
 
+        enabledAudioDescription = true;
         initComponents();
+
+    }
+
+    public boolean isEabledAudioDescription() {
+        return enabledAudioDescription;
+    }
+
+    public void setEnabledAudioDescription(boolean enabled) {
+        this.enabledAudioDescription = enabled;
     }
 
     private void initComponents() {
@@ -107,31 +118,33 @@ public class AidPanel extends JLayeredPane {
 
     private void getAudibleDescription() {
 
-        new Thread(() -> {
+        if (enabledAudioDescription) {
+            new Thread(() -> {
 
-            String r = "";
+                String r = "";
 
-            r = this.additionalDescriptions
-                    .stream()
-                    .map((s) -> s + "..\n\n")
-                    .reduce(r, String::concat);
+                r = this.additionalDescriptions
+                        .stream()
+                        .map((s) -> s + "..\n\n")
+                        .reduce(r, String::concat);
 
-            for (int i = 0; i < aidComponents.size(); i++) {
+                for (int i = 0; i < aidComponents.size(); i++) {
 
-                int n = i + 1;
-                r += NarratorTexts.pressKeyTo(n + "", aidComponents.get(i).getDescription()) + "\n";
-            }
+                    int n = i + 1;
+                    r += NarratorTexts.pressKeyTo(n + "", aidComponents.get(i).getDescription()) + "\n";
+                }
 
-            if (!r.equalsIgnoreCase("")) {
-                r += "\n" + NarratorTexts.pressSpaceToRepeat();
-                Narrator.getInstance().speak(r);
-            } else {
-                Narrator.getInstance().speak(NarratorTexts.pressSpaceToGetAudibleDescriptions());
-            }
+                if (!r.equalsIgnoreCase("")) {
+                    r += "\n" + NarratorTexts.pressSpaceToRepeat();
+                    Narrator.getInstance().speak(r);
+                } else {
+                    Narrator.getInstance().speak(NarratorTexts.pressSpaceToGetAudibleDescriptions());
+                }
 
-            inputDetector.requestFocus();
+                inputDetector.requestFocus();
 
-        }).start();
+            }).start();
+        }
     }
 
 }

@@ -171,16 +171,20 @@ public class CSVReader {
 
         String buffer = "";
 
-        buffer = line
-                .stream()
-                .map((data) -> data + ",")
-                .reduce(buffer, String::concat);
+       for (String l : line){
+           buffer +=   l  + ", ";
+       }
 
-        if (buffer.length() > 1) {
-            buffer = buffer.substring(0, buffer.length() - 1);
+        if (buffer.length() > 2) {
+            buffer = buffer.substring(0, buffer.length() - 2);
+            
+             
+            
         } else {
             buffer = "";
         }
+        
+        
 
         writter.write(buffer);
         writter.newLine();

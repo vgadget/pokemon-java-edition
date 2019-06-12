@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -69,8 +71,17 @@ public class Sound implements Serializable {
         clip.setFramePosition(0);
         return clip;
     }
-    
-    public File getResourceFile(){
+
+    public File getResourceFile() {
+
+        if (clip == null || tempFile == null) {
+            try {
+                clip = getClip();
+            } catch (Exception e) {
+
+            }
+        }
+
         return tempFile;
     }
 

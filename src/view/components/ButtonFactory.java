@@ -4,18 +4,25 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import languajes.ButtonTexts;
 import model.entities.Move;
 import model.entities.MoveSet;
+import model.entities.Specie;
 import utilities.image.RGB;
+import utilities.sound.Sound;
 import view.components.fonts.PokemonFont;
 
 /**
@@ -71,7 +78,7 @@ public class ButtonFactory {
     }
 
     private static CustomButton moveButton(String name, String type, int minimumPP, int maximunPP, Color backgroundColor) throws Exception {
-        
+
         Font font = PokemonFont.getFont(14); // Font: Pokemon, Size: 14.
         FontMetrics fm = PokemonFont.getFontMetrics(font); // Font metrics
 
@@ -106,8 +113,8 @@ public class ButtonFactory {
             name = name.substring(0, name.length() - i);
             i++;
         }
-        
-        if (i > 0){
+
+        if (i > 0) {
             name = name.substring(0, name.length() - 1) + "...";
         }
 
@@ -143,6 +150,110 @@ public class ButtonFactory {
 
         return cb;
 
+    }
+
+    private static final String URI_POKEDEX_SPECIE_BUTTON = "Resources\\BattleHUD\\Pokedex\\INFO_SCREEN\\pokedexButton.png";
+    private static final String OVER_AUDIO_FEEDBACK = "Resources\\BattleHUD\\Pokedex\\INFO_SCREEN\\select.wav";
+    private static final String CLIC_AUDIO_FEEDBACK = "Resources\\BattleHUD\\Pokedex\\INFO_SCREEN\\confirm.wav";
+
+    private static Sound over;
+    private static Sound entered;
+
+    private static void loadSounds() {
+        try {
+            over = new Sound(new File(OVER_AUDIO_FEEDBACK));
+            entered = new Sound(new File(CLIC_AUDIO_FEEDBACK));
+        } catch (Exception e) {
+
+        }
+    }
+
+    public static CustomButton getPokedexSpecieButton(Specie s, Dimension frameDimension) throws Exception {
+
+        String text = " " + s.getPokedexID() + " - " + s.getName();
+
+        float grid = (float) (frameDimension.getWidth() * (0.3f));
+
+        Dimension buttonDimension = new Dimension((int) (grid * 3.51), (int) (grid * 0.44)); // Button proportion 
+
+        Font f = view.components.fonts.PokemonFont.getFont(1);
+
+        Dimension labelDimension = new Dimension(buttonDimension);
+
+        labelDimension.setSize((int) (labelDimension.getWidth() * 0.55f), labelDimension.getHeight());
+
+        int fontSize = (int) utilities.string.StringUtil.preferedFontSizeforLabel(f, text, labelDimension);
+        f = view.components.fonts.PokemonFont.getFont(fontSize);
+
+        if (text.length() > 18) {
+            text = text.substring(0, 16) + "...";
+        }
+
+        BufferedImage background = ImageIO.read(new File(URI_POKEDEX_SPECIE_BUTTON));
+        CustomButton cb = new CustomButton(text, fontSize, Color.WHITE, background, buttonDimension);
+
+        if (over == null || entered == null) {
+            loadSounds();
+        }
+
+        cb.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                utilities.sound.SoundPlayer.getInstance().playEffectChannel(over);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                utilities.sound.SoundPlayer.getInstance().playEffectChannel(entered);
+            }
+
+        });
+
+        return cb;
+    }
+
+    public static CustomButton getPokedexCreateSpecie(String text, Dimension frameDimension) throws Exception {
+
+        float grid = (float) (frameDimension.getWidth() * (0.3f));
+
+        Dimension buttonDimension = new Dimension((int) (grid * 3.51), (int) (grid * 0.44)); // Button proportion 
+
+        Font f = view.components.fonts.PokemonFont.getFont(1);
+
+        Dimension labelDimension = new Dimension(buttonDimension);
+
+        labelDimension.setSize((int) (labelDimension.getWidth() * 0.50f), labelDimension.getHeight());
+
+        int fontSize = (int) utilities.string.StringUtil.preferedFontSizeforLabel(f, text, labelDimension);
+        f = view.components.fonts.PokemonFont.getFont(fontSize);
+
+        if (text.length() > 18) {
+            text = text.substring(0, 16) + "...";
+        }
+
+        BufferedImage background = ImageIO.read(new File(URI_POKEDEX_SPECIE_BUTTON));
+        CustomButton cb = new CustomButton(text, fontSize, Color.WHITE, background, buttonDimension);
+        
+              if (over == null || entered == null) {
+            loadSounds();
+        }
+
+        cb.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                utilities.sound.SoundPlayer.getInstance().playEffectChannel(over);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                utilities.sound.SoundPlayer.getInstance().playEffectChannel(entered);
+            }
+
+        });
+
+        return cb;
     }
 
 }
