@@ -22,7 +22,7 @@ public class ButtonTexts {
     }
 
     //Main menu - Text for single player button.
-    private String singlePlayerButton = "   Single player.";
+    private String singlePlayerButton = "Single player.";
 
     public String singlePlayerButton() {
         return singlePlayerButton;
@@ -36,21 +36,21 @@ public class ButtonTexts {
     }
 
     //Main menu - Text for settings button.
-    private String settingsButton = "Settings.     ";
+    private String settingsButton = "Settings.";
 
     public String settingsButton() {
         return settingsButton;
     }
 
     //Main menu - Text for credits button.
-    private String creditsButton = "Credits.      ";
+    private String creditsButton = "Credits.";
 
     public String creditsButton() {
         return creditsButton;
     }
 
     //Main menu - Text for save and exit.
-    private String saveAndExit = "     Save and exit.";
+    private String saveAndExit = "Save and exit.";
 
     public String saveAndExit() {
         return saveAndExit;

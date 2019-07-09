@@ -1,9 +1,13 @@
 package view.menu;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,20 +29,21 @@ import view.menu.components.AnimatedBackgroundPanel;
  */
 public class MainMenu extends JFrame {
 
-    ;
-    private static int START_POINT_Y; // Position in Y coordinate where components start being placed.
-    private static int START_POINT_X; // Position in X coordinate where components are aligned.
+    private static int grid;
 
-    private AidPanel panel = new AnimatedBackgroundPanel(Dimensions.getMainMenuResolution());
-    private CustomButton singlePlayer = ButtonFactory.menuButton(ButtonTexts.getInstance().singlePlayerButton());
-    private CustomButton multiPlayer = ButtonFactory.menuButton(ButtonTexts.getInstance().multiPlayerButton());
-    private CustomButton settings = ButtonFactory.menuButton(ButtonTexts.getInstance().settingsButton());
-    private CustomButton credits = ButtonFactory.menuButton(ButtonTexts.getInstance().creditsButton());
-    private CustomButton saveAndExit = ButtonFactory.menuButton(ButtonTexts.getInstance().saveAndExit());
+    private AidPanel panel;
+    private CustomButton singlePlayer;
+    private CustomButton multiPlayer;
+    private CustomButton settings;
+    private CustomButton credits;
+    private CustomButton saveAndExit;
+
+    private boolean resizing = false;
 
     public MainMenu() {
         try {
             initComponents();
+
         } catch (Exception ex) {
             Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -46,53 +51,88 @@ public class MainMenu extends JFrame {
 
     public void initComponents() throws Exception {
 
+        if (panel != null) {
+            remove(panel);
+        }
+
+        panel = new AnimatedBackgroundPanel(Dimensions.getSelectedResolution());
+
+        singlePlayer = ButtonFactory.menuButton(ButtonTexts.getInstance().singlePlayerButton());
+        multiPlayer = ButtonFactory.menuButton(ButtonTexts.getInstance().multiPlayerButton());
+        settings = ButtonFactory.menuButton(ButtonTexts.getInstance().settingsButton());
+        credits = ButtonFactory.menuButton(ButtonTexts.getInstance().creditsButton());
+        saveAndExit = ButtonFactory.menuButton(ButtonTexts.getInstance().saveAndExit());
+
+        grid = (int) (Dimensions.getSelectedResolution().getWidth() * 0.03f);
+
+        if (grid == 0) {
+            grid = 1;
+        }
+
+        //Button actions
+        //Button placing
         panel.setLayout(null);
 
-        //Button placing
-        Dimension buttonSize = singlePlayer.getSize();
+        setMainMenuButtons();
 
-        START_POINT_Y = (int) (buttonSize.height / 2);
-        START_POINT_X = (int) (utilities.image.Dimensions.getMainMenuResolution().getWidth() - (buttonSize.width + buttonSize.width / 6));
-
-        setPosition(singlePlayer, START_POINT_X, START_POINT_Y);
         panel.add(singlePlayer);
 
-        setPosition(multiPlayer, START_POINT_X, START_POINT_Y + singlePlayer.getBounds().height);
         panel.add(multiPlayer);
 
-        setPosition(settings, START_POINT_X, START_POINT_Y + 2 * singlePlayer.getBounds().height);
         panel.add(settings);
 
-        setPosition(credits, START_POINT_X, START_POINT_Y + 3 * singlePlayer.getBounds().height);
         panel.add(credits);
 
-        setPosition(saveAndExit, START_POINT_X, START_POINT_Y + 4 * singlePlayer.getBounds().height);
         panel.add(saveAndExit);
 
         //Author text
+        Dimension d = new Dimension(18 * grid, 2 * grid);
         Font f = view.components.fonts.PokemonFont.getFont(16);
-        
+        int fontSize = (int) utilities.string.StringUtil.preferedFontSizeforLabel(f, LabelTexts.getInstance().developedByAdrianVazquezBarrera(), d);
+
+        f = f.deriveFont(fontSize);
+
         JLabel developedByAdrianVazquezBarreraLabel = new JLabel(LabelTexts.getInstance().developedByAdrianVazquezBarrera());
+
         developedByAdrianVazquezBarreraLabel.setFont(f);
+
         developedByAdrianVazquezBarreraLabel.setForeground(Color.WHITE);
-        
-        FontMetrics fm = developedByAdrianVazquezBarreraLabel.getFontMetrics(developedByAdrianVazquezBarreraLabel.getFont());
-        developedByAdrianVazquezBarreraLabel.setLocation(0, Dimensions.getMainMenuResolution().height - 3*fm.getHeight());
-        developedByAdrianVazquezBarreraLabel.setSize(fm.stringWidth(LabelTexts.getInstance().developedByAdrianVazquezBarrera()), fm.getHeight());
+
+        developedByAdrianVazquezBarreraLabel.setLocation(0, 16 * grid);
+        developedByAdrianVazquezBarreraLabel.setSize(d.width, d.height);
+
         panel.add(developedByAdrianVazquezBarreraLabel);
-    
+
         //Pokemon logo
-        JLabel pokemonLogo = new JLabel(new ImageIcon(ImageIO.read(new File("Resources/MainTitle/pokemonLogo/mainTitleLogo.png"))));
-        pokemonLogo.setSize(448, 258);
+        BufferedImage logo = ImageIO.read(new File("Resources/MainTitle/pokemonLogo/mainTitleLogo.png"));
+        logo = utilities.image.ImageUtil.resize(logo, 12 * grid, 7 * grid);
+        JLabel pokemonLogo = new JLabel(new ImageIcon(logo));
+
+        pokemonLogo.setSize(12 * grid, 7 * grid);
         panel.add(pokemonLogo);
-        
+
         //Panel and frame settings
         add(panel);
-        setSize(Dimensions.getMainMenuResolution());
+
+        setSize(Dimensions.getSelectedResolution());
         setLocationRelativeTo(null);
-        setResizable(true);
+        setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+
         setVisible(true);
+    }
+
+    private void setMainMenuButtons() {
+
+        setPosition(singlePlayer, 22 * grid, (grid));
+
+        setPosition(multiPlayer, 22 * grid, 4 * grid);
+
+        setPosition(settings, 22 * grid, 7 * grid);
+
+        setPosition(credits, 22 * grid, 10 * grid);
+
+        setPosition(saveAndExit, 22 * grid, 13 * grid);
     }
 
     private void setPosition(CustomButton cb, int x, int y) {

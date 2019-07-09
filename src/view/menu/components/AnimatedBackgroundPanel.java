@@ -32,7 +32,7 @@ public class AnimatedBackgroundPanel extends AidPanel {
     Random rnd = new Random();
     
     public AnimatedBackgroundPanel(){
-        this(utilities.image.Dimensions.getMainMenuResolution());
+        this(utilities.image.Dimensions.getSelectedResolution());
     } 
 
     public AnimatedBackgroundPanel(Dimension frameDimension) {
@@ -109,7 +109,11 @@ public class AnimatedBackgroundPanel extends AidPanel {
         try {
             int i = new Random().nextInt(AVAILABLE_IMAGES);
             background = ImageIO.read(new File(URI_BACKGROUNDS + "/tile(" + i + ").png"));
-            background = utilities.image.ImageUtil.resizeProportional(background, utilities.image.ImageUtil.getProportion(frameDimension) * 1.5f);
+            
+            double proportionX = Math.max((background.getWidth()/this.frameDimension.getWidth()), (this.frameDimension.getWidth()/background.getWidth()));
+            double proportionY = Math.max((background.getHeight()/this.frameDimension.getHeight()), (this.frameDimension.getHeight()/background.getHeight()));
+            
+            background = utilities.image.ImageUtil.resizeProportional(background, Math.max(proportionX, proportionY) * 1.5f);
         } catch (IOException ex) {
             Logger.getLogger(AnimatedBackgroundPanel.class.getName()).log(Level.SEVERE, null, ex);
         }

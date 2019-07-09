@@ -18,6 +18,7 @@ import languajes.ButtonTexts;
 import model.entities.Move;
 import model.entities.MoveSet;
 import model.entities.Specie;
+import utilities.image.Dimensions;
 import utilities.image.RGB;
 import utilities.sound.Sound;
 import view.components.fonts.PokemonFont;
@@ -39,14 +40,43 @@ public class ButtonFactory {
             BufferedImage idleBackground = ImageIO.read(new File(URI_BUTTON_MENU_IDLE));
             BufferedImage mouseEnteredBackground = ImageIO.read(new File(URI_BUTTON_MENU_MOUSE_ENTERED));
 
+            int grid = (int) (Dimensions.getSelectedResolution().getWidth() * 0.03f);
+
+            if (grid == 0) {
+                grid = 1;
+            }
+
             Dimension buttonSize = new Dimension(
-                    idleBackground.getWidth() / 2, //Button width
-                    idleBackground.getHeight() / 2 //Button height
+                    (int)(grid * 14f), //Button width
+                    ((int) (grid * 3.6f)) //Button height
             );
 
-            CustomButton jb = new CustomButton(text, 18, Color.WHITE, idleBackground, mouseEnteredBackground, buttonSize);
+            idleBackground = utilities.image.ImageUtil.resize(idleBackground, buttonSize.width, buttonSize.height);
+            mouseEnteredBackground = utilities.image.ImageUtil.resize(mouseEnteredBackground, buttonSize.width, buttonSize.height);
 
-            jb.setBounds(0, 0, idleBackground.getWidth() / 2, idleBackground.getHeight() / 2);
+            int fontSize = (int) utilities.string.StringUtil.preferedFontSizeforLabel(view.components.fonts.PokemonFont.getFont(12), text, new Dimension((int) (buttonSize.width * 0.4f), (int) (buttonSize.height * 0.9f)));
+
+            CustomButton jb = new CustomButton(text, fontSize, Color.WHITE, idleBackground, mouseEnteredBackground, buttonSize);
+
+            jb.setBounds(0, 0, idleBackground.getWidth(), idleBackground.getHeight());
+
+            if (over == null || entered == null) {
+                loadSounds();
+            }
+
+            jb.addMouseListener(new MouseAdapter() {
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    utilities.sound.SoundPlayer.getInstance().playEffectChannel(over);
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    utilities.sound.SoundPlayer.getInstance().playEffectChannel(entered);
+                }
+
+            });
 
             return jb;
         } catch (Exception ex) {

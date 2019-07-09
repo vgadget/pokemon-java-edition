@@ -10,19 +10,17 @@ public class Dimensions {
 
     public static final Dimension frameDimension1080p = new Dimension((int) (1920 / 1.3), (int) (1080 / 1.3));
     public static final Dimension frameDimension720p = new Dimension((int) (1280 / 1.3), (int) (720 / 1.3));
+    public static final Dimension frameDimension2k =  new Dimension((int) (1280*2 / 1.3), (int) (720*2 / 1.3));
     
-    public static final Dimension mainMenuResolution =  new Dimension(getSelectedResolution().width, (int) (getSelectedResolution().height*1.3));
+    private static Dimension selectedResolution = frameDimension2k;
     
     public static Dimension getSelectedResolution(){
-        return frameDimension720p;
+        return selectedResolution;
     }
-    public static Dimension getMainMenuResolution(){
-        
-        if (getSelectedResolution().equals(frameDimension1080p)){
-            return frameDimension1080p;
-        }
-        
-        return mainMenuResolution;
+    
+    public static void setSelectedResolution(Dimension resolution){
+        selectedResolution = resolution;
     }
+   
 
 }
