@@ -44,7 +44,9 @@ class TTSEngine {
     public void stopSpeaking() {
 
         if (audioPlayer != null) {
+            
             audioPlayer.cancel();
+            audioPlayer.interrupt();
         }
     }
 

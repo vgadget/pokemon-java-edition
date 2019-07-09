@@ -40,7 +40,7 @@ public class Specie implements Entity<String> {
             Integer minDefense, Integer maxSpecialDefense, Integer minSpecialDefense,
             Integer maxSpeed, Integer minSpeed, Float precision, Float evasion, String description, Sound cry)
             throws Exception {
-        
+
         if (validateFields(name, type, secondaryType, front, back, height, weight, pokedexID,
                 maxHP, minHP, maxAttack, minAttack,
                 maxSpecialAttack, minSpecialAttack, maxDefense,
@@ -82,7 +82,7 @@ public class Specie implements Entity<String> {
             Integer minDefense, Integer maxSpecialDefense, Integer minSpecialDefense,
             Integer maxSpeed, Integer minSpeed, Float precision, Float evasion, String description, Sound cry) {
 
-        if (name == null || name.equals("")) {           
+        if (name == null || name.equals("")) {
             return false;
         } else if (front == null || back == null) {
             return false;
@@ -103,29 +103,29 @@ public class Specie implements Entity<String> {
         } else if (maxSpecialDefense < minSpecialDefense || Math.min(maxSpecialDefense, minSpecialDefense) <= 0) {
             return false;
         } else if (maxSpeed < minSpeed || Math.min(maxSpeed, minSpeed) <= 0) {
-                    System.out.println("DEBUG");
+            System.out.println("DEBUG");
             return false;
         } else if (evasion <= 0 || evasion > 6) {
-                    System.out.println("DEBUG");
+            System.out.println("DEBUG");
             return false;
         } else if (precision < 0.3 || precision > 1) {
-                    System.out.println("DEBUG");
+            System.out.println("DEBUG");
             return false;
         } else if (type == null) {
-                    System.out.println("DEBUG");
+            System.out.println("DEBUG");
             return false;
         } else if (description == null || description.equals("")) {
             return false;
         } else if (cry == null) {
             return false;
         }
-        
+
         return true;
     }
 
     public String getName() {
 
-        String key = this.getClass().getCanonicalName() + " - " + getPK() + " - getName()";
+        String key = this.getClass().getCanonicalName() + "-" + getPK() + "-getName()";
 
         if (StringResourceMultilingualManager.getInstance().keyExist(key)) {
             return StringResourceMultilingualManager.getInstance().getResource(key);
@@ -232,7 +232,7 @@ public class Specie implements Entity<String> {
 
     public String getDescription() {
 
-        String key = this.getClass().getCanonicalName() + " - " + getPK() + " - getDescription()";
+        String key = this.getClass().getCanonicalName() + "-" + getPK() + "-getDescription()";
 
         if (StringResourceMultilingualManager.getInstance().keyExist(key)) {
             return StringResourceMultilingualManager.getInstance().getResource(key);
@@ -242,6 +242,32 @@ public class Specie implements Entity<String> {
         }
 
         return description;
+    }
+
+    @Override
+    public String toString() {
+
+        String secType = "";
+
+        if (secondaryType != null) {
+            secType = secondaryType.getName();
+        }
+
+        if (!StringResourceMultilingualManager.getInstance().keyExist("kilogram")) {
+            StringResourceMultilingualManager.getInstance().addKey("kilogram");
+        }
+
+        if (!StringResourceMultilingualManager.getInstance().keyExist("meter")) {
+            StringResourceMultilingualManager.getInstance().addKey("meter");
+        }
+
+        return name
+                + ". I D :" + pokedexID + ". "
+                + type.getName() + ". "
+                + secType + ". "
+                + getDescription() + ". "
+                + getHeight() + " " + StringResourceMultilingualManager.getInstance().getResource("meter") + ". "
+                + getWeight() +" "+ StringResourceMultilingualManager.getInstance().getResource("kilogram") + ". ";
     }
 
     @Override

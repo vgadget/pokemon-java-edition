@@ -14,29 +14,37 @@ import model.TypeModel;
  *
  * @author Adrian Vazquez
  */
-public class PokedexViewImpl extends PokedexView{
+public class PokedexViewImpl extends PokedexView {
 
-    public PokedexViewImpl(SpecieController specieController, TypeModel typeModel) {
-        super(specieController.getModel(), specieController);
-        initComponents();
-        
+    private TypeModel typeModel;
+
+    public void setup() {
+        //SETUP POKEDEX SPECIE LIST
         int w, h;
-        
-        w = (int) (this.pokedexEntryPanel.getSize().getWidth()*0.35);
+
+        w = (int) (this.pokedexEntryPanel.getSize().getWidth() * 0.35); //POKEDEX LIST WILL USE THE 35% OF THE WINDOW
         h = (int) this.pokedexEntryPanel.getSize().getHeight();
-        
+
         this.jSplitPane1.remove(this.pokedexSpecieListPane);
-        
-        this.pokedexSpecieListPane = new JScrollPane(new PokedexSpecieListView(getModel().getAll(), new Dimension(w, h), (PokedexEntryView) pokedexEntryPanel, specieController, typeModel));
+
+        PokedexSpecieListView pokedexSpecieListView = new PokedexSpecieListView(getModel().getAll(), new Dimension(w, h), (PokedexEntryView) pokedexEntryPanel, getController(), typeModel);
+        pokedexSpecieListView.setContainer(this);
+        this.pokedexSpecieListPane = new JScrollPane(pokedexSpecieListView);
         this.pokedexSpecieListPane.getVerticalScrollBar().setUnitIncrement(6);
-        
+
         this.jSplitPane1.add(this.pokedexSpecieListPane);
-        
+
         repaint();
     }
 
+    public PokedexViewImpl(SpecieController specieController, TypeModel typeModel) {
+        super(specieController.getModel(), specieController);
+        this.typeModel = typeModel;
+        initComponents();
 
-    
+        setup();
+
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -51,7 +59,8 @@ public class PokedexViewImpl extends PokedexView{
         pokedexEntryPanel = new PokedexEntryView();
         pokedexSpecieListPane = new javax.swing.JScrollPane();
 
-        jSplitPane1.setDividerLocation(700);
+        jSplitPane1.setDividerLocation(0.75f);
+        jSplitPane1.setDividerSize(0);
 
         int w = (int) (pokedexEntryPanel.getSize().width * (1.35));
         int h = (int) pokedexEntryPanel.getSize().height;
@@ -93,7 +102,7 @@ public class PokedexViewImpl extends PokedexView{
 
     @Override
     public void refresh() {
-        repaint();
+        setup();
     }
 
 

@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import texttospeech.Narrator;
 import view.components.fonts.PokemonFont;
 
 /**
@@ -22,6 +23,7 @@ import view.components.fonts.PokemonFont;
 public class CustomButton extends JButton implements AidComponent {
 
     private String text;
+    private String pressedVoiceFeedback;
     private BufferedImage idle;
     private BufferedImage mouseEntered;
     private BufferedImage displayedImage;
@@ -121,13 +123,25 @@ public class CustomButton extends JButton implements AidComponent {
     public void setDescription(String text) {
         this.text = text;
     }
-    
-    
 
     @Override
     public void press() {
         for (ActionListener al : this.getActionListeners()) {
             al.actionPerformed(null);
+        }
+    }
+    
+    
+    @Override
+    public void setPressedVoiceFeedback(String text) {
+        this.pressedVoiceFeedback = text;
+    }
+
+    @Override
+    public void getPressedVoiceFeedback() {
+       
+        if (this.pressedVoiceFeedback != null){
+            Narrator.getInstance().speak(this.pressedVoiceFeedback);
         }
     }
 

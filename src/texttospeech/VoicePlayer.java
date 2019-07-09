@@ -1,6 +1,5 @@
 package texttospeech;
 
-
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -34,6 +33,8 @@ class VoicePlayer extends Thread {
 
     public void cancel() {
         if (sourceDataLine != null) {
+            sourceDataLine.flush();
+            sourceDataLine.drain();
             sourceDataLine.stop();
         }
         requestStop = true;
@@ -57,10 +58,10 @@ class VoicePlayer extends Thread {
 
     }
 
-    public PlayerStatus getPlayerStatus(){
+    public PlayerStatus getPlayerStatus() {
         return playerStatus;
     }
-    
+
     @Override
     public void run() {
 

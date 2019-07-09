@@ -10,7 +10,7 @@ import view.components.AidPanel;
  *
  * @author Adrian Vazquez
  */
-public abstract class AbstractView<M extends Model, C extends Controller> extends AidPanel implements View<M, C>{
+public abstract class AbstractView<M extends Model, C extends Controller> extends JLayeredPane implements View<M, C>{
 
     private M model;
     private C controller;

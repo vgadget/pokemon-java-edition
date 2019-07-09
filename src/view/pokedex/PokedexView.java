@@ -16,6 +16,7 @@ public abstract class PokedexView extends AbstractView<SpecieModel, SpecieContro
         setModel(specieModel);
         setController(specieController);
         
+        
     }
 
 

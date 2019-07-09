@@ -14,10 +14,15 @@ import javax.swing.JPanel;
 import languajes.StringResourceMultilingualManager;
 import model.SpecieModel;
 import model.TypeModel;
-import utilities.CSVReader;
+import texttospeech.Narrator;
+import utilities.CSVManager;
+import utilities.image.Dimensions;
 import utilities.sound.Sound;
 import view.pokedex.CreateSpecieView;
 import view.View;
+import view.components.AidPanel;
+import view.components.ButtonFactory;
+import view.components.CustomButton;
 import view.menu.MainMenu;
 import view.pokedex.PokedexEntryView;
 import view.pokedex.PokedexSpecieListView;
@@ -33,8 +38,55 @@ public class Main {
     public static void main(String[] args) throws Exception {
         
         
-        //StringResourceMultilingualManager.getInstance().setDefaultLanguage("日本語");
+       
+        /*
+        StringResourceMultilingualManager.getInstance().setDefaultLanguage("ESPAÑOL");
         
+        JFrame frame = new JFrame();
+        JPanel panel = new AidPanel();
+        
+        CustomButton cb1, cb2, cb3, cb4, cb5, cb6, cb7, cb8, cb9, cb10, cb11;
+        
+        cb1 = ButtonFactory.menuButton("ONE");
+        cb2 = ButtonFactory.menuButton("TWO");
+        cb3 = ButtonFactory.menuButton("THREE");
+        cb4 = ButtonFactory.menuButton("FOUR");
+        cb5 = ButtonFactory.menuButton("FIVE");
+        cb6 = ButtonFactory.menuButton("SIX");
+        cb7 = ButtonFactory.menuButton("SEVEN");
+        cb8 = ButtonFactory.menuButton("EIGHT");
+        cb9 = ButtonFactory.menuButton("NINE");
+        cb10 = ButtonFactory.menuButton("TEN");
+        cb11 = ButtonFactory.menuButton("ELEVEN");
+        
+        panel.add(cb1);
+        panel.add(cb2);
+        panel.add(cb3);
+        panel.add(cb4);
+        panel.add(cb5);
+        panel.add(cb6);
+        panel.add(cb7);
+        panel.add(cb8);
+        panel.add(cb9);
+        panel.add(cb10);
+        panel.add(cb11);
+        
+        
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(Dimensions.frameDimension1080p);
+        frame.add(panel);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        */
+        
+        /*
+        StringResourceMultilingualManager manager = StringResourceMultilingualManager.getInstance();
+        
+        manager.setResource("model.entities.Type - Bug", "Bicho");
+        */
+        
+        Narrator.getInstance().setLanguage(Narrator.Language.ENGLISH);
+        //StringResourceMultilingualManager.getInstance().setDefaultLanguage("ESPAÑOL");
         
         SpecieModel specieModel;
         TypeModel typeModel;
@@ -68,7 +120,7 @@ public class Main {
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(true);
-        frame.setVisible(true); 
+        frame.setVisible(true);
 
         //new MainMenu();
         

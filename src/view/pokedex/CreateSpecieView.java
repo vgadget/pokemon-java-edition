@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
+import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import model.TypeModel;
 import model.entities.Specie;
@@ -24,7 +25,6 @@ import utilities.string.StringComparator;
 import utilities.sound.SoundPlayer;
 import utilities.sound.Sound;
 import view.pokedex.components.SpriteJLabel;
-
 
 /**
  *
@@ -45,7 +45,7 @@ public class CreateSpecieView extends PokedexView {
     public CreateSpecieView(TypeModel typeModel, SpecieController specieController) {
 
         super(specieController.getModel(), specieController);
-        setEnabledAudioDescription(false);
+        
 
         this.typeModel = typeModel;
 
@@ -616,14 +616,14 @@ public class CreateSpecieView extends PokedexView {
         if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
 
             File[] files = fileChooser.getSelectedFiles();
-            
-            Arrays.sort(files, new Comparator<File>() {
-            @Override
-            public int compare(File o1, File o2) {
 
-                return new StringComparator().compare(o1.getName(), o2.getName());
-            }
-        });
+            Arrays.sort(files, new Comparator<File>() {
+                @Override
+                public int compare(File o1, File o2) {
+
+                    return new StringComparator().compare(o1.getName(), o2.getName());
+                }
+            });
 
             if (files.length > 1) {
 
@@ -673,9 +673,6 @@ public class CreateSpecieView extends PokedexView {
 
             back.setRefreshRate(this.jSliderRefreshRate.getModel().getMaximum() - this.jSliderRefreshRate.getModel().getValue() + 1);
             front.setRefreshRate(this.jSliderRefreshRate.getModel().getMaximum() - this.jSliderRefreshRate.getModel().getValue() + 1);
-            
-            
-            
 
             this.jLabelSpriteSpeed.setText((this.jSliderRefreshRate.getModel().getValue()) + "");
         } catch (Exception ex) {
@@ -755,7 +752,33 @@ public class CreateSpecieView extends PokedexView {
 
         Specie specie = this.getController().createEntity(data);
 
-        this.getController().newEntityGesture(specie);
+        boolean exist = false;
+        int i = 0;
+
+        List<Specie> specieList = this.getModel().getAll();
+        
+        
+        
+        if (specieList.size() >= 999) {
+            utilities.DisplayMessage.showErrorDialog("There are " + specieList.size() + " pokémon, remove some species to add others.");
+        } else {
+
+            while (i < specieList.size() && !exist) {
+
+                if (specieList.get(i).getName().equals(specie.getName()) || specieList.get(i).getPokedexID().equals(specie.getPokedexID())) {
+                    exist = true;
+                }
+                i++;
+            }
+            
+            if (!exist) {
+                this.getController().newEntityGesture(specie);
+            } else {
+                utilities.DisplayMessage.showErrorDialog("This specie is already created.");
+            }
+        }
+        
+        SwingUtilities.getWindowAncestor(this).dispose();
     }//GEN-LAST:event_jButtonCreateSpecieActionPerformed
 
     private void jButtonPlayCryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPlayCryActionPerformed
@@ -863,7 +886,3 @@ public class CreateSpecieView extends PokedexView {
     private javax.swing.JTextField jTextFieldWeight;
     // End of variables declaration//GEN-END:variables
 }
-
-
-
-

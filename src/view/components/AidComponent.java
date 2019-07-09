@@ -9,8 +9,14 @@ package view.components;
  *
  * @author Adrian Vazquez
  */
-public interface AidComponent{
+public interface AidComponent {
+
     public String getDescription();
+
     public void press();
-     
+
+    public void setPressedVoiceFeedback(String text);
+    
+    public void getPressedVoiceFeedback();
+
 }

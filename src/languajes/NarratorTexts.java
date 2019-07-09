@@ -15,8 +15,6 @@ public class NarratorTexts {
        |                String multilingual resouces                          |
         ----------------------------------------------------------------------
      */
-   
-    
     //Notifies the users. If they press some key, an action will be performed.
     private static String pressKey = "Press {key} to {action}";
 
@@ -38,7 +36,14 @@ public class NarratorTexts {
 
     //Notifies the users. If they press space, the Narrator start to speak.
     private static String pressSpaceToGetAudibleDescriptions = "Press Space to get audible descriptions. ";
+
     public static String pressSpaceToGetAudibleDescriptions() {
         return pressSpaceToGetAudibleDescriptions;
+    }
+
+    private static String pressUpOrDownArrowToNavigateBetweenMoreOptions = "Press UP or DOWN key to navigate between more options.";
+
+    public static String pressUpOrDownArrowToNavigateBetweenMoreOptions() {
+        return pressUpOrDownArrowToNavigateBetweenMoreOptions;
     }
 }

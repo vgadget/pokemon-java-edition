@@ -2,13 +2,11 @@ package languajes;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import utilities.CSVReader;
+import utilities.CSVManager;
 
 /**
  *
@@ -33,12 +31,12 @@ public class StringResourceMultilingualManager {
     }
 
     //END OF SINGLETON
-    private CSVReader reader;
+    private CSVManager csvManager;
     private String selectedLanguage;
 
     private StringResourceMultilingualManager() throws FileNotFoundException {
-        reader = new CSVReader(new File("Resources\\languages\\translations.csv"));
-        selectedLanguage = reader.getColums().get(1);
+        csvManager = new CSVManager(new File("Resources\\languages\\translations.csv"));
+        selectedLanguage = getAvailableLanguages().get(1);
     }
 
     public void setDefaultLanguage(String laguage) {
@@ -51,6 +49,7 @@ public class StringResourceMultilingualManager {
     }
 
     public String getResource(String key) {
+
         return getResource(key, getDefaultLanguage());
     }
 
@@ -59,81 +58,75 @@ public class StringResourceMultilingualManager {
     }
 
     public void addLanguage(String language) {
+        try {
+            List<List<String>> data = csvManager.getAll();
 
-        if (!languageExist(language)) {
-            try {
-                reader.addColumn(language.toUpperCase());
-            } catch (IOException ex) {
-                utilities.DisplayMessage.showErrorDialog(ex.getMessage());
-            }
+            data.forEach((line) -> {
+                line.add(" ");
+            });
+
+            csvManager.setData(data);
+            csvManager.save();
+
+        } catch (Exception ex) {
+            Logger.getLogger(StringResourceMultilingualManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public List<String> getAvailableLanguages() {
+
         try {
-            return this.reader.getColums();
-        } catch (FileNotFoundException ex) {
-            utilities.DisplayMessage.showErrorDialog(ex.getMessage());
+            return csvManager.getAll().get(0);
+        } catch (Exception ex) {
+            Logger.getLogger(StringResourceMultilingualManager.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return null;
+        return new LinkedList<>();
     }
 
     public String getResource(String key, String language) {
 
-        String resource = "";
+        String resource = key;
+
+        int languageIndex = getLanguageIndex(language);
+
+        if (languageIndex < 0) {
+            languageIndex = 1;
+        }
 
         try {
-
-            List<List<String>> data = reader.getAll();
+            List<List<String>> data = this.csvManager.getAll();
 
             for (List<String> line : data) {
 
                 if (line.get(0).equalsIgnoreCase(key)) {
+                    String r = line.get(languageIndex);
 
-                    resource = line.get(getLanguageIndex(language));
-                    
-                    resource = resource.replace("\"", "");
-                    
                     int i = 1;
-                    while ((resource.equalsIgnoreCase(key) || resource.isEmpty() || resource.equalsIgnoreCase(" ")) && i < line.size()) {
-                        resource = line.get(i);
+                    while (i < getAvailableLanguages().size() && (r == null || r.equals("") || r.equals(" "))) {
+                        r = line.get(i);
                         i++;
                     }
 
-                    return resource;
+                    if (r != null && !r.equals("") && !r.equals(" ")) {
+                        resource = r;
+                    }
                 }
-
             }
 
         } catch (Exception ex) {
-            //utilities.DisplayMessage.showErrorDialog(ex.getMessage());
+            Logger.getLogger(StringResourceMultilingualManager.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        
-        
-        return key;
+        return resource;
     }
 
-    private int getLanguageIndex(String language) throws FileNotFoundException {
+    private int getLanguageIndex(String language) {
 
         int i = 0;
 
-        List<String> lang = this.getAvailableLanguages();
-
-        boolean found = false;
-        while (i < lang.size() && !found) {
-
-            if (lang.get(i).contains(language)) {
-                found = true;
-
-            } else {
-                i++;
-            }
-        }
-
-        if (!found) {
-            i = 0;
+        if (this.getAvailableLanguages().contains(language)) {
+            i = this.getAvailableLanguages().indexOf(language);
         }
 
         return i;
@@ -141,117 +134,88 @@ public class StringResourceMultilingualManager {
 
     private void setResource(String key, String language, String resource) {
 
-        resource = "\"" + resource + "\"";
+        try {
 
-        if (keyExist(key) && languageExist(language)) {
+            List<List<String>> data = csvManager.getAll();
 
-            try {
-
-                List<List<String>> data = new LinkedList<>();
-
-                data.add(reader.getColums());
-                data.addAll(reader.getAll());
-
-                int i = 0;
-                boolean found = false;
-                while (i < data.size() && !found) {
-
-                    if (data.get(i).get(0).contains(key)) {
-
-                        data.get(i).set(getLanguageIndex(language), resource);
-                        reader.setData(data);
-                        found = true;
-                    } else {
-                        i++;
+            int languageIndex = getAvailableLanguages().indexOf(language);
+            
+            if (languageIndex >= 1) {
+                for (List<String> line : data) {
+                    
+                    if (line.get(0).equalsIgnoreCase(key)) {
+                        line.set(languageIndex, resource);
+                        
                     }
-
                 }
-
-            } catch (Exception ex) {
-                utilities.DisplayMessage.showErrorDialog(ex.getMessage());
+                csvManager.setData(data);
+                csvManager.save();
             }
+
+        } catch (Exception ex) {
+            Logger.getLogger(StringResourceMultilingualManager.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
     public void addKey(String key) {
 
-        if (!keyExist(key)) {
+        try {
+            List<List<String>> data = csvManager.getAll();
+            List<String> line = new LinkedList<>();
 
-            try {
+            line.add(key);
 
-                int columnCount = reader.getColumCount();
-
-                List<List<String>> data = new LinkedList<>();
-
-                data.add(reader.getColums());
-                data.addAll(reader.getAll());
-
-                List<String> line = new ArrayList<>();
-
-                line.add(key);
-
-                while (line.size() < columnCount) {
-                    line.add(" ");
-                }
-
-                data.add(line);
-
-                reader.setData(data);
-
-            } catch (Exception ex) {
-                utilities.DisplayMessage.showErrorDialog(ex.getMessage());
+            for (int i = 1; i < getAvailableLanguages().size(); i++) {
+                line.add(" ");
             }
+
+            data.add(line);
+
+            csvManager.setData(data);
+            csvManager.save();
+
+        } catch (Exception ex) {
+            Logger.getLogger(StringResourceMultilingualManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public List<String> getAvailableKeys() throws FileNotFoundException {
 
         List<String> keys = new LinkedList<>();
-        List<List<String>> data = reader.getAll();
 
-        data
-                .forEach((line) -> {
-                    keys.add(line.get(0));
-                });
+        try {
+            for (List<String> s : csvManager.getAll()) {
+                keys.add(s.get(0));
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(StringResourceMultilingualManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         return keys;
     }
 
     private boolean languageExist(String language) {
 
-        try {
-
-            List<String> lan = reader.getColums();
-
-            if (lan.stream().anyMatch((l) -> (l.equalsIgnoreCase(language)))) {
-                return true;
-            }
-
-        } catch (FileNotFoundException ex) {
-            utilities.DisplayMessage.showErrorDialog(ex.getMessage());
-        }
-
-        return false;
+        return getAvailableLanguages().contains(language);
     }
 
     public boolean keyExist(String key) {
 
         try {
+            for (List<String> line : csvManager.getAll()) {
 
-            List<List<String>> data = reader.getAll();
+                if (line.get(0).equalsIgnoreCase(key)) {
+                    return true;
+                }
 
-            if (data.stream().anyMatch((line) -> (line.get(0).equals(key)))) {
-                return true;
             }
 
-        } catch (FileNotFoundException ex) {
-            utilities.DisplayMessage.showErrorDialog(ex.getMessage());
+        } catch (Exception ex) {
+            Logger.getLogger(StringResourceMultilingualManager.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return false;
     }
-    
-    
 
 }

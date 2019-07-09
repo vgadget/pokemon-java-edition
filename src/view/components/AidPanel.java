@@ -7,13 +7,18 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
 import languajes.NarratorTexts;
 import texttospeech.Narrator;
 
-public class AidPanel extends JLayeredPane {
+public class AidPanel extends JPanel {
 
-    private final List<AidComponent> aidComponents = new ArrayList<>();
-    private final List<String> additionalDescriptions = new ArrayList<>();
+    private List<AidComponent> currentAidComponents = new ArrayList<>();
+    private List<AidComponent> allAidComponents = new ArrayList<>();
+    private List<String> additionalDescriptions = new ArrayList<>();
+
+    private int componentBlockFrom = 0;
+    private int componentBlockTo = 9;
 
     private JLabel inputDetector = new JLabel();
 
@@ -26,7 +31,7 @@ public class AidPanel extends JLayeredPane {
 
     }
 
-    public boolean isEabledAudioDescription() {
+    public boolean isEnabledAudioDescription() {
         return enabledAudioDescription;
     }
 
@@ -35,18 +40,55 @@ public class AidPanel extends JLayeredPane {
     }
 
     private void initComponents() {
+
         new Thread(() -> {
             inputDetector.setFocusable(true);
             inputDetector.addKeyListener(new KeyAdapter() {
 
                 @Override
                 public void keyPressed(KeyEvent e) {
+                    inputDetector.requestFocus();
+
                     if (e.getKeyChar() >= '1' && e.getKeyChar() <= '9') {
+
                         int opc = Integer.parseInt(e.getKeyChar() + "") - 1;
-                        if (opc < aidComponents.size()) {
-                            aidComponents.get(opc).press();
+
+                        if (opc < currentAidComponents.size()) {
+                            currentAidComponents.get(opc).press();
                         }
+
                     } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+
+                        getAudibleDescription();
+
+                    } else if ((e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_UP) && allAidComponents.size() > 9) {
+
+                        if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+
+                            if (componentBlockTo + 9 < allAidComponents.size()) {
+
+                                componentBlockFrom = componentBlockTo;
+                                componentBlockTo = componentBlockTo + 9;
+
+                            } else if (componentBlockTo < allAidComponents.size()) {
+                                componentBlockFrom = componentBlockTo;
+                                componentBlockTo = allAidComponents.size();
+                            }
+
+                        } else {
+
+                            if (componentBlockFrom - 9 >= 0) {
+
+                                componentBlockTo = componentBlockFrom;
+                                componentBlockFrom = componentBlockFrom - 9;
+
+                            } else {
+                                componentBlockFrom = 0;
+                                componentBlockTo = componentBlockFrom + 9;
+                            }
+                        }
+
+                        currentAidComponents = allAidComponents.subList(componentBlockFrom, componentBlockTo);
                         getAudibleDescription();
                     }
                 }
@@ -94,7 +136,7 @@ public class AidPanel extends JLayeredPane {
     @Override
     public void remove(Component c) {
         if (c instanceof AidComponent) {
-            aidComponents.remove((AidComponent) c);
+            currentAidComponents.remove((AidComponent) c);
         }
         super.remove(c);
         inputDetector.requestFocus();
@@ -103,9 +145,14 @@ public class AidPanel extends JLayeredPane {
 
     private void addAidComponent(Component component) {
         if (component instanceof AidComponent) {
-            if (!aidComponents.contains((AidComponent) component) && aidComponents.size() < 9) {
-                this.aidComponents.add((AidComponent) component);
-                inputDetector.requestFocus();
+
+            if (!allAidComponents.contains((AidComponent) component)) {
+                if (!currentAidComponents.contains((AidComponent) component) && currentAidComponents.size() < 9) {
+                    this.currentAidComponents.add((AidComponent) component);
+                    inputDetector.requestFocus();
+                }
+
+                this.allAidComponents.add((AidComponent) component);
             }
         }
     }
@@ -118,7 +165,7 @@ public class AidPanel extends JLayeredPane {
 
     private void getAudibleDescription() {
 
-        if (enabledAudioDescription) {
+        if (isEnabledAudioDescription()) {
             new Thread(() -> {
 
                 String r = "";
@@ -128,15 +175,22 @@ public class AidPanel extends JLayeredPane {
                         .map((s) -> s + "..\n\n")
                         .reduce(r, String::concat);
 
-                for (int i = 0; i < aidComponents.size(); i++) {
+                for (int i = 0; i < currentAidComponents.size(); i++) {
 
                     int n = i + 1;
-                    r += NarratorTexts.pressKeyTo(n + "", aidComponents.get(i).getDescription()) + "\n";
+                    r += NarratorTexts.pressKeyTo(n + "", currentAidComponents.get(i).getDescription()) + "\n";
                 }
 
                 if (!r.equalsIgnoreCase("")) {
+
+                    if (this.allAidComponents.size() > 9) {
+                        r += "\n" + NarratorTexts.pressUpOrDownArrowToNavigateBetweenMoreOptions();
+                    }
+
                     r += "\n" + NarratorTexts.pressSpaceToRepeat();
+
                     Narrator.getInstance().speak(r);
+
                 } else {
                     Narrator.getInstance().speak(NarratorTexts.pressSpaceToGetAudibleDescriptions());
                 }

@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +24,7 @@ import model.entities.Sprite;
 import model.entities.Type;
 import utilities.image.RGB;
 import utilities.sound.Sound;
-import view.pokedex.components.SpriteJLabel;
+import view.pokedex.components.SpriteJLabel;       //Hay un bug: Las voces se mezclan
 
 /**
  *
@@ -45,7 +47,6 @@ public class PokedexEntryView extends JLayeredPane {
         So, with a simple Math operation I Will have a precise grid to place every component on the panel. They will be xGrid and yGrid and will be initialised on setup() methow.
         xGrid and yGrid will be equal.
      */
-    
     int xGrid, yGrid;
 
     private BufferedImage pokedexEntryBackground;
@@ -60,64 +61,109 @@ public class PokedexEntryView extends JLayeredPane {
     private JLabel weight;
     private SpriteJLabel sprite;
     private JButton cryButton;
-    
+
     Dimension size;
-    
+
     public PokedexEntryView() {
 
         pokedexEntryBackground = null;
         setup();
-        
+
     }
 
-    public void setSpecie(Specie specie) {
+    public void setSpecie(Specie s) {
 
-        this.specie = specie;
+        this.specie = s;
 
+        Thread t1, t2, t3; // To optimice load
+
+        t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                setSprite(specie.getFrontSprite());
+            }
+        });
+
+        t2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                setType(specie.getType());
+                setSecondaryType(specie.getSecondaryType());
+                setPokedexIdAndName(specie.getPokedexID() + "", specie.getName());
+
+            }
+        });
+
+        t3 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                setCry(specie.getCry());
+                setHeightAndWeight(specie.getHeight(), specie.getWeight());
+                setDescription(specie.getDescription());
+
+            }
+        });
+
+        t1.start();
+        t2.start();
+        t3.start();
+
+        try {
+            t2.join();
+            t3.join();
+            t1.join();
+
+        } catch (InterruptedException ex) {
+            Logger.getLogger(PokedexEntryView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+        
+        /*
         setDescription(this.specie.getDescription());
-        setPokedexIdAndName(this.specie.getPokedexID() + "", specie.getName());
+        setPokedexIdAndName(this.specie.getPokedexID()< + "", specie.getName());
         setType(this.specie.getType());
         setSecondaryType(this.specie.getSecondaryType());
         setHeightAndWeight(this.specie.getHeight(), specie.getWeight());
         setSprite(this.specie.getFrontSprite());
         setCry(this.specie.getCry());
-
+         */
         refresh();
     }
-    
-    private void setCry(Sound cry){
-        
-        for (ActionListener al : this.cryButton.getActionListeners()){
+
+    private void setCry(Sound cry) {
+
+        for (ActionListener al : this.cryButton.getActionListeners()) {
             this.cryButton.removeActionListener(al);
         }
-        
-        this.cryButton.addActionListener(new ActionListener() {
+
+        this.cryButton.addMouseListener(new MouseAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-               utilities.sound.SoundPlayer.getInstance().playEffectChannel(cry);
+            public void mouseClicked(MouseEvent e) {
+                utilities.sound.SoundPlayer.getInstance().playEffectChannel(cry);
             }
+
         });
-        
+
     }
-    
-    private void setSprite(Sprite s){
-        
+
+    private void setSprite(Sprite s) {
+
         BufferedImage animation[] = s.getAnimation();
-        
-        for (int i = 0; i < animation.length; i++){
+
+        for (int i = 0; i < animation.length; i++) {
             animation[i] = utilities.image.ImageUtil.resize(animation[i], (int) this.sprite.getSize().getHeight(), (int) this.sprite.getSize().getWidth());
         }
-        
+
         try {
             this.sprite.setup(new Sprite(animation, s.getRefreshRate()));
         } catch (Exception ex) {
             Logger.getLogger(PokedexEntryView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    private void setHeightAndWeight(Float heigt, Float weight)
-    {
-        
+
+    private void setHeightAndWeight(Float heigt, Float weight) {
+
         String h = "" + heigt;
         String w = "" + weight;
 
@@ -132,9 +178,8 @@ public class PokedexEntryView extends JLayeredPane {
 
         this.height.setText(h);
         this.weight.setText(w);
-        
+
     }
-            
 
     private void setType(Type t) {
 
@@ -154,7 +199,7 @@ public class PokedexEntryView extends JLayeredPane {
 
             f = view.components.fonts.PokemonFont.getFont((int) fontSize);
             // END OF FONT STUFF    
-            
+
             Color c = Color.WHITE;
             finalImage = utilities.image.ImageUtil.addText(finalImage, t.getName(), f, c);
 
@@ -197,7 +242,7 @@ public class PokedexEntryView extends JLayeredPane {
 
             f = view.components.fonts.PokemonFont.getFont((int) fontSize);
             // END OF FONT STUFF
-            
+
             if (t != null) {
                 Color c = Color.WHITE;
                 finalImage = utilities.image.ImageUtil.addText(finalImage, t.getName(), f, c);
@@ -217,7 +262,9 @@ public class PokedexEntryView extends JLayeredPane {
 
         Font f = view.components.fonts.PokemonFont.getFont(1);
 
-        float fontSize = utilities.string.StringUtil.preferedFontSizeforLabel(f, text, specieIdAndName.getSize());
+        Dimension labelSize = new Dimension((int) (specieIdAndName.getSize().width * 0.80), specieIdAndName.getSize().height);
+
+        float fontSize = utilities.string.StringUtil.preferedFontSizeforLabel(f, text, labelSize);
 
         f = view.components.fonts.PokemonFont.getFont((int) fontSize);
 
@@ -310,22 +357,22 @@ public class PokedexEntryView extends JLayeredPane {
             this.weight = new JLabel();
             this.height.setLocation(xGrid * 28, (int) (yGrid * (10)));
             this.weight.setLocation(xGrid * 28, (int) (yGrid * 12));
-            this.height.setSize(xGrid * 8, (int)( yGrid *(1.4f)));
-            this.weight.setSize(xGrid * 8, (int)( yGrid *(1.4f)));
-            
+            this.height.setSize(xGrid * 8, (int) (yGrid * (1.4f)));
+            this.weight.setSize(xGrid * 8, (int) (yGrid * (1.4f)));
+
             // SPRITE
             this.sprite = new SpriteJLabel();
-            this.sprite.setLocation(xGrid*3, yGrid);
-            this.sprite.setSize(xGrid*10, yGrid*10);
-            
+            this.sprite.setLocation(xGrid * 3, yGrid);
+            this.sprite.setSize(xGrid * 10, yGrid * 10);
+
             // CRY BUTTON
             this.cryButton = new JButton();
-            this.cryButton.setLocation((int) (xGrid*13.8), (int) (yGrid*6.65));
-            this.cryButton.setSize(xGrid*4, yGrid*4);
+            this.cryButton.setLocation((int) (xGrid * 13.8), (int) (yGrid * 6.65));
+            this.cryButton.setSize(xGrid * 4, yGrid * 4);
             this.cryButton.setOpaque(false);
             this.cryButton.setContentAreaFilled(false);
             this.cryButton.setBorderPainted(false);
-            
+
             // PANEL LAYERS
             add(background, new Integer(0));
             add(this.jTextAreaDescription, new Integer(1));
@@ -336,7 +383,6 @@ public class PokedexEntryView extends JLayeredPane {
             add(this.weight, new Integer(6));
             add(this.sprite, new Integer(7));
             add(this.cryButton, new Integer(8));
-            
 
         } catch (IOException ex) {
             utilities.DisplayMessage.showErrorDialog(ex.getLocalizedMessage());
@@ -355,12 +401,10 @@ public class PokedexEntryView extends JLayeredPane {
     public Specie getSpecie() {
         return specie;
     }
-    
+
     @Override
-    public Dimension getSize(){
+    public Dimension getSize() {
         return size;
     }
 
 }
-
-

@@ -76,6 +76,8 @@ public class Narrator {
             output = s;
         }
 
+        tts.stopSpeaking();
+        
         tts.speak(output+" ", 1.5f, false, true);
 
     }
