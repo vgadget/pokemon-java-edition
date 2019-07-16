@@ -12,7 +12,7 @@ public class Dimensions {
     public static final Dimension frameDimension720p = new Dimension((int) (1280 / 1.3), (int) (720 / 1.3));
     public static final Dimension frameDimension2k =  new Dimension((int) (1280*2 / 1.3), (int) (720*2 / 1.3));
     
-    private static Dimension selectedResolution = frameDimension2k;
+    private static Dimension selectedResolution = frameDimension1080p;
     
     public static Dimension getSelectedResolution(){
         return selectedResolution;

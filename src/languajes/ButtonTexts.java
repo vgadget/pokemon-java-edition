@@ -56,6 +56,34 @@ public class ButtonTexts {
         return saveAndExit;
     }
 
+    // Main menu -> Single player - Text for Fight.
+    private String battle = "Battle.";
+
+    public String battle() {
+        return battle;
+    }
+
+    // Main menu -> Single player - Text for catch new pokemon.
+    private String catchPokemon = "Catch.";
+
+    public String catchPokemon() {
+        return catchPokemon;
+    }
+
+    // Main menu -> Single player - Text for catch new pokemon.
+    private String pokedex = "Pokédex.";
+
+    public String pokedex() {
+        return pokedex;
+    }
+
+    // Main menu -> X - Text for go back to main menu.
+    private String goBack = "Go back.";
+
+    public String goBack() {
+        return goBack;
+    }
+
     // Attack button description
     private String attackButtonDescription = "Attack: {name}, Type: {type}, with {remainingPP} over {maximunPP} PP.";
 
