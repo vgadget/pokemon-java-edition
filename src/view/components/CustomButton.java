@@ -58,7 +58,6 @@ public class CustomButton extends JButton implements AidComponent {
                         Thread.sleep(200);
                         displayedImage = idle;
                         repaint();
-                        mouseEntered(e);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(CustomButton.class.getName()).log(Level.SEVERE, null, ex);
                     }

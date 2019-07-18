@@ -5,6 +5,10 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,15 +34,15 @@ public class AnimatedBackgroundPanel extends AidPanel {
     private int dx, dy; // Background location trajectory.
 
     Random rnd = new Random();
-    
-    public AnimatedBackgroundPanel(){
+
+    public AnimatedBackgroundPanel() {
         this(utilities.image.Dimensions.getSelectedResolution());
-    } 
+    }
 
     public AnimatedBackgroundPanel(Dimension frameDimension) {
 
         this.frameDimension = frameDimension;
-                
+
         setUpBackgrounds();
 
         dx = dy = BACKGROUND_SPEED;
@@ -107,13 +111,31 @@ public class AnimatedBackgroundPanel extends AidPanel {
 
     private void setUpBackgrounds() {
         try {
-            int i = new Random().nextInt(AVAILABLE_IMAGES);
-            background = ImageIO.read(new File(URI_BACKGROUNDS + "/tile(" + i + ").png"));
-            
-            double proportionX = Math.max((background.getWidth()/this.frameDimension.getWidth()), (this.frameDimension.getWidth()/background.getWidth()));
-            double proportionY = Math.max((background.getHeight()/this.frameDimension.getHeight()), (this.frameDimension.getHeight()/background.getHeight()));
-            
+//            int i = new Random().nextInt(AVAILABLE_IMAGES);
+//            background = ImageIO.read(new File(URI_BACKGROUNDS + "/tile(" + i + ").png"));
+
+            List<File> images = new LinkedList<>();
+
+            images.addAll(Arrays.asList(new File(URI_BACKGROUNDS).listFiles()));
+
+            images
+                    .stream()
+                    .filter((img) -> (!img.getName().toUpperCase().contains(".PNG")))
+                    .forEachOrdered((img)
+                            -> {
+
+                        images.remove(img);
+                    });
+
+            background = ImageIO.read(images.get(new Random().nextInt(images.size())));
+
+            double proportionX = Math.max((background.getWidth() / this.frameDimension.getWidth()), (this.frameDimension.getWidth() / background.getWidth()));
+            double proportionY = Math.max((background.getHeight() / this.frameDimension.getHeight()), (this.frameDimension.getHeight() / background.getHeight()));
+
             background = utilities.image.ImageUtil.resizeProportional(background, Math.max(proportionX, proportionY) * 1.5f);
+            
+            
+            
         } catch (IOException ex) {
             Logger.getLogger(AnimatedBackgroundPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -123,7 +145,7 @@ public class AnimatedBackgroundPanel extends AidPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        
+
         g.drawImage(background, x, y, this);
     }
 }

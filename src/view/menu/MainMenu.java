@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.logging.Level;
@@ -38,11 +37,16 @@ public class MainMenu extends JFrame {
     private CustomButton creditsMenuButton;
     private CustomButton saveAndExitMenuButton;
 
-    //Single player buttons.
+    //Single player menu buttons.
     private CustomButton singlePlayerBattle;
     private CustomButton catchPokemon;
     private CustomButton pokedex;
     private CustomButton goBackFromSinglePlayerMenuToMainMenu;
+
+    //Multiplayer menu buttons.
+    private CustomButton localMultiplayer;
+    private CustomButton onlineMultiplayer;
+    private CustomButton goBackFromMultiPlayerMenuToMainMenu;
 
     public MainMenu() {
         try {
@@ -73,19 +77,7 @@ public class MainMenu extends JFrame {
         //Set buttons
         setMainMenuButtons();
         setSinglePlayerMenuButtons();
-        hideSinglePlayerMenuButtons();
-        hideMainMenuButtons();
-
-        panel.add(singlePlayerMenuButton);
-        panel.add(multiPlayerMenuButton);
-        panel.add(settingsMenuButton);
-        panel.add(creditsMenuButton);
-        panel.add(saveAndExitMenuButton);
-
-        panel.add(singlePlayerBattle);
-        panel.add(catchPokemon);
-        panel.add(pokedex);
-        panel.add(goBackFromSinglePlayerMenuToMainMenu);
+        setMultiplayerMenuButtons();
 
         //Author text
         Dimension d = new Dimension(18 * grid, 2 * grid);
@@ -156,11 +148,17 @@ public class MainMenu extends JFrame {
         multiPlayerMenuButton.addActionListener((ActionEvent e) -> {
 
             hideMainMenuButtons();
+            showMultiPlayerMenuButtons();
         });
 
+        settingsMenuButton.addActionListener((ActionEvent e) -> {
+
+            //hideMainMenuButtons();
+        });
+        
         creditsMenuButton.addActionListener((ActionEvent e) -> {
 
-            hideMainMenuButtons();
+            //hideMainMenuButtons();
         });
         saveAndExitMenuButton.addActionListener((ActionEvent e) -> {
 
@@ -189,6 +187,7 @@ public class MainMenu extends JFrame {
 
         setPosition(goBackFromSinglePlayerMenuToMainMenu, 22 * grid, 13 * grid);
 
+        //Actions
         goBackFromSinglePlayerMenuToMainMenu.addActionListener((ActionEvent e) -> {
             hideSinglePlayerMenuButtons();
             showMainMenuButtons();
@@ -196,7 +195,90 @@ public class MainMenu extends JFrame {
 
     }
 
+    private void setMultiplayerMenuButtons() {
+
+        localMultiplayer = ButtonFactory.menuButton(ButtonTexts.getInstance().localMultiplayer());
+        onlineMultiplayer = ButtonFactory.menuButton(ButtonTexts.getInstance().online());
+        goBackFromMultiPlayerMenuToMainMenu = ButtonFactory.menuButton(ButtonTexts.getInstance().goBack());
+
+        // Position
+        setPosition(localMultiplayer, 22 * grid, (grid));
+
+        setPosition(onlineMultiplayer, 22 * grid, 4 * grid);
+
+        setPosition(goBackFromMultiPlayerMenuToMainMenu, 22 * grid, 7 * grid);
+
+        //Actions
+        goBackFromMultiPlayerMenuToMainMenu.addActionListener((ActionEvent e) -> {
+            hideMultiPlayerMenuButtons();
+            showMainMenuButtons();
+        });
+    }
+
+    private void hideMultiPlayerMenuButtons() {
+
+        new Thread(() -> {
+
+            for (int i = 22; i < 40; i++) {
+
+                setPosition(localMultiplayer, i * grid, (grid));
+
+                setPosition(onlineMultiplayer, i * grid, 4 * grid);
+
+                setPosition(pokedex, i * grid, 7 * grid);
+
+                setPosition(goBackFromMultiPlayerMenuToMainMenu, i * grid, 7 * grid);
+
+                try {
+                    Thread.sleep(20);
+                    panel.repaint();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            panel.remove(localMultiplayer);
+            panel.remove(onlineMultiplayer);
+            panel.remove(goBackFromMultiPlayerMenuToMainMenu);
+
+        }).start();
+    }
+
+    private void showMultiPlayerMenuButtons() {
+
+        panel.add(localMultiplayer);
+        panel.add(onlineMultiplayer);
+        panel.add(goBackFromMultiPlayerMenuToMainMenu);
+
+        new Thread(() -> {
+
+            for (int i = 40; i >= 22; i--) {
+
+                setPosition(localMultiplayer, i * grid, (grid));
+
+                setPosition(onlineMultiplayer, i * grid, 4 * grid);
+
+                setPosition(pokedex, i * grid, 7 * grid);
+
+                setPosition(goBackFromMultiPlayerMenuToMainMenu, i * grid, 7 * grid);
+
+                try {
+                    Thread.sleep(20);
+                    panel.repaint();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        }).start();
+    }
+
     private void showSinglePlayerMenuButtons() {
+
+        panel.add(singlePlayerBattle);
+        panel.add(catchPokemon);
+        panel.add(pokedex);
+        panel.add(goBackFromSinglePlayerMenuToMainMenu);
 
         new Thread(() -> {
 
@@ -244,11 +326,22 @@ public class MainMenu extends JFrame {
                 }
             }
 
+            panel.remove(singlePlayerBattle);
+            panel.remove(catchPokemon);
+            panel.remove(pokedex);
+            panel.remove(goBackFromSinglePlayerMenuToMainMenu);
+
         }).start();
 
     }
 
     private void showMainMenuButtons() {
+
+        panel.add(singlePlayerMenuButton);
+        panel.add(multiPlayerMenuButton);
+        panel.add(settingsMenuButton);
+        panel.add(creditsMenuButton);
+        panel.add(saveAndExitMenuButton);
 
         new Thread(() -> {
 
@@ -299,6 +392,12 @@ public class MainMenu extends JFrame {
                     Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+
+            panel.remove(singlePlayerMenuButton);
+            panel.remove(multiPlayerMenuButton);
+            panel.remove(settingsMenuButton);
+            panel.remove(creditsMenuButton);
+            panel.remove(saveAndExitMenuButton);
 
         }).start();
     }

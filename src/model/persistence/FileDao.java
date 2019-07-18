@@ -50,12 +50,7 @@ public class FileDao<E extends Entity, PK extends Comparable> implements Dao<E, 
                 allElements.add(readObject(pathname));
             }
         }
-
-//        for (E element : allElements) {
-//            if (!element.getClass().equals(c)) {
-//                allElements.remove(element);
-//            }
-//        }
+        
         return allElements;
     }
 

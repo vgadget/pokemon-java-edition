@@ -47,14 +47,14 @@ public class ButtonFactory {
             }
 
             Dimension buttonSize = new Dimension(
-                    (int)(grid * 14f), //Button width
+                    (int)(grid * 14.7f), //Button width
                     ((int) (grid * 3.6f)) //Button height
             );
 
             idleBackground = utilities.image.ImageUtil.resize(idleBackground, buttonSize.width, buttonSize.height);
             mouseEnteredBackground = utilities.image.ImageUtil.resize(mouseEnteredBackground, buttonSize.width, buttonSize.height);
 
-            int fontSize = (int) utilities.string.StringUtil.preferedFontSizeforLabel(view.components.fonts.PokemonFont.getFont(12), text, new Dimension((int) (buttonSize.width * 0.4f), (int) (buttonSize.height * 0.9f)));
+            int fontSize = (int) utilities.string.StringUtil.preferedFontSizeforLabel(view.components.fonts.PokemonFont.getFont(12), text, new Dimension((int) (buttonSize.width * 0.4f), (int) (buttonSize.height * 0.3f)));
 
             CustomButton jb = new CustomButton(text, fontSize, Color.WHITE, idleBackground, mouseEnteredBackground, buttonSize);
 

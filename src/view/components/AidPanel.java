@@ -3,6 +3,8 @@ package view.components;
 import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JLabel;
@@ -26,7 +28,8 @@ public class AidPanel extends JPanel {
 
     public AidPanel() {
 
-        enabledAudioDescription = true;
+        
+        enabledAudioDescription = false;
         initComponents();
 
     }
@@ -107,6 +110,7 @@ public class AidPanel extends JPanel {
 
         addAidComponent(c);
         inputDetector.requestFocus();
+
         return super.add(c);
     }
 
@@ -130,13 +134,13 @@ public class AidPanel extends JPanel {
         addAidComponent(c);
         super.add(c, constraint, index);
         inputDetector.requestFocus();
-
     }
 
     @Override
     public void remove(Component c) {
         if (c instanceof AidComponent) {
             currentAidComponents.remove((AidComponent) c);
+            allAidComponents.remove((AidComponent) c);
         }
         super.remove(c);
         inputDetector.requestFocus();

@@ -36,7 +36,7 @@ public class PokemonBattleViewDebug {
         JFrame testOutputFrame = new JFrame("Debug: Outputs");
         JFrame testInputFrame = new JFrame("Debug: Inputs");
 
-        Dimension screenSize = Dimensions.frameDimension720p;
+        Dimension screenSize = Dimensions.getSelectedResolution();
         Dimension testOutputframeSize = new Dimension(screenSize);
 
         Dimension testInputputframeSize = new Dimension((int) (500), (int) (600));

@@ -77,6 +77,20 @@ public class ButtonTexts {
         return pokedex;
     }
 
+    // Main menu -> Multiplayer - Text for onlinePlay
+    private String localMltiplayer = "Local multiplayer.";
+
+    public String localMultiplayer() {
+        return localMltiplayer;
+    }
+
+    // Main menu -> Multiplayer - Text for onlinePlay
+    private String online = "Online multiplayer.";
+
+    public String online() {
+        return online;
+    }
+
     // Main menu -> X - Text for go back to main menu.
     private String goBack = "Go back.";
 

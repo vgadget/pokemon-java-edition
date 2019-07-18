@@ -74,9 +74,9 @@ public class Main {
 //        frame.setResizable(true);
 //        frame.setVisible(true);
 
-        new MainMenu();
+        //new MainMenu();
         
-        
+        debug.PokemonBattleViewDebug.test();
         
         
 
