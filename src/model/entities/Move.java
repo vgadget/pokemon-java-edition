@@ -1,12 +1,13 @@
 package model.entities;
 
 import languajes.StringResourceMultilingualManager;
+import model.BattleModel;
 
 /**
  *
  * @author Adrian Vazquez
  */
-public class Move implements Entity<String> {
+public abstract class Move implements Entity<String> {
 
     private String name;
     private int precision;
@@ -49,7 +50,7 @@ public class Move implements Entity<String> {
             return false;
         } else if (type == null) {
             return false;
-        } else if (this.frontAnimation == null || backAnimation == null) {
+        } else if (frontAnimation == null || backAnimation == null) {
             return false;
         }
 
@@ -97,6 +98,8 @@ public class Move implements Entity<String> {
     public Sprite getBackAnimation() {
         return backAnimation;
     }
+    
+    public abstract void makeEffect(BattleModel battleModel);
 
     @Override
     public boolean equals(Object obj) {

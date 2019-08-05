@@ -11,17 +11,17 @@ import model.MoveModel;
 public class Pokemon implements Entity<String> {
 
     private String nickname;
-    private int level;
-    private int currentHp;
-    private int maxHp;
-    private int attack;
-    private int defense;
-    private int specialAttack;
-    private int specialDefense;
-    private int speed;
-    private float precission;
-    private float evasion;
-    private boolean canLeft;
+    private Integer level;
+    private Integer currentHp;
+    private Integer maxHp;
+    private Integer attack;
+    private Integer defense;
+    private Integer specialAttack;
+    private Integer specialDefense;
+    private Integer speed;
+    private Float precission;
+    private Float evasion;
+    private Boolean canLeft;
 
     private Specie specie;
     private MoveSet moveSet;
@@ -29,43 +29,45 @@ public class Pokemon implements Entity<String> {
     private StatusCondition volatileStatusCondition;
     private StatusCondition persistentStatusCondition;
 
-    public Pokemon(String nickname, int level, Specie specie) {
-        this.nickname = nickname;
-        this.level = level;
-        this.specie = specie;
+    public Pokemon(String nickname, Integer level, Specie specie) throws Exception{
+        
+        setNickname(nickname);
+        setLevel(level);
+        setSpecie(specie);
+
         this.moveSet = new MoveSet();
 
         moveSet.add(MoveModel.getDefaultMove());
 
         generateRandomFIelds();
-        
+
     }
 
     public void generateRandomFIelds() {
-        
+
         maxHp = ThreadLocalRandom.current().nextInt(specie.getMinHP(), specie.getMaxHP() + 1);
         currentHp = maxHp;
         attack = ThreadLocalRandom.current().nextInt(specie.getMinAttack(), specie.getMaxAttack() + 1);
         defense = ThreadLocalRandom.current().nextInt(specie.getMinDefense(), specie.getMaxDefense() + 1);
         specialAttack = ThreadLocalRandom.current().nextInt(specie.getMinSpecialAttack(), specie.getMaxSpecialAttack() + 1);
         specialDefense = ThreadLocalRandom.current().nextInt(specie.getMinSpecialDefense(), specie.getMaxSpecialDefense() + 1);
-        speed = ThreadLocalRandom.current().nextInt(specie.getMinSpeed(), specie.getMaxSpeed()+ 1);
+        speed = ThreadLocalRandom.current().nextInt(specie.getMinSpeed(), specie.getMaxSpeed() + 1);
         precission = specie.getPrecision();
         evasion = specie.getEvasion();
         canLeft = true;
     }
 
     public String getNickname() {
-        
-        if (this.nickname.isEmpty()){
+
+        if (this.nickname.isEmpty()) {
             return this.getSpecie().getName();
         }
-        
+
         return nickname;
     }
 
     public void setNickname(String nickname) throws Exception {
-        
+
         this.nickname = nickname.trim();
     }
 
@@ -93,7 +95,7 @@ public class Pokemon implements Entity<String> {
         }
     }
 
-    public void setLevel(int level) {
+    public void setLevel(Integer level) {
         if (level >= 1 && level <= 100) {
             this.level = level;
         } else if (level < 1) {
@@ -103,7 +105,7 @@ public class Pokemon implements Entity<String> {
         }
     }
 
-    public void setCurrentHp(int currentHp) {
+    public void setCurrentHp(Integer currentHp) {
         if (currentHp >= 0 && currentHp <= getMaxHp()) {
             this.currentHp = currentHp;
         } else if (currentHp < 0) {
@@ -113,7 +115,7 @@ public class Pokemon implements Entity<String> {
         }
     }
 
-    public void setAttack(int attack) {
+    public void setAttack(Integer attack) {
         if (attack > 0 && attack <= getSpecie().getMaxAttack()) {
             this.attack = attack;
         } else if (attack <= 0) {
@@ -123,7 +125,7 @@ public class Pokemon implements Entity<String> {
         }
     }
 
-    public void setDefense(int defense) {
+    public void setDefense(Integer defense) {
         if (defense >= 0 && defense <= getSpecie().getMaxDefense()) {
             this.defense = defense;
         } else if (defense < 0) {
@@ -133,7 +135,7 @@ public class Pokemon implements Entity<String> {
         }
     }
 
-    public void setSpecialAttack(int specialAttack) {
+    public void setSpecialAttack(Integer specialAttack) {
         if (specialAttack > 0 && specialAttack <= getSpecie().getMaxSpecialAttack()) {
             this.specialAttack = specialAttack;
         } else if (specialAttack <= 0) {
@@ -143,7 +145,7 @@ public class Pokemon implements Entity<String> {
         }
     }
 
-    public void setSpecialDefense(int specialDefense) {
+    public void setSpecialDefense(Integer specialDefense) {
         if (specialDefense >= 0 && specialDefense <= getSpecie().getMaxSpecialDefense()) {
             this.specialDefense = specialDefense;
         } else if (specialDefense < 0) {
@@ -153,7 +155,7 @@ public class Pokemon implements Entity<String> {
         }
     }
 
-    public void setSpeed(int speed) {
+    public void setSpeed(Integer speed) {
         if (speed > 0 && speed <= getSpecie().getMaxSpeed()) {
             this.speed = speed;
         } else if (speed <= 0) {
@@ -163,28 +165,28 @@ public class Pokemon implements Entity<String> {
         }
     }
 
-    public void setPrecission(float precission) {
+    public void setPrecission(Float precission) {
         if (precission >= 0 && precission <= getSpecie().getPrecision()) {
             this.precission = precission;
         } else if (precission < 0) {
-            this.precission = 0;
+            this.precission = 0f;
         } else {
             this.precission = getSpecie().getPrecision();
         }
 
     }
 
-    public void setEvasion(float evasion) {
+    public void setEvasion(Float evasion) {
         if (evasion >= 0 && evasion <= getSpecie().getEvasion()) {
             this.evasion = evasion;
         } else if (evasion < 0) {
-            this.evasion = 0;
+            this.evasion = 0f;
         } else {
             this.evasion = getSpecie().getEvasion();
         }
     }
 
-    public void setCanLeft(boolean canLeft) {
+    public void setCanLeft(Boolean canLeft) {
         this.canLeft = canLeft;
     }
 
@@ -204,47 +206,47 @@ public class Pokemon implements Entity<String> {
         this.item = item;
     }
 
-    public int getLevel() {
+    public Integer getLevel() {
         return level;
     }
 
-    public int getCurrentHp() {
+    public Integer getCurrentHp() {
         return currentHp;
     }
 
-    public int getMaxHp() {
+    public Integer getMaxHp() {
         return maxHp;
     }
 
-    public int getAttack() {
+    public Integer getAttack() {
         return attack;
     }
 
-    public int getDefense() {
+    public Integer getDefense() {
         return defense;
     }
 
-    public int getSpecialAttack() {
+    public Integer getSpecialAttack() {
         return specialAttack;
     }
 
-    public int getSpecialDefense() {
+    public Integer getSpecialDefense() {
         return specialDefense;
     }
 
-    public int getSpeed() {
+    public Integer getSpeed() {
         return speed;
     }
 
-    public float getPrecission() {
+    public Float getPrecission() {
         return precission;
     }
 
-    public float getEvasion() {
+    public Float getEvasion() {
         return evasion;
     }
 
-    public boolean isCanLeft() {
+    public Boolean isCanLeft() {
         return canLeft;
     }
 

@@ -44,6 +44,7 @@ public class TrainerLocal implements Trainer {
     private Sprite sprite;
 
     private TrainerLocal() throws IOException, ClassNotFoundException {
+        
         TrainerLocal tl = (TrainerLocal) Persistence.getInstance().getDao().get(getPK(), TrainerLocal.class);
 
         setName(tl.getName());
@@ -53,7 +54,7 @@ public class TrainerLocal implements Trainer {
         setSprite(tl.getSprite());
     }
 
-    public TrainerLocal(String name, Sprite sprite, Pokemon initialPokemon) {
+    private TrainerLocal(String name, Sprite sprite, Pokemon initialPokemon) {
 
         this(name, sprite, new LinkedList<Pokemon>(), new LinkedList<Pokemon>(), initialPokemon);
 

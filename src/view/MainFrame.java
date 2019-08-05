@@ -2,9 +2,6 @@ package view;
 
 import java.awt.Component;
 import java.awt.Container;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Stack;
 import javax.swing.JFrame;
 import utilities.image.Dimensions;
