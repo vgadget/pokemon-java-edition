@@ -212,7 +212,7 @@ public class ButtonFactory {
 
         Dimension labelDimension = new Dimension(buttonDimension);
 
-        labelDimension.setSize((int) (labelDimension.getWidth() * 0.50f), labelDimension.getHeight());
+        labelDimension.setSize((int) (labelDimension.getWidth() * 0.40f), labelDimension.getHeight());
 
         int fontSize = (int) utilities.string.StringUtil.preferedFontSizeforLabel(f, text, labelDimension);
         f = view.components.fonts.PokemonFont.getFont(fontSize);

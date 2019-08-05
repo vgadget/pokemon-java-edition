@@ -1,6 +1,6 @@
 package debug;
 
-import view.battle.BattleView;
+import view.battle_deprecated.BattleView;
 import utilities.image.Dimensions;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -22,9 +22,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
-import view.battle.BattleViewImpl;
-import view.battle.components.PokemonMainCharacterHealthHud;
-import view.battle.components.PokemonOpponentHealthHud;
+import view.battle_deprecated.BattleViewImpl;
+import view.battle_deprecated.components.PokemonMainCharacterHealthHud;
+import view.battle_deprecated.components.PokemonOpponentHealthHud;
 
 /**
  *

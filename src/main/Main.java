@@ -38,6 +38,10 @@ public class Main {
     public static void main(String[] args) throws Exception {
                 
         Narrator.getInstance().setLanguage(Narrator.Language.ENGLISH);
+        
+        
+        //debug.PokemonBattleViewDebug.test();
+        
         //StringResourceMultilingualManager.getInstance().setDefaultLanguage("ESPAÑOL");
 //        
 //        SpecieModel specieModel;
@@ -74,9 +78,9 @@ public class Main {
 //        frame.setResizable(true);
 //        frame.setVisible(true);
 
-        //new MainMenu();
+       new MainMenu();
         
-        debug.PokemonBattleViewDebug.test();
+        
         
         
 

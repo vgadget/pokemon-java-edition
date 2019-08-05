@@ -1,91 +1,83 @@
 package view.battle;
 
 import java.awt.image.BufferedImage;
-import javax.swing.JPanel;
+import model.entities.Pokemon;
+import view.components.AidPanel;
 
 /**
  *
  * @author Adrian Vazquez
  */
-public abstract class BattleView extends JPanel {
+public abstract class BattleView extends AidPanel {
 
-    //Pokemon sprites
-    public abstract void pausePokemonSprites();
+    public abstract void setPokemonPlayer1(Pokemon p);
 
-    public abstract void playPokemonSprites();
+    public abstract void setPokemonPlayer2(Pokemon p);
 
-    public abstract void player1SetSprites(BufferedImage s[]);
+    public abstract void pokemonPlayer1PausePokemonSprite();
 
-    public abstract void player2SetSprites(BufferedImage s[]);
+    public abstract void pokemonPlayer2PausePokemonSprite();
 
-    public abstract void player1PausePokemonSprite();
+    public abstract void pokemonPlayer1PlayPokemonSprite();
 
-    public abstract void player2PausePokemonSprite();
+    public abstract void pokemonPlayer2PlayPokemonSprite();
 
-    public abstract void player1PlayPokemonSprite();
+    public abstract void pokemonPlayer1Appear();
 
-    public abstract void player2PlayPokemonSprite();
+    public abstract void pokemonPlayer2Appear();
 
-    public abstract void player1Appear();
+    public abstract void pokemonPlayer1Withdraw();
 
-    public abstract void player2Appear();
+    public abstract void pokemonPlayer2Withdraw();
 
-    public abstract void player1Withdraw();
+    public abstract void pokemonPlayer1Blink();
 
-    public abstract void player2Withdraw();
+    public abstract void pokemonPlayer2Blink();
 
-    public abstract void player1Blink();
+    public abstract void pokemonPlayer1Dead();
 
-    public abstract void player2Blink();
+    public abstract void pokemonPlayer2Dead();
 
-    public abstract void player1Dead();
+    public abstract void pokemonPlayer1LetsGo();
 
-    public abstract void player2Dead();
+    public abstract void pokemonPlayer2LetsGo();
 
-    public abstract void player1LetsGo();
+    public abstract void pokemonPlayer1LaunchPokeball();
 
-    public abstract void player2LetsGo();
+    public abstract void pokemonPlayer2LaunchPokeball();
 
-    public abstract void player1Fly();
+    public abstract void pokemonPlayer1SetNonVolatileStatus(BufferedImage sprites[]);
 
-    public abstract void player2Fly();
+    public abstract void pokemonPlayer2SetNonVolatileStatus(BufferedImage sprites[]);
 
-    public abstract void player1LaunchPokeball();
+    public abstract void pokemonPlayer1RemoveNonVolatileStatus();
 
-    public abstract void player2LaunchPokeball();
+    public abstract void pokemonPlayer2RemoveNonVolatileStatus();
 
-    public abstract void player1SetNonVolatileStatus(BufferedImage sprites[]);
+    public abstract void pokemonPlayer1SetVolatileStatus(BufferedImage sprites[]);
 
-    public abstract void player2SetNonVolatileStatus(BufferedImage sprites[]);
+    public abstract void pokemonPlayer2SetVolatileStatus(BufferedImage sprites[]);
 
-    public abstract void player1RemoveNonVolatileStatus();
+    public abstract void pokemonPlayer1RemoveVolatileStatus();
 
-    public abstract void player2RemoveNonVolatileStatus();
-    
-    public abstract void player1SetVolatileStatus(BufferedImage sprites[]);
+    public abstract void pokemonPlayer2RemoveVolatileStatus();
 
-    public abstract void player2SetVolatileStatus(BufferedImage sprites[]);
+    public abstract void pokemonPlayer1StatsUP();
 
-    public abstract void player1RemoveVolatileStatus();
+    public abstract void pokemonPlayer2StatsUP();
 
-    public abstract void player2RemoveVolatileStatus();
+    public abstract void pokemonPlayer1StatsDown();
 
-    public abstract void player1StatsUP();
-
-    public abstract void player2StatsUP();
-
-    public abstract void player1StatsDown();
-
-    public abstract void player2StatsDown();
+    public abstract void pokemonPlayer2StatsDown();
 
     // Health bar
-    public abstract void player1UpdateData(String name, int level, int sex);
+    public abstract void pokemonPlayer1UpdateData(String name, int level, int sex);
 
-    public abstract void player2UpdateData(String name, int level, int sex, boolean isCatched);
+    public abstract void pokemonPlayer2UpdateData(String name, int level, int sex, boolean isCatched);
 
-    public abstract void player1UpdateHP(int currentHP, int maxHP);
+    public abstract void pokemonPlayer1UpdateHP(int currentHP, int maxHP);
 
-    public abstract void player2UpdateHP(int currentHP, int maxHP);
+    public abstract void pokemonPlayer2UpdateHP(int currentHP, int maxHP);
 
     // Battleground
     public abstract void setWeather(BufferedImage[] weather);
@@ -96,9 +88,9 @@ public abstract class BattleView extends JPanel {
 
     public abstract void doAttackAnimation();
 
-    public abstract void player1LoadDefaultAttackAnimation();
+    public abstract void pokemonPlayer1LoadDefaultAttackAnimation();
 
-    public abstract void player2LoadDefaultAttackAnimation();
+    public abstract void pokemonPlayer2LoadDefaultAttackAnimation();
 
     public abstract boolean attackAnimationIsPplaying();
 

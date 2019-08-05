@@ -9,6 +9,7 @@ import controller.SpecieController;
 import java.awt.Dimension;
 import javax.swing.JScrollPane;
 import model.TypeModel;
+import view.MainFrame;
 
 /**
  *
@@ -35,6 +36,10 @@ public class PokedexViewImpl extends PokedexView {
         this.jSplitPane1.add(this.pokedexSpecieListPane);
 
         repaint();
+
+        MainFrame.getInstance().showView(this);
+        MainFrame.getInstance().setSize(getPreferredSize());
+        MainFrame.getInstance().setLocationRelativeTo(null);
     }
 
     public PokedexViewImpl(SpecieController specieController, TypeModel typeModel) {
@@ -43,7 +48,6 @@ public class PokedexViewImpl extends PokedexView {
         initComponents();
 
         setup();
-
     }
 
     /**

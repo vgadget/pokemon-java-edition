@@ -3,15 +3,13 @@ package view.components;
 import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import languajes.NarratorTexts;
 import texttospeech.Narrator;
+import view.MainFrame;
 
 public class AidPanel extends JPanel {
 
@@ -28,8 +26,7 @@ public class AidPanel extends JPanel {
 
     public AidPanel() {
 
-        
-        enabledAudioDescription = false;
+        enabledAudioDescription = true;
         initComponents();
 
     }
@@ -63,6 +60,10 @@ public class AidPanel extends JPanel {
                     } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 
                         getAudibleDescription();
+
+                    } else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+
+                        MainFrame.getInstance().previousView();
 
                     } else if ((e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_UP) && allAidComponents.size() > 9) {
 

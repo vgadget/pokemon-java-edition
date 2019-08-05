@@ -62,6 +62,12 @@ public class ButtonTexts {
     public String battle() {
         return battle;
     }
+    // Main menu -> Single player - Text for see pokemon team.
+    private String team = "My team.";
+
+    public String team() {
+        return team;
+    }
 
     // Main menu -> Single player - Text for catch new pokemon.
     private String catchPokemon = "Catch.";

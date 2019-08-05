@@ -1,5 +1,6 @@
 package view.menu;
 
+import controller.SpecieController;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -10,21 +11,24 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import languajes.ButtonTexts;
 import languajes.LabelTexts;
+import model.SpecieModel;
+import model.TypeModel;
 import utilities.image.Dimensions;
+import view.MainFrame;
 import view.components.ButtonFactory;
 import view.components.AidPanel;
 import view.components.CustomButton;
 import view.menu.components.AnimatedBackgroundPanel;
+import view.pokedex.PokedexViewImpl;
 
 /**
  *
  * @author Adrian Vazquez
  */
-public class MainMenu extends JFrame {
+public class MainMenu {
 
     private static int grid;
 
@@ -39,6 +43,7 @@ public class MainMenu extends JFrame {
 
     //Single player menu buttons.
     private CustomButton singlePlayerBattle;
+    private CustomButton team;
     private CustomButton catchPokemon;
     private CustomButton pokedex;
     private CustomButton goBackFromSinglePlayerMenuToMainMenu;
@@ -50,8 +55,9 @@ public class MainMenu extends JFrame {
 
     public MainMenu() {
         try {
+            
             initComponents();
-
+            
         } catch (Exception ex) {
             Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -59,14 +65,11 @@ public class MainMenu extends JFrame {
 
     public void initComponents() throws Exception {
 
-        //Load the panel
-        if (panel != null) {
-            remove(panel);
-        }
-
         panel = new AnimatedBackgroundPanel(Dimensions.getSelectedResolution());
 
         panel.setLayout(null);
+        
+        panel.setPreferredSize(Dimensions.getSelectedResolution());
 
         grid = (int) (Dimensions.getSelectedResolution().getWidth() * 0.03f);
 
@@ -106,14 +109,8 @@ public class MainMenu extends JFrame {
         panel.add(pokemonLogo);
 
         //Panel and frame settings
-        add(panel);
+        MainFrame.getInstance().showView(panel);
 
-        setSize(Dimensions.getSelectedResolution());
-        setLocationRelativeTo(null);
-        setResizable(false);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-        setVisible(true);
         showMainMenuButtons();
     }
 
@@ -155,7 +152,7 @@ public class MainMenu extends JFrame {
 
             //hideMainMenuButtons();
         });
-        
+
         creditsMenuButton.addActionListener((ActionEvent e) -> {
 
             //hideMainMenuButtons();
@@ -172,6 +169,7 @@ public class MainMenu extends JFrame {
     private void setSinglePlayerMenuButtons() {
 
         singlePlayerBattle = ButtonFactory.menuButton(ButtonTexts.getInstance().battle());
+        team = ButtonFactory.menuButton(ButtonTexts.getInstance().team());
         catchPokemon = ButtonFactory.menuButton(ButtonTexts.getInstance().catchPokemon());
         pokedex = ButtonFactory.menuButton(ButtonTexts.getInstance().pokedex());
         goBackFromSinglePlayerMenuToMainMenu = ButtonFactory.menuButton(ButtonTexts.getInstance().goBack());
@@ -179,7 +177,7 @@ public class MainMenu extends JFrame {
         // Position
         setPosition(singlePlayerBattle, 22 * grid, (grid));
 
-        setPosition(catchPokemon, 22 * grid, 4 * grid);
+        setPosition(team, 22 * grid, 4 * grid);
 
         setPosition(catchPokemon, 22 * grid, 7 * grid);
 
@@ -188,6 +186,21 @@ public class MainMenu extends JFrame {
         setPosition(goBackFromSinglePlayerMenuToMainMenu, 22 * grid, 13 * grid);
 
         //Actions
+        pokedex.addActionListener((ActionEvent e) -> {
+
+            TypeModel typeModel = new TypeModel();
+            SpecieModel specieModel = new SpecieModel();
+            SpecieController specieController = new SpecieController();
+
+            specieModel.setController(specieController);
+            specieController.setModel(specieModel);
+
+            PokedexViewImpl view = new PokedexViewImpl(specieController, typeModel);
+
+            specieController.addView(view);
+
+        });
+
         goBackFromSinglePlayerMenuToMainMenu.addActionListener((ActionEvent e) -> {
             hideSinglePlayerMenuButtons();
             showMainMenuButtons();
@@ -276,6 +289,7 @@ public class MainMenu extends JFrame {
     private void showSinglePlayerMenuButtons() {
 
         panel.add(singlePlayerBattle);
+        panel.add(team);
         panel.add(catchPokemon);
         panel.add(pokedex);
         panel.add(goBackFromSinglePlayerMenuToMainMenu);
@@ -286,11 +300,13 @@ public class MainMenu extends JFrame {
 
                 setPosition(singlePlayerBattle, i * grid, (grid));
 
-                setPosition(catchPokemon, i * grid, 4 * grid);
+                setPosition(team, i * grid, 4 * grid);
+                
+                setPosition(catchPokemon, i * grid, 7 * grid);
 
-                setPosition(pokedex, i * grid, 7 * grid);
+                setPosition(pokedex, i * grid, 10 * grid);
 
-                setPosition(goBackFromSinglePlayerMenuToMainMenu, i * grid, 10 * grid);
+                setPosition(goBackFromSinglePlayerMenuToMainMenu, i * grid, 13 * grid);
 
                 try {
                     Thread.sleep(20);
@@ -311,12 +327,14 @@ public class MainMenu extends JFrame {
             for (int i = 22; i < 40; i++) {
 
                 setPosition(singlePlayerBattle, i * grid, (grid));
+                
+                setPosition(team, i * grid, 4*(grid));
 
-                setPosition(catchPokemon, i * grid, 4 * grid);
+                setPosition(catchPokemon, i * grid, 7 * grid);
 
-                setPosition(pokedex, i * grid, 7 * grid);
+                setPosition(pokedex, i * grid, 10 * grid);
 
-                setPosition(goBackFromSinglePlayerMenuToMainMenu, i * grid, 10 * grid);
+                setPosition(goBackFromSinglePlayerMenuToMainMenu, i * grid, 13 * grid);
 
                 try {
                     Thread.sleep(20);

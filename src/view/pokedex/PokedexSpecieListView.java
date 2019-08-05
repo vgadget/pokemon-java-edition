@@ -11,12 +11,13 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import languajes.ButtonTexts;
 import languajes.StringResourceMultilingualManager;
-import marytts.util.data.audio.AudioPlayer;
 import model.TypeModel;
 import model.entities.Specie;
 import texttospeech.Narrator;
 import utilities.sound.SoundPlayer;
+import view.MainFrame;
 import view.components.AidPanel;
 import view.components.ButtonFactory;
 import view.components.CustomButton;
@@ -65,7 +66,7 @@ public class PokedexSpecieListView extends AidPanel {
         setBackground(new Color(0, 132, 99)); // SET BACKGROUND
 
         // VIEW SIZE
-        Dimension buttonSize = new Dimension((int) (size.getWidth() * 0.80f), (int) (size.getWidth() * 0.80f));
+        Dimension buttonSize = new Dimension((int) (size.getWidth() * 1f), (int) (size.getWidth() * 1f));
 
         Collections.sort(specieList); // SORT SPECIE LIST.
 
@@ -91,13 +92,13 @@ public class PokedexSpecieListView extends AidPanel {
                                 String cry = "It_sounds_like";
 
                                 if (!StringResourceMultilingualManager.getInstance().keyExist(cry)) {
-                                    
+
                                     StringResourceMultilingualManager.getInstance().addKey(cry);
-                                    
+
                                 }
-                                
+
                                 Narrator.getInstance().speak(StringResourceMultilingualManager.getInstance().getResource(cry));
-                                
+
                                 SoundPlayer.getInstance().playEffectChannel(s.getCry());
                             }
                         }).start();
@@ -158,6 +159,24 @@ public class PokedexSpecieListView extends AidPanel {
             add(cb);
         } catch (Exception ex) {
             Logger.getLogger(PokedexSpecieListView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //CREATE EXIT BUTTON
+        try {
+
+            CustomButton cb = ButtonFactory.pokedexButton(ButtonTexts.getInstance().goBack(), buttonSize);
+            
+            cb.addActionListener((ActionEvent e) -> {
+                
+                MainFrame.getInstance().previousView();
+                
+            });
+
+            add(cb);
+            
+            
+        } catch (Exception e) {
+
         }
 
         // SHOW ALL PROPERLY
