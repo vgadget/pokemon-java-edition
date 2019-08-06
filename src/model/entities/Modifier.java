@@ -7,7 +7,7 @@ import model.BattleModel;
  *
  * @author Adrian Vazquez
  */
-public interface Modifier extends Observer, Entity<String>{
+public interface Modifier extends Observer<BattleModel>, Entity<String>{
     public String getName();
     public void makeEffect(BattleModel battleModel);
     

@@ -1,5 +1,6 @@
 package model.entities;
 
+import java.util.Random;
 import languajes.StringResourceMultilingualManager;
 import model.BattleModel;
 
@@ -10,15 +11,15 @@ import model.BattleModel;
 public abstract class Move implements Entity<String> {
 
     private String name;
-    private int precision;
-    private int power;
-    private int pp;
+    private Integer precision;
+    private Integer power;
+    private Integer pp;
     private StatusCondition secondaryEffect;
     private Type type;
     private Sprite frontAnimation;
     private Sprite backAnimation;
 
-    public Move(String name, int precision, int power, int pp,
+    public Move(String name, Integer precision, Integer power, Integer pp,
             StatusCondition secondaryEffect, Type type,
             Sprite frontAnimation, Sprite backAnimation) throws Exception {
 
@@ -36,8 +37,8 @@ public abstract class Move implements Entity<String> {
         }
     }
 
-    private boolean validateFields(String name, int precision, int power,
-            int pp, Type type,
+    private boolean validateFields(String name, Integer precision, Integer power,
+            Integer pp, Type type,
             Sprite frontAnimation, Sprite backAnimation) {
 
         if (name == null || name.equals("")) {
@@ -71,15 +72,15 @@ public abstract class Move implements Entity<String> {
         return name;
     }
 
-    public int getPrecision() {
+    public Integer getPrecision() {
         return precision;
     }
 
-    public int getPower() {
+    public Integer getPower() {
         return power;
     }
 
-    public int getPp() {
+    public Integer getPp() {
         return pp;
     }
 
@@ -99,7 +100,11 @@ public abstract class Move implements Entity<String> {
         return backAnimation;
     }
     
-    public abstract void makeEffect(BattleModel battleModel);
+    public abstract boolean makeEffect(BattleModel battleModel);
+    
+    public boolean fails(){
+        return new Random().nextInt(100) <= getPrecision();
+    }
 
     @Override
     public boolean equals(Object obj) {

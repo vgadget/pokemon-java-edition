@@ -1,4 +1,4 @@
-package model.entities;
+package utilities.image;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -21,6 +21,10 @@ public class Image implements Serializable {
 
     public BufferedImage getImage() {
         return image;
+    }
+    
+    public void setImage(BufferedImage img){
+        this.image = img;
     }
 
     private void writeObject(ObjectOutputStream out) throws IOException {

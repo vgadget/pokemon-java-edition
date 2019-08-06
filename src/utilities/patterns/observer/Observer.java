@@ -8,7 +8,9 @@ package utilities.patterns.observer;
 /**
  *
  * @author Adrian Vazquez
+ * @param <S>
  */
-public interface Observer {
+public interface Observer <S extends Subject> {
+
     public void update();
 }

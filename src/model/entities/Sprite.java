@@ -1,5 +1,6 @@
 package model.entities;
 
+import utilities.image.Image;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -16,6 +17,10 @@ public class Sprite implements Serializable {
     int animationLength;
 
     public Sprite(BufferedImage[] animation, int refreshRate) throws Exception {
+        setAnimation(animation);
+        setRefreshRate(refreshRate);
+    }
+    public Sprite(List<Image> animation, int refreshRate) throws Exception {
         setAnimation(animation);
         setRefreshRate(refreshRate);
     }
@@ -43,6 +48,17 @@ public class Sprite implements Serializable {
         }
 
         this.animationLength = this.animation.size();
+    }
+    public void setAnimation(List<Image> animation) {
+
+        BufferedImage anim[] = new BufferedImage[animation.size()];
+        
+        for (int i = 0; i < this.animation.size(); i++){
+            anim[i] = this.animation.get(i).getImage();
+        }
+        
+        setAnimation(anim);
+        
     }
 
     public int getRefreshRate() {

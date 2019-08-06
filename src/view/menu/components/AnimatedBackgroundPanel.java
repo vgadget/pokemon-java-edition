@@ -23,7 +23,6 @@ public class AnimatedBackgroundPanel extends AidPanel {
 
     private static final String URI_BACKGROUNDS = "Resources/MainTitle/backgrounds";
 
-    private static final int AVAILABLE_IMAGES = 3;
     private static final int BACKGROUND_SPEED = 1;
 
     private BufferedImage background;

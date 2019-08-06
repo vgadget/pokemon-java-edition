@@ -9,11 +9,11 @@ package utilities.patterns.observer;
  *
  * @author Adrian Vazquez
  */
-public interface Subject {
+public interface Subject <O extends Observer>{
 
-    public void attach(Observer observer);
+    public void attach(O observer);
 
-    public void dettach(Observer observer);
+    public void dettach(O observer);
 
     public void notifyObservers();
 
