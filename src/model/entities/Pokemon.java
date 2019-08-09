@@ -29,8 +29,10 @@ public class Pokemon implements Entity<String> {
     private StatusCondition volatileStatusCondition;
     private StatusCondition persistentStatusCondition;
 
-    public Pokemon(String nickname, Integer level, Specie specie) throws Exception{
-        
+    private transient Boost boost;
+
+    public Pokemon(String nickname, Integer level, Specie specie) throws Exception {
+
         setNickname(nickname);
         setLevel(level);
         setSpecie(specie);
@@ -41,6 +43,19 @@ public class Pokemon implements Entity<String> {
 
         generateRandomFIelds();
 
+    }
+
+    public Boost getBoost() {
+
+        if (boost == null) {
+            boost = new Boost();
+        }
+
+        return boost;
+    }
+    
+    public void removeBoost(){
+        boost = null;
     }
 
     public void generateRandomFIelds() {
@@ -219,31 +234,31 @@ public class Pokemon implements Entity<String> {
     }
 
     public Integer getAttack() {
-        return attack;
+        return attack + getBoost().getAttackBoost();
     }
 
     public Integer getDefense() {
-        return defense;
+        return defense + getBoost().getDefenseBoost();
     }
 
     public Integer getSpecialAttack() {
-        return specialAttack;
+        return specialAttack + getBoost().getSpecialAttackBoost();
     }
 
     public Integer getSpecialDefense() {
-        return specialDefense;
+        return specialDefense + getBoost().getSpecialDefenseBoost();
     }
 
     public Integer getSpeed() {
-        return speed;
+        return speed + getBoost().getSpeedBoost();
     }
 
     public Float getPrecission() {
-        return precission;
+        return precission * getBoost().getPrecissionBoost();
     }
 
     public Float getEvasion() {
-        return evasion;
+        return evasion + getBoost().getEvasionBoost();
     }
 
     public Boolean isCanLeft() {
@@ -271,6 +286,85 @@ public class Pokemon implements Entity<String> {
         }
 
         return this.getClass().getName().compareTo(o.getClass().getName());
+    }
+
+}
+
+class Boost {
+
+    private Integer attackBoost;
+    private Integer defenseBoost;
+    private Integer specialAttackBoost;
+    private Integer specialDefenseBoost;
+    private Integer speedBoost;
+    private Float precissionBoost;
+    private Float evasionBoost;
+
+    public Boost() {
+        attackBoost
+                = defenseBoost
+                = specialAttackBoost
+                = specialDefenseBoost
+                = speedBoost = 0;
+        evasionBoost = 0f;
+        precissionBoost = 1f;
+
+    }
+
+    public Integer getAttackBoost() {
+        return attackBoost;
+    }
+
+    public void setAttackBoost(Integer attackBoost) {
+        this.attackBoost = attackBoost;
+    }
+
+    public Integer getDefenseBoost() {
+        return defenseBoost;
+    }
+
+    public void setDefenseBoost(Integer defenseBoost) {
+        this.defenseBoost = defenseBoost;
+    }
+
+    public Integer getSpecialAttackBoost() {
+        return specialAttackBoost;
+    }
+
+    public void setSpecialAttackBoost(Integer specialAttackBoost) {
+        this.specialAttackBoost = specialAttackBoost;
+    }
+
+    public Integer getSpecialDefenseBoost() {
+        return specialDefenseBoost;
+    }
+
+    public void setSpecialDefenseBoost(Integer specialDefenseBoost) {
+        this.specialDefenseBoost = specialDefenseBoost;
+    }
+
+    public Integer getSpeedBoost() {
+        return speedBoost;
+    }
+
+    public void setSpeedBoost(Integer speedBoost) {
+        this.speedBoost = speedBoost;
+    }
+
+    public Float getPrecissionBoost() {
+        return precissionBoost;
+    }
+
+    public void setPrecissionBoost(Float precissionBoost) {
+        this.precissionBoost = precissionBoost;
+    }
+
+    public Float getEvasionBoost() {
+        return evasionBoost;
+    }
+
+    public void setEvasionBoost(Float evasionBoost) {
+        this.evasionBoost = evasionBoost;
     }
 
 }

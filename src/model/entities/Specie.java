@@ -103,16 +103,12 @@ public class Specie implements Entity<String> {
         } else if (maxSpecialDefense < minSpecialDefense || Math.min(maxSpecialDefense, minSpecialDefense) <= 0) {
             return false;
         } else if (maxSpeed < minSpeed || Math.min(maxSpeed, minSpeed) <= 0) {
-            System.out.println("DEBUG");
             return false;
         } else if (evasion <= 0 || evasion > 6) {
-            System.out.println("DEBUG");
             return false;
         } else if (precision < 0.3 || precision > 1) {
-            System.out.println("DEBUG");
             return false;
         } else if (type == null) {
-            System.out.println("DEBUG");
             return false;
         } else if (description == null || description.equals("")) {
             return false;
@@ -267,7 +263,7 @@ public class Specie implements Entity<String> {
                 + secType + ". "
                 + getDescription() + ". "
                 + getHeight() + " " + StringResourceMultilingualManager.getInstance().getResource("meter") + ". "
-                + getWeight() +" "+ StringResourceMultilingualManager.getInstance().getResource("kilogram") + ". ";
+                + getWeight() + " " + StringResourceMultilingualManager.getInstance().getResource("kilogram") + ". ";
     }
 
     @Override
