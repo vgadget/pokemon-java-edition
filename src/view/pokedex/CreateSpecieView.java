@@ -24,6 +24,7 @@ import model.entities.Type;
 import utilities.string.StringComparator;
 import utilities.sound.SoundPlayer;
 import utilities.sound.Sound;
+import view.MainFrame;
 import view.pokedex.components.SpriteJLabel;
 
 /**
@@ -778,7 +779,8 @@ public class CreateSpecieView extends PokedexView {
             }
         }
         
-        SwingUtilities.getWindowAncestor(this).dispose();
+        MainFrame.getInstance().previousView();
+        MainFrame.getInstance().previousView();
     }//GEN-LAST:event_jButtonCreateSpecieActionPerformed
 
     private void jButtonPlayCryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPlayCryActionPerformed

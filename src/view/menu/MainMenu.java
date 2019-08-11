@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -53,11 +55,17 @@ public class MainMenu {
     private CustomButton onlineMultiplayer;
     private CustomButton goBackFromMultiPlayerMenuToMainMenu;
 
+    //Semaphore
+    Semaphore mutex;
+
     public MainMenu() {
+
+        mutex = new Semaphore(1);
+
         try {
-            
+
             initComponents();
-            
+
         } catch (Exception ex) {
             Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -68,7 +76,7 @@ public class MainMenu {
         panel = new AnimatedBackgroundPanel(Dimensions.getSelectedResolution());
 
         panel.setLayout(null);
-        
+
         panel.setPreferredSize(Dimensions.getSelectedResolution());
 
         grid = (int) (Dimensions.getSelectedResolution().getWidth() * 0.03f);
@@ -83,8 +91,8 @@ public class MainMenu {
         setMultiplayerMenuButtons();
 
         //Author text
-        Dimension d = new Dimension(18 * grid, 2 * grid);
-        Font f = view.components.fonts.PokemonFont.getFont(16);
+        Dimension d = new Dimension(Dimensions.getSelectedResolution().width, 1 * grid);
+        Font f = view.components.fonts.PokemonFont.getFont(20);
         int fontSize = (int) utilities.string.StringUtil.preferedFontSizeforLabel(f, LabelTexts.getInstance().developedByAdrianVazquezBarrera(), d);
 
         f = f.deriveFont(fontSize);
@@ -95,8 +103,12 @@ public class MainMenu {
 
         developedByAdrianVazquezBarreraLabel.setForeground(Color.WHITE);
 
-        developedByAdrianVazquezBarreraLabel.setLocation(0, 16 * grid);
+        developedByAdrianVazquezBarreraLabel.setLocation(0, Dimensions.getSelectedResolution().height - d.height);
         developedByAdrianVazquezBarreraLabel.setSize(d.width, d.height);
+        
+        
+        developedByAdrianVazquezBarreraLabel.setOpaque(true);
+        developedByAdrianVazquezBarreraLabel.setBackground(new Color(0, 0, 0, 90));
 
         panel.add(developedByAdrianVazquezBarreraLabel);
 
@@ -202,6 +214,7 @@ public class MainMenu {
         });
 
         goBackFromSinglePlayerMenuToMainMenu.addActionListener((ActionEvent e) -> {
+
             hideSinglePlayerMenuButtons();
             showMainMenuButtons();
         });
@@ -253,17 +266,24 @@ public class MainMenu {
             panel.remove(localMultiplayer);
             panel.remove(onlineMultiplayer);
             panel.remove(goBackFromMultiPlayerMenuToMainMenu);
+            mutex.release();
 
         }).start();
     }
 
     private void showMultiPlayerMenuButtons() {
 
-        panel.add(localMultiplayer);
-        panel.add(onlineMultiplayer);
-        panel.add(goBackFromMultiPlayerMenuToMainMenu);
-
         new Thread(() -> {
+
+            try {
+                mutex.acquire();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            panel.add(localMultiplayer);
+            panel.add(onlineMultiplayer);
+            panel.add(goBackFromMultiPlayerMenuToMainMenu);
 
             for (int i = 40; i >= 22; i--) {
 
@@ -288,20 +308,26 @@ public class MainMenu {
 
     private void showSinglePlayerMenuButtons() {
 
-        panel.add(singlePlayerBattle);
-        panel.add(team);
-        panel.add(catchPokemon);
-        panel.add(pokedex);
-        panel.add(goBackFromSinglePlayerMenuToMainMenu);
-
         new Thread(() -> {
+
+            try {
+                mutex.acquire();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            panel.add(singlePlayerBattle);
+            panel.add(team);
+            panel.add(catchPokemon);
+            panel.add(pokedex);
+            panel.add(goBackFromSinglePlayerMenuToMainMenu);
 
             for (int i = 40; i >= 22; i--) {
 
                 setPosition(singlePlayerBattle, i * grid, (grid));
 
                 setPosition(team, i * grid, 4 * grid);
-                
+
                 setPosition(catchPokemon, i * grid, 7 * grid);
 
                 setPosition(pokedex, i * grid, 10 * grid);
@@ -315,7 +341,6 @@ public class MainMenu {
                     Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-
         }).start();
 
     }
@@ -327,8 +352,8 @@ public class MainMenu {
             for (int i = 22; i < 40; i++) {
 
                 setPosition(singlePlayerBattle, i * grid, (grid));
-                
-                setPosition(team, i * grid, 4*(grid));
+
+                setPosition(team, i * grid, 4 * (grid));
 
                 setPosition(catchPokemon, i * grid, 7 * grid);
 
@@ -347,7 +372,10 @@ public class MainMenu {
             panel.remove(singlePlayerBattle);
             panel.remove(catchPokemon);
             panel.remove(pokedex);
+            panel.remove(team);
             panel.remove(goBackFromSinglePlayerMenuToMainMenu);
+
+            mutex.release();
 
         }).start();
 
@@ -355,13 +383,19 @@ public class MainMenu {
 
     private void showMainMenuButtons() {
 
-        panel.add(singlePlayerMenuButton);
-        panel.add(multiPlayerMenuButton);
-        panel.add(settingsMenuButton);
-        panel.add(creditsMenuButton);
-        panel.add(saveAndExitMenuButton);
-
         new Thread(() -> {
+
+            try {
+                mutex.acquire();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            panel.add(singlePlayerMenuButton);
+            panel.add(multiPlayerMenuButton);
+            panel.add(settingsMenuButton);
+            panel.add(creditsMenuButton);
+            panel.add(saveAndExitMenuButton);
 
             for (int i = 40; i >= 22; i--) {
 
@@ -416,6 +450,8 @@ public class MainMenu {
             panel.remove(settingsMenuButton);
             panel.remove(creditsMenuButton);
             panel.remove(saveAndExitMenuButton);
+
+            mutex.release();
 
         }).start();
     }

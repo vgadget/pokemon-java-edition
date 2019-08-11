@@ -298,7 +298,7 @@ public class PokedexEntryView extends JLayeredPane {
 
             pokedexEntryBackground = ImageIO.read(new File(URI_POKEDEX_ENTRY_BACKGROUND));
 
-            pokedexEntryBackground = utilities.image.ImageUtil.resizeProportional(pokedexEntryBackground, ((utilities.image.Dimensions.getSelectedResolution().getHeight()) / (this.pokedexEntryBackground.getHeight())));
+            pokedexEntryBackground = utilities.image.ImageUtil.resizeProportional(pokedexEntryBackground, 0.85f*((utilities.image.Dimensions.getSelectedResolution().getHeight()) / (this.pokedexEntryBackground.getHeight())));
 
             this.size = new Dimension(pokedexEntryBackground.getWidth() + offset, pokedexEntryBackground.getHeight() + offset);
             this.setPreferredSize(size);
@@ -306,6 +306,9 @@ public class PokedexEntryView extends JLayeredPane {
             JLabel background = new JLabel(new ImageIcon(pokedexEntryBackground));
 
             background.setSize(this.getPreferredSize());
+            
+            setOpaque(true);
+            setBackground(new Color(57, 57, 57));
 
             // XGRID AND YGRID
             xGrid = (int) (this.pokedexEntryBackground.getWidth() * 0.03f);
@@ -405,5 +408,7 @@ public class PokedexEntryView extends JLayeredPane {
     public Dimension getSize() {
         return size;
     }
+    
+    
 
 }

@@ -35,20 +35,22 @@ public class AidPanel extends JPanel {
         return enabledAudioDescription;
     }
 
-    public void setEnabledAudioDescription(boolean enabled) {
+    public synchronized void setEnabledAudioDescription(boolean enabled) {
         this.enabledAudioDescription = enabled;
     }
 
-    private void initComponents() {
+    private synchronized void initComponents() {
 
         new Thread(() -> {
             inputDetector.setFocusable(true);
             inputDetector.addKeyListener(new KeyAdapter() {
 
                 @Override
-                public void keyPressed(KeyEvent e) {
+                public synchronized void keyPressed(KeyEvent e) {
                     inputDetector.requestFocus();
 
+                    Narrator.getInstance().speak(" ");
+                    
                     if (e.getKeyChar() >= '1' && e.getKeyChar() <= '9') {
 
                         int opc = Integer.parseInt(e.getKeyChar() + "") - 1;
@@ -123,7 +125,7 @@ public class AidPanel extends JPanel {
     }
 
     @Override
-    public void add(Component c, Object constraint) {
+    public synchronized void add(Component c, Object constraint) {
         addAidComponent(c);
         super.add(c, constraint);
         inputDetector.requestFocus();
@@ -131,44 +133,56 @@ public class AidPanel extends JPanel {
     }
 
     @Override
-    public void add(Component c, Object constraint, int index) {
+    public synchronized void add(Component c, Object constraint, int index) {
         addAidComponent(c);
         super.add(c, constraint, index);
         inputDetector.requestFocus();
     }
 
     @Override
-    public void remove(Component c) {
+    public synchronized void remove(Component c) {
+
         if (c instanceof AidComponent) {
-            currentAidComponents.remove((AidComponent) c);
-            allAidComponents.remove((AidComponent) c);
+
+            if (currentAidComponents.remove((AidComponent) c)
+                    && allAidComponents.remove((AidComponent) c)) {
+
+            }
         }
+
         super.remove(c);
+
         inputDetector.requestFocus();
 
     }
 
-    private void addAidComponent(Component component) {
+    private synchronized void addAidComponent(Component component) {
+
         if (component instanceof AidComponent) {
 
             if (!allAidComponents.contains((AidComponent) component)) {
-                if (!currentAidComponents.contains((AidComponent) component) && currentAidComponents.size() < 9) {
-                    this.currentAidComponents.add((AidComponent) component);
-                    inputDetector.requestFocus();
-                }
 
+                if (!currentAidComponents.contains((AidComponent) component) && currentAidComponents.size() < 9) {
+
+                    this.currentAidComponents.add((AidComponent) component);
+
+                }
                 this.allAidComponents.add((AidComponent) component);
             }
         }
+
+        inputDetector.requestFocus();
     }
 
-    public void addAudibleDescription(String s) {
+    public synchronized void addAudibleDescription(String s) {
 
         this.additionalDescriptions.add(s);
 
     }
 
-    private void getAudibleDescription() {
+    public synchronized void getAudibleDescription() {
+        
+        this.inputDetector.requestFocus();
 
         if (isEnabledAudioDescription()) {
             new Thread(() -> {

@@ -63,7 +63,7 @@ public class PokedexSpecieListView extends AidPanel {
         }
 
         // COLOR BACGROUND
-        setBackground(new Color(0, 132, 99)); // SET BACKGROUND
+        setBackground(new Color(57, 57, 57)); // SET BACKGROUND
 
         // VIEW SIZE
         Dimension buttonSize = new Dimension((int) (size.getWidth() * 1f), (int) (size.getWidth() * 1f));
@@ -143,7 +143,7 @@ public class PokedexSpecieListView extends AidPanel {
                     frame.addWindowListener(new java.awt.event.WindowAdapter() {
                         @Override
                         public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                            container.refresh();
+                            MainFrame.getInstance().previousView();
                         }
                     });
 
@@ -181,7 +181,7 @@ public class PokedexSpecieListView extends AidPanel {
 
         // SHOW ALL PROPERLY
         repaint();
-        setPreferredSize(new Dimension((int) buttonSize.getWidth(), (int) ((buttonSize.getHeight() * this.specieList.size()) + size.getHeight())));
+        setPreferredSize(new Dimension((int) (buttonSize.getWidth()*0.90f), (int) ((buttonSize.getHeight() * specieList.size()))));
 
         requestFocusInWindow();
     }

@@ -5,6 +5,7 @@ import java.awt.Container;
 import java.util.Stack;
 import javax.swing.JFrame;
 import utilities.image.Dimensions;
+import view.components.AidPanel;
 
 /**
  *
@@ -28,6 +29,7 @@ public class MainFrame extends JFrame {
     private MainFrame() {
         super();
         lastComponents = new Stack<>();
+        setUndecorated(true);
         update();
     }
 
@@ -35,10 +37,12 @@ public class MainFrame extends JFrame {
 
         this.setResizable(false);
 
+        this.setSize(Dimensions.getSelectedResolution());
+
         if (lastComponents.isEmpty()) {
             this.setSize(Dimensions.getSelectedResolution());
         } else {
-            this.setSize(lastComponents.peek().getPreferredSize());
+            //this.setSize(lastComponents.peek().getPreferredSize());
             add(lastComponents.peek());
         }
 
@@ -63,11 +67,15 @@ public class MainFrame extends JFrame {
     public void previousView() {
         if (hasPrevious()) {
             remove(lastComponents.pop());
+
+            if (lastComponents.peek() instanceof AidPanel) {
+                ((AidPanel) lastComponents.peek()).getAudibleDescription();
+            }
         }
         update();
     }
-    
-    public boolean hasPrevious(){
+
+    public boolean hasPrevious() {
         return lastComponents.size() > 1;
     }
 
