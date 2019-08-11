@@ -48,9 +48,6 @@ public class PokedexViewImpl extends PokedexView {
         super(specieController.getModel(), specieController);
         this.typeModel = typeModel;
         initComponents();
-
-        BasicSplitPaneDivider divider;
-
    
 
         setup();

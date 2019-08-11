@@ -144,6 +144,7 @@ public class PokedexSpecieListView extends AidPanel {
                         @Override
                         public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                             MainFrame.getInstance().previousView();
+                            requestFocusInWindow();
                         }
                     });
 
@@ -153,6 +154,7 @@ public class PokedexSpecieListView extends AidPanel {
                     frame.setResizable(false);
                     frame.setLocationRelativeTo(null);
                     frame.setVisible(true);
+                    frame.setAlwaysOnTop(true);
                 }
             });
 
