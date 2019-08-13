@@ -68,17 +68,17 @@ public class Narrator {
 
     public void speak(String s) {
 
-        String output;
-
-        if (this.selectedLanguage.equals(Language.SPANISH)) {
-            output = spanishAdaptor(s);
-        } else {
-            output = s;
-        }
-
-        tts.stopSpeaking();
-        
-        tts.speak(output+" ", 1.5f, false, true);
+//        String output;
+//
+//        if (this.selectedLanguage.equals(Language.SPANISH)) {
+//            output = spanishAdaptor(s);
+//        } else {
+//            output = s;
+//        }
+//
+//        tts.stopSpeaking();
+//        
+//        tts.speak(output+" ", 1.5f, false, true);
 
     }
 

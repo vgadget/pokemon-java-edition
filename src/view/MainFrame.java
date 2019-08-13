@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.util.Stack;
@@ -29,25 +30,24 @@ public class MainFrame extends JFrame {
     private MainFrame() {
         super();
         lastComponents = new Stack<>();
+        setBackground(Color.BLACK);
         setUndecorated(true);
+
         update();
     }
 
     private void update() {
 
+        this.setSize(Dimensions.getSelectedResolution());
         this.setResizable(false);
 
-        this.setSize(Dimensions.getSelectedResolution());
-
-        if (lastComponents.isEmpty()) {
-            this.setSize(Dimensions.getSelectedResolution());
-        } else {
-            //this.setSize(lastComponents.peek().getPreferredSize());
+        if (!lastComponents.isEmpty()) {
             add(lastComponents.peek());
         }
 
-        this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setAlwaysOnTop(true);
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
 
         revalidate();

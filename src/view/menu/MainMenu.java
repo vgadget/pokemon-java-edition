@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.concurrent.Semaphore;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -92,7 +91,7 @@ public class MainMenu {
 
         //Author text
         Dimension d = new Dimension(Dimensions.getSelectedResolution().width, 1 * grid);
-        Font f = view.components.fonts.PokemonFont.getFont(20);
+        Font f = view.components.fonts.PokemonFont.getFont(18);
         int fontSize = (int) utilities.string.StringUtil.preferedFontSizeforLabel(f, LabelTexts.getInstance().developedByAdrianVazquezBarrera(), d);
 
         f = f.deriveFont(fontSize);
@@ -108,7 +107,7 @@ public class MainMenu {
         
         
         developedByAdrianVazquezBarreraLabel.setOpaque(true);
-        developedByAdrianVazquezBarreraLabel.setBackground(new Color(0, 0, 0, 90));
+        developedByAdrianVazquezBarreraLabel.setBackground(new Color(0, 0, 0, 200));
 
         panel.add(developedByAdrianVazquezBarreraLabel);
 

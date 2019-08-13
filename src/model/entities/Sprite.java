@@ -53,12 +53,11 @@ public class Sprite implements Serializable {
 
         BufferedImage anim[] = new BufferedImage[animation.size()];
         
-        for (int i = 0; i < this.animation.size(); i++){
-            anim[i] = this.animation.get(i).getImage();
+        for (int i = 0; i < animation.size(); i++){
+            anim[i] = animation.get(i).getImage();
         }
         
         setAnimation(anim);
-        
     }
 
     public int getRefreshRate() {

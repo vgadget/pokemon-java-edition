@@ -1,6 +1,9 @@
 package model.entities;
 
+import java.util.LinkedList;
+import java.util.List;
 import languajes.StringResourceMultilingualManager;
+import model.MoveModel;
 import utilities.sound.Sound;
 
 /**
@@ -33,6 +36,7 @@ public class Specie implements Entity<String> {
     private Type secondaryType;
     private String description;
     private Sound cry;
+    private List<Move> movementsCanLearn;
 
     public Specie(String name, Type type, Type secondaryType, Sprite front, Sprite back, Float height, Float weight, Integer pokedexID,
             Integer maxHP, Integer minHP, Integer maxAttack, Integer minAttack,
@@ -40,6 +44,8 @@ public class Specie implements Entity<String> {
             Integer minDefense, Integer maxSpecialDefense, Integer minSpecialDefense,
             Integer maxSpeed, Integer minSpeed, Float precision, Float evasion, String description, Sound cry)
             throws Exception {
+
+        movementsCanLearn = new LinkedList<>();
 
         if (validateFields(name, type, secondaryType, front, back, height, weight, pokedexID,
                 maxHP, minHP, maxAttack, minAttack,
@@ -238,6 +244,25 @@ public class Specie implements Entity<String> {
         }
 
         return description;
+    }
+
+    public List<Move> getMovementsCanLearn() {
+
+        if (this.movementsCanLearn.isEmpty()) {
+            this.movementsCanLearn.add(MoveModel.getDefaultMove());
+        }
+
+        return movementsCanLearn;
+    }
+
+    public void setMovementsCanLearn(List<Move> movementsCanLearn) {
+
+        this.movementsCanLearn.addAll(movementsCanLearn);
+
+        if (this.movementsCanLearn.isEmpty()) {
+            this.movementsCanLearn.add(MoveModel.getDefaultMove());
+        }
+
     }
 
     @Override

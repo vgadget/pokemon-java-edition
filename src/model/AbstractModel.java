@@ -83,6 +83,7 @@ public abstract class AbstractModel<C extends Controller, E extends Entity, PK e
             return Persistence.getInstance().getDao().getAll(c);
         } catch (Exception ex) {
             DisplayMessage.showErrorDialog(ex.getMessage());
+            
         }
 
         return new LinkedList();

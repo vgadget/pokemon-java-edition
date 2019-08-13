@@ -66,14 +66,14 @@ public class PokedexSpecieListView extends AidPanel {
         setBackground(new Color(57, 57, 57)); // SET BACKGROUND
 
         // VIEW SIZE
-        Dimension buttonSize = new Dimension((int) (size.getWidth() * 1f), (int) (size.getWidth() * 1f));
+        Dimension frameDimension = new Dimension((int) (size.getWidth() * 1f), (int) (size.getWidth() * 1f));
 
         Collections.sort(specieList); // SORT SPECIE LIST.
 
         specieList.forEach((s) -> { // FOR EACH SPECIE CREATES A BUTTON.
             try {
                 //System.out.println(s.getName());
-                CustomButton cb = ButtonFactory.getPokedexSpecieButton(s, buttonSize);
+                CustomButton cb = ButtonFactory.getPokedexSpecieButton(s, frameDimension);
                 cb.setDescription(s.getName());
 
                 // IF BUTTON PRESSED, SHOW THAT POKEMON | ACTION LISTENER.
@@ -86,20 +86,24 @@ public class PokedexSpecieListView extends AidPanel {
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
+
                                 entryView.setSpecie(s);
-                                cb.getPressedVoiceFeedback();
 
-                                String cry = "It_sounds_like";
+                                if (isEnabledAudioDescription()) {
+                                    cb.getPressedVoiceFeedback();
 
-                                if (!StringResourceMultilingualManager.getInstance().keyExist(cry)) {
+                                    String cry = "It_sounds_like";
 
-                                    StringResourceMultilingualManager.getInstance().addKey(cry);
+                                    if (!StringResourceMultilingualManager.getInstance().keyExist(cry)) {
 
+                                        StringResourceMultilingualManager.getInstance().addKey(cry);
+
+                                    }
+
+                                    Narrator.getInstance().speak(StringResourceMultilingualManager.getInstance().getResource(cry));
+
+                                    SoundPlayer.getInstance().playEffectChannel(s.getCry());
                                 }
-
-                                Narrator.getInstance().speak(StringResourceMultilingualManager.getInstance().getResource(cry));
-
-                                SoundPlayer.getInstance().playEffectChannel(s.getCry());
                             }
                         }).start();
                     }
@@ -132,7 +136,7 @@ public class PokedexSpecieListView extends AidPanel {
                 languajes.StringResourceMultilingualManager.getInstance().setResource(getClass().getName() + "-CREATE_NEW_SPECIE", text);
             }
 
-            CustomButton cb = ButtonFactory.pokedexButton(text, buttonSize);
+            CustomButton cb = ButtonFactory.pokedexButton(text, frameDimension);
 
             cb.addActionListener(new ActionListener() {
                 @Override
@@ -148,7 +152,7 @@ public class PokedexSpecieListView extends AidPanel {
                         }
                     });
 
-                    CreateSpecieView panel = new CreateSpecieView(typeModel, specieController);
+                    CreateSpecieView panel = new CreateSpecieView(typeModel, specieController, frame);
                     frame.add(panel);
                     frame.setSize(panel.getPreferredSize());
                     frame.setResizable(false);
@@ -166,25 +170,24 @@ public class PokedexSpecieListView extends AidPanel {
         //CREATE EXIT BUTTON
         try {
 
-            CustomButton cb = ButtonFactory.pokedexButton(ButtonTexts.getInstance().goBack(), buttonSize);
-            
+            CustomButton cb = ButtonFactory.pokedexButton(ButtonTexts.getInstance().goBack(), frameDimension);
+
             cb.addActionListener((ActionEvent e) -> {
-                
+
                 MainFrame.getInstance().previousView();
-                
+
             });
 
             add(cb);
-            
-            
-        } catch (Exception e) {
 
+            // SHOW ALL PROPERLY
+            setPreferredSize(new Dimension((int) (frameDimension.getWidth() * 0.90f), (int) ((cb.getSize().height * (specieList.size() + 2)))));
+
+        } catch (Exception e) {
+            utilities.DisplayMessage.showErrorDialog(e.getMessage());
         }
 
-        // SHOW ALL PROPERLY
         repaint();
-        setPreferredSize(new Dimension((int) (buttonSize.getWidth()*0.90f), (int) ((buttonSize.getHeight() * specieList.size()))));
-
         requestFocusInWindow();
     }
 

@@ -26,7 +26,7 @@ public class AidPanel extends JPanel {
 
     public AidPanel() {
 
-        enabledAudioDescription = true;
+        enabledAudioDescription = false;
         initComponents();
 
     }

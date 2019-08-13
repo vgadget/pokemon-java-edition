@@ -1,11 +1,14 @@
 package utilities;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -25,34 +28,22 @@ public class CSVManager {
         this.file = file;
     }
 
-    private void read() throws FileNotFoundException {
+    private void read() throws FileNotFoundException, IOException {
 
-        Scanner scanner = new Scanner(file);
-        scanner.useDelimiter("\n");
-        
+
         List<List<String>> data = new LinkedList<>();
+
+        List<String> allLines = Files.readAllLines(file.toPath());
         
-        while (scanner.hasNext()){
-            data.add(readLine(scanner));
-        }
+        allLines.forEach((line) -> {
+            data.add(split(line));
+        });
         
+      
         this.data = data;
-        
-        scanner.close();
+
     }
 
-    private List<String> readLine(Scanner reader) {
-
-        List<String> line = new LinkedList<>();
-
-        String buffer = "";
-        if (reader.hasNext()) {
-            buffer = reader.nextLine();
-            line.addAll(split(buffer));
-        }
-
-        return line;
-    }
 
     private static List<String> split(String l) {
 
@@ -73,16 +64,16 @@ public class CSVManager {
                 buffer += l.charAt(i);
             }
         }
-                
+
         return line;
     }
 
-    public synchronized List<List<String>> getAll() throws Exception{
-        
-        if (data == null){
+    public synchronized List<List<String>> getAll() throws Exception {
+
+        if (data == null) {
             read();
         }
-        
+
         return data;
     }
 

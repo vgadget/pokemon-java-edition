@@ -206,7 +206,7 @@ public class ButtonFactory {
 
         float grid = (float) (frameDimension.getWidth() * (0.3f));
 
-        Dimension buttonDimension = new Dimension((int) (grid * 3.51), (int) (grid * 0.44)); // Button proportion 
+        Dimension buttonDimension = new Dimension((int) (1.2f*(grid * 3.51)), (int) (1.2f*(grid * 0.45))); // Button proportion 
 
         Font f = view.components.fonts.PokemonFont.getFont(1);
 
