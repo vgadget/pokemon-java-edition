@@ -1,26 +1,26 @@
-"KEY","ENGLISH","ESPAÑOL","ITALIANO","日本語","中国"
-"model.entities.Type - Bug","Bug","Bicho","Insetto","バグ","窃听器"
-"model.entities.Type - Dark","Dark","Siniestro","Buio","ダーク","暗"
-"model.entities.Type - Dragon","Dragon","Dragón","Drago","ドラゴン","龙"
-"model.entities.Type - Electric","Electric","Eléctrico","Elettrico","電気の","电动"
-"model.entities.Type - Fairy","Fairy","Hada","Fata","妖精","仙女"
-"model.entities.Type - Fighting","Fighting","Lucha","Combattente","ファイティング","战斗"
-"model.entities.Type - Fire","Fire","Fuego","Fuoco","火災","火"
-"model.entities.Type - Flying","Flying","Volador","volante","飛行","飞行"
-"model.entities.Type - Ghost","Ghost","Fantasma","Fantasma","幽霊","鬼"
-"model.entities.Type - Grass","Grass","Planta","Erba","草","草"
-"model.entities.Type - Ground","Ground","Tierra","Terra","接地","地面"
-"model.entities.Type - Ice","Ice","Hielo","Ghiaccio","氷","冰"
-"model.entities.Type - Normal","Normal","Normal","Normale","ノーマル","正常"
-"model.entities.Type - Poison","Poison","Veneno","Veleno","毒","毒"
-"model.entities.Type - Psychic","Psychic","Psíquico","Psichico","サイキック","精神"
-"model.entities.Type - Rock","Rock","Roca","Roccia","岩","岩石"
-"model.entities.Type - Steel","Steel","Acero","Acciaio","鋼","钢"
-"model.entities.Type - Water","Water","Agua","acqua","水","水"
-"view.pokedex.PokedexSpecieListView-CREATE_NEW_SPECIE","Create specie."," Crear especie."," "," "," "
-"kilogram"," Kilograms","Kilogramos"," "," "," "
-"meter"," Meters","Metros"," "," "," "
-"It_sounds_like"," It sounds like: "," Suena así:"," "," "," "
-"null - Tackle - getName()","Tackle"," "," "," "," "
-"model.entities.Specie-151_Mew-getName()","Mew"," "," "," "," "
-"model.entities.Specie-151_Mew-getDescription()","Mew is said to possess the genetic composition of all Pokémon. It is capable of making itself invisible at will, so it entirely avoids notice even if it approaches people."," "," "," "," "
+KEY,ENGLISH,ESPAÑOL,ITALIANO,日本語,中国
+model.entities.Type - Bug,Bug,Bicho,Insetto,バグ,窃听器
+model.entities.Type - Dark,Dark,Siniestro,Buio,ダーク,暗
+model.entities.Type - Dragon,Dragon,Dragón,Drago,ドラゴン,龙
+model.entities.Type - Electric,Electric,Eléctrico,Elettrico,電気の,电动
+model.entities.Type - Fairy,Fairy,Hada,Fata,妖精,仙女
+model.entities.Type - Fighting,Fighting,Lucha,Combattente,ファイティング,战斗
+model.entities.Type - Fire,Fire,Fuego,Fuoco,火災,火
+model.entities.Type - Flying,Flying,Volador,volante,飛行,飞行
+model.entities.Type - Ghost,Ghost,Fantasma,Fantasma,幽霊,鬼
+model.entities.Type - Grass,Grass,Planta,Erba,草,草
+model.entities.Type - Ground,Ground,Tierra,Terra,接地,地面
+model.entities.Type - Ice,Ice,Hielo,Ghiaccio,氷,冰
+model.entities.Type - Normal,Normal,Normal,Normale,ノーマル,正常
+model.entities.Type - Poison,Poison,Veneno,Veleno,毒,毒
+model.entities.Type - Psychic,Psychic,Psíquico,Psichico,サイキック,精神
+model.entities.Type - Rock,Rock,Roca,Roccia,岩,岩石
+model.entities.Type - Steel,Steel,Acero,Acciaio,鋼,钢
+model.entities.Type - Water,Water,Agua,acqua,水,水
+view.pokedex.PokedexSpecieListView-CREATE_NEW_SPECIE,Create specie., Crear especie., , , 
+kilogram, Kilograms,Kilogramos, , , 
+meter, Meters,Metros, , , 
+It_sounds_like, It sounds like: , Suena así:, , , 
+model.entities.Movements.Tackle - Tackle - getName(),Tackle, Placaje, , , 
+model.entities.Specie-151_Mew-getName(),Mew,Mew, , , 
+model.entities.Specie-151_Mew-getDescription(),"Mew is said to possess the genetic composition of all Pokémon. It is capable of making itself invisible at will, so it entirely avoids notice even if it approaches people.", , , , 

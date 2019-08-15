@@ -1,6 +1,7 @@
 package main;
 
 import controller.SpecieController;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,13 +12,15 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import languajes.StringResourceMultilingualManager;
 import model.MoveModel;
 import model.SpecieModel;
 import model.TypeModel;
-import model.entities.Move;
+import model.entities.Movements.Move;
 import model.entities.Specie;
 import model.persistence.Persistence;
 import texttospeech.Narrator;
@@ -29,6 +32,7 @@ import view.View;
 import view.components.AidPanel;
 import view.components.ButtonFactory;
 import view.components.CustomButton;
+import view.components.Notification;
 import view.menu.MainMenu;
 import view.pokedex.PokedexEntryView;
 import view.pokedex.PokedexSpecieListView;
@@ -44,11 +48,9 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         Narrator.getInstance().setLanguage(Narrator.Language.ENGLISH);
-        
-        
-        
+        //languajes.StringResourceMultilingualManager.getInstance().setDefaultLanguage("ESPAÑOL");
+
         //System.out.println(new MoveModel().getAll());
-        
 //        
 //        SpecieModel specieModel = new SpecieModel();
 //        SpecieController specieController = new SpecieController();
@@ -58,21 +60,25 @@ public class Main {
 //        
 //        TypeModel typeModel = new TypeModel();
 //        
-//        JFrame frame = new JFrame();
 //        CreateSpecieView view = new CreateSpecieView(typeModel, specieController);
 //        
 //        frame.add(view);
 //        
-//        frame.setSize(view.getPreferredSize());
-//        frame.setLocationRelativeTo(null);
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setVisible(true);
 
        new Thread(()->{
            
            new MainMenu();
            
        }).start();
+
+
+        while (true) {
+            String s
+                    = new Scanner(System.in).nextLine();
+
+            Notification.getInstance().displayNotification(s);
+        }
+
     }
 
 }

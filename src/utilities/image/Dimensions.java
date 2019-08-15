@@ -19,14 +19,16 @@ public class Dimensions {
 
     private static Dimension selectedResolution = getFullScreenResolution();
 
-    private static boolean enableFullScreen = true;
+    private static boolean enableFullScreen = false;
     private static boolean isEnabledFullScreen = false;
 
     public static Dimension getSelectedResolution() {
 
         if (enableFullScreen && !isEnabledFullScreen) {
+            
             enterFullScreenMode();
             isEnabledFullScreen = true;
+            
         } else if (!enableFullScreen) {
 
             isEnabledFullScreen = false;

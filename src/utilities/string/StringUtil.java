@@ -8,6 +8,8 @@ package utilities.string;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
+import java.util.LinkedList;
+import java.util.List;
 import javax.swing.JLabel;
 
 /**
@@ -37,7 +39,7 @@ public class StringUtil {
 
             w = fm.stringWidth(t);
             h = fm.getHeight();
-            
+
         }
 
         return i;
@@ -97,6 +99,38 @@ public class StringUtil {
         FontMetrics fm = j.getFontMetrics(f);
 
         return fm;
+    }
+
+    public static List<String> divideText(String text, int size) {
+
+        List<String> textDivided = new LinkedList<>();
+
+        if (text.length() > size) {
+
+            textDivided.addAll(divideText(text.substring(0, size), size));
+            textDivided.addAll(divideText(text.substring(size, text.length()), size));
+
+        } else {
+            textDivided.add(text);
+        }
+
+        return textDivided;
+    }
+
+    public static String carousel(String text) {
+
+        String s = "";
+
+        if (text.length() > 0) {
+            
+            for (int i = 1; i < text.length(); i++) {
+
+                s += text.charAt(i);
+            }
+
+            s += text.charAt(0);
+        }
+        return s;
     }
 
 }

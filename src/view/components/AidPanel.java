@@ -28,6 +28,8 @@ public class AidPanel extends JPanel {
 
         enabledAudioDescription = false;
         initComponents();
+        
+        add(Notification.getInstance());
 
     }
 

@@ -1,5 +1,6 @@
 package model.entities;
 
+import model.entities.Movements.Move;
 import java.util.LinkedList;
 import java.util.List;
 import languajes.StringResourceMultilingualManager;
