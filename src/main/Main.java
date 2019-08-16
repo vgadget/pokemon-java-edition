@@ -73,10 +73,10 @@ public class Main {
 
 
         while (true) {
-            String s
-                    = new Scanner(System.in).nextLine();
+            
 
-            Notification.getInstance().displayNotification(s);
+            Notification.getInstance().displayNotification("こんにちは");
+            
         }
 
     }
