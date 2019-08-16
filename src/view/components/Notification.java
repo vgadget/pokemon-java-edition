@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view.components;
 
 import java.awt.Color;
@@ -30,6 +25,9 @@ import utilities.string.StringComparator;
  */
 public class Notification extends JLabel {
 
+    
+    // SINGLETON
+    
     private static Notification instance;
 
     public static Notification getInstance() {
@@ -40,36 +38,47 @@ public class Notification extends JLabel {
 
         return instance;
     }
+    
+    // END OF SINGLETON.
 
-    private final String URI_BACKGROUND = "Resources\\Common\\Notification\\PNG";
+    // RESOURCES
+    private static final String URI_BACKGROUND = "Resources\\Common\\Notification\\PNG";
     private static final String OVER_AUDIO_FEEDBACK = "Resources\\BattleHUD\\Pokedex\\INFO_SCREEN\\select.wav";
-    private Sound sound;
+    
+    // ATTRIBUTES
+    private Sprite notificationBanner; // NOTIFIACTION BANNER SPRITE 
+    private int currentSprite; // CURRENT SPRITE TO DISPLAY
+    private Dimension bannerDimension; // NOTIFICATION BANNER SPRITE DIMENSION
 
-    private Sprite notificationBanner;
-    private Dimension bannerDimension;
+    private Sound sound; // SOUND TO PLAY WHEN NOTIFICATION RECEIVED.
+    
+    private String currentDisplayingText = ""; // TEXT TO DISPLAY
 
-    private String currentDisplayingText = "";
-    private int currentSprite;
+    private int x, y; // COORDINATES TO SET IN CASE OF SHOW ANIMATION
+    private int hideYCoordenate; // COORDINATE (Y AXIS) TO SET IN CASE OF HIDE ANIMATION
 
-    private int x, y;
-    private int hideYCoordenate;
+    private int grid; // PIXEL GRID
 
-    private int grid;
-
-    private Notification() {
+    // CONSTRUCTOR.
+    private Notification() { // SINGLETON
 
         currentSprite = 0;
         setup();
 
     }
 
+    /*
+    
+        THE ONY ONE PUBLIC METHOD. IT CALLS ALL PRIVATE METHODS
+        
+     */
     public synchronized void displayNotification(String text) {
 
         try {
-            
+
             utilities.sound.SoundPlayer.getInstance().playEffectChannel(sound);
 
-            if (text.length() > 18) {
+            if (text.length() > 18) { // IF THE TEXT IS TOO LONG, SHOW AS CAROUSEL
 
                 setNotificationText(text.substring(0, 18));
                 showMessage();
@@ -89,7 +98,8 @@ public class Notification extends JLabel {
                     }
 
                 }
-            } else {
+                
+            } else { // IF THE TEXT CAN BE SHOWN WITHOUT CAROUSEL, SHOW IT NORMALLY.
 
                 setNotificationText(text);
                 showMessage();
@@ -97,16 +107,17 @@ public class Notification extends JLabel {
                 Thread.sleep(5000);
             }
 
+            // WHEN IT ENDS TO DISPLAY. HIDE NOTIFICATION BAR.
             hideMessage();
             Thread.sleep(100);
 
         } catch (InterruptedException ex) {
-            Logger.getLogger(Notification.class.getName()).log(Level.SEVERE, null, ex);
+            utilities.DisplayMessage.showErrorDialog(ex.getLocalizedMessage());
         }
 
     }
 
-    private void showMessage() {
+    private void showMessage() { // GRADUALLY CHANGE PLACE OF THE BANNER TO MAKE THE APPEAR ANIMATION.
 
         new Thread(() -> {
 
@@ -125,7 +136,7 @@ public class Notification extends JLabel {
 
     }
 
-    private void hideMessage() {
+    private void hideMessage() { // GRADUALLY CHANGE PLACE OF THE BANNER TO MAKE THE HIDE ANIMATION.
 
         new Thread(() -> {
 
@@ -152,6 +163,7 @@ public class Notification extends JLabel {
 
     private BufferedImage getCurrentImageToDisplay() {
 
+        // ACORDING TO ATTRIBUTES DISPLAY TEXT ON NOTIFICATION 
         BufferedImage img = notificationBanner.getAnimation()[currentSprite];
 
         Font f = view.components.fonts.PokemonFont.getFont(1);
@@ -169,7 +181,10 @@ public class Notification extends JLabel {
 
     private void setup() {
 
+        // SET PIXEL GRID
         grid = (int) ((Dimensions.getSelectedResolution().width) * (0.03f));
+
+        // SET BANNER DIMENSION 
         int w, h;
 
         w = grid * 535;
@@ -180,8 +195,10 @@ public class Notification extends JLabel {
 
         bannerDimension = new Dimension(w, h);
 
+        // LOAD RESOURCES
         try {
 
+            // READ FILES OF THE BANNER ANIMATION (IMAGE FILES)
             File f = new File(URI_BACKGROUND);
 
             List<File> imageFiles = Arrays.asList(
@@ -189,38 +206,51 @@ public class Notification extends JLabel {
                         return pathname.getName().toLowerCase().endsWith("png");
                     }));
 
+            // SORT FILES BY NAME
             StringComparator comp = new StringComparator();
             imageFiles.sort((File o1, File o2) -> {
                 return comp.compare(o1.getName(), o2.getName());
             });
 
+            // READ IMAGES FROM FILES AND RESIZE USING BANNER DIMENSION
             List<Image> imgs = new LinkedList<>();
 
             for (File file : imageFiles) {
                 imgs.add(new Image(utilities.image.ImageUtil.resize((ImageIO.read(file)), bannerDimension.width, bannerDimension.height)));
             }
 
+            // CREATE AND INIIALISE BANNER SPRITE  
             notificationBanner = new Sprite(imgs, 450);
 
+            // LOAD THE SOUND TO BE PLAYED WHEN NOTIFICATION IS DISPLAYED
             this.sound = new Sound(new File(OVER_AUDIO_FEEDBACK));
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+            utilities.DisplayMessage.showErrorDialog(ex.getLocalizedMessage());
         }
 
+        // THE X AND Y COORDINATES OF THE NOTIFICATION BAR WHEN IT IS DISPLAYED
         x = (int) ((Dimensions.getSelectedResolution().width - bannerDimension.width) / 2);
         y = grid / 2;
 
+        // THE Y COORDINATE OF THE NOTIFICATION BAR WHEN IS HIDING
         hideYCoordenate = -bannerDimension.height * 2;
 
+        // BY DEFAULT, THE NOTIFICATION BAR IS HIDE.
         setLocation(x, hideYCoordenate);
         setSize(bannerDimension);
 
+        /*  
+            This thread is allways showing the notification bar. 
+            Does not matter if there are some text or not. 
+            And it does not take care about the placing. It just paint info 
+            acording to the atributes.
+         */
         new Thread(() -> {
 
             currentDisplayingText = "";
 
-            while (true) {
+            while (!Thread.interrupted()) {
 
                 if (currentSprite >= notificationBanner.getAnimation().length) {
                     currentSprite = 0;
