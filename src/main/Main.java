@@ -45,8 +45,30 @@ import view.pokedex.PokedexViewImpl;
  */
 public class Main {
 
+    //Model
+    public static TypeModel typeModel;
+    public static SpecieModel specieModel;
+
+    //View
+    public static PokedexView pokedexView;
+
+    //Controller
+    public static SpecieController specieController;
+
     public static void main(String[] args) throws Exception {
 
+        typeModel = new TypeModel();
+        specieModel = new SpecieModel();
+
+        specieController = new SpecieController();
+
+        specieModel.setController(specieController);
+        specieController.setModel(specieModel);
+
+        pokedexView = new PokedexViewImpl(specieController, typeModel);
+
+        specieController.addView(pokedexView);
+        
         Narrator.getInstance().setLanguage(Narrator.Language.ENGLISH);
         //languajes.StringResourceMultilingualManager.getInstance().setDefaultLanguage("ESPAÑOL");
 
@@ -64,21 +86,18 @@ public class Main {
 //        
 //        frame.add(view);
 //        
+        new Thread(() -> {
 
-       new Thread(()->{
-           
-           new MainMenu();
-           
-       }).start();
+            new MainMenu();
 
+        }).start();
 
-        while (true) {
-            
-
-            Notification.getInstance().displayNotification("こんにちは");
-            
-        }
-
+//
+//        new Thread(()->{
+//            
+//            
+//            
+//        }).start();
     }
 
 }

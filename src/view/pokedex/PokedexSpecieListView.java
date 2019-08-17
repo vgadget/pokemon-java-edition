@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,7 +29,6 @@ import view.components.CustomButton;
  */
 public class PokedexSpecieListView extends AidPanel {
 
-    private List<Specie> specieList;
     private Dimension size;
     private PokedexEntryView entryView;
     private SpecieController specieController;
@@ -37,8 +37,7 @@ public class PokedexSpecieListView extends AidPanel {
 
     private PokedexView container;
 
-    public PokedexSpecieListView(List<Specie> specieList, Dimension size, PokedexEntryView pokedexEntryView, SpecieController specieController, TypeModel typeModel) {
-        this.specieList = specieList;
+    public PokedexSpecieListView(Dimension size, PokedexEntryView pokedexEntryView, SpecieController specieController, TypeModel typeModel) {
         this.size = size;
         this.entryView = pokedexEntryView;
         this.specieController = specieController;
@@ -68,42 +67,61 @@ public class PokedexSpecieListView extends AidPanel {
         // VIEW SIZE
         Dimension frameDimension = new Dimension((int) (size.getWidth() * 1f), (int) (size.getWidth() * 1f));
 
-        Collections.sort(specieList); // SORT SPECIE LIST.
+        List<String> pkList = specieController.getModel().getAllPk();
 
-        specieList.forEach((s) -> { // FOR EACH SPECIE CREATES A BUTTON.
+//        specieController.getModel().getAll().parallelStream().forEach((specie) -> {
+//            pkList.add(specie.getPK());
+//        });
+
+        Collections.sort(pkList, new utilities.string.StringComparator()); // SORT SPECIE LIST.
+
+        new Thread(() -> {
+            
+            // START SHOWING FIRST SPECIE
+            if (pkList.size() > 0) {
+                entryView.setSpecie(specieController.getModel().getEntity(pkList.get(0)));
+            }
+
+        }).start();
+
+        pkList.parallelStream().forEachOrdered((String s) -> { // FOR EACH SPECIE CREATES A BUTTON.
+
             try {
+
                 //System.out.println(s.getName());
-                CustomButton cb = ButtonFactory.getPokedexSpecieButton(s, frameDimension);
-                cb.setDescription(s.getName());
+                Specie specie = specieController.getModel().getEntity(s);
+                CustomButton cb = ButtonFactory.getPokedexSpecieButton(specie, frameDimension);
+                cb.setDescription(specie.getName());
 
                 // IF BUTTON PRESSED, SHOW THAT POKEMON | ACTION LISTENER.
                 cb.setPressedVoiceFeedback(s.toString());
 
                 cb.addActionListener(new ActionListener() {
+
+                    private String speciePk = s;
+
                     @Override
                     public void actionPerformed(ActionEvent e) {
 
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
+                        Specie specieSelected = specieController.getModel().getEntity(speciePk);
 
-                                entryView.setSpecie(s);
+                        new Thread(() -> {
+                            entryView.setSpecie(specieSelected);
 
-                                if (isEnabledAudioDescription()) {
-                                    cb.getPressedVoiceFeedback();
+                            if (isEnabledAudioDescription()) {
+                                cb.getPressedVoiceFeedback();
 
-                                    String cry = "It_sounds_like";
+                                String cry = "It_sounds_like";
 
-                                    if (!StringResourceMultilingualManager.getInstance().keyExist(cry)) {
+                                if (!StringResourceMultilingualManager.getInstance().keyExist(cry)) {
 
-                                        StringResourceMultilingualManager.getInstance().addKey(cry);
+                                    StringResourceMultilingualManager.getInstance().addKey(cry);
 
-                                    }
-
-                                    Narrator.getInstance().speak(StringResourceMultilingualManager.getInstance().getResource(cry));
-
-                                    SoundPlayer.getInstance().playEffectChannel(s.getCry());
                                 }
+
+                                Narrator.getInstance().speak(StringResourceMultilingualManager.getInstance().getResource(cry));
+
+                                SoundPlayer.getInstance().playEffectChannel(specieSelected.getCry());
                             }
                         }).start();
                     }
@@ -115,11 +133,6 @@ public class PokedexSpecieListView extends AidPanel {
                 Logger.getLogger(PokedexSpecieListView.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-
-        // START SHOWING FIRST SPECIE
-        if (specieList.size() > 0) {
-            entryView.setSpecie(specieList.get(0));
-        }
 
         // CREATE SPECIE BUTTON
         try {
@@ -142,13 +155,15 @@ public class PokedexSpecieListView extends AidPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
 
+                    MainFrame.getInstance().hideMainFrame();
+
                     frame = new JFrame(cb.getDescription());
 
                     frame.addWindowListener(new java.awt.event.WindowAdapter() {
                         @Override
                         public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                            MainFrame.getInstance().previousView();
-                            requestFocusInWindow();
+                            MainFrame.getInstance().showMainFrame();
+                            MainFrame.getInstance().requestFocusInWindow();
                         }
                     });
 
@@ -181,7 +196,7 @@ public class PokedexSpecieListView extends AidPanel {
             add(cb);
 
             // SHOW ALL PROPERLY
-            setPreferredSize(new Dimension((int) (frameDimension.getWidth() * 0.90f), (int) ((cb.getSize().height * (specieList.size() + 2)))));
+            setPreferredSize(new Dimension((int) (frameDimension.getWidth() * 0.90f), (int) ((cb.getSize().height * (pkList.size() + 4)))));
 
         } catch (Exception e) {
             utilities.DisplayMessage.showErrorDialog(e.getMessage());

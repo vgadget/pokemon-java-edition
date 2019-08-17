@@ -45,19 +45,19 @@ public abstract class AbstractModel<C extends Controller, E extends Entity, PK e
     }
 
     @Override
-    public E getEntity(PK pk){
-        
+    public E getEntity(PK pk) {
+
         E entity = null;
 
         try {
             entity = (E) Persistence.getInstance().getDao().get(pk, c);
-            
+
         } catch (Exception ex) {
             DisplayMessage.showErrorDialog(ex.getMessage());
         }
 
         return entity;
-        
+
     }
 
     @Override
@@ -78,18 +78,31 @@ public abstract class AbstractModel<C extends Controller, E extends Entity, PK e
 
     @Override
     public List<E> getAll() {
-        
+
         try {
             return Persistence.getInstance().getDao().getAll(c);
         } catch (Exception ex) {
             DisplayMessage.showErrorDialog(ex.getMessage());
-            
         }
 
         return new LinkedList();
     }
-    
-    protected void fireModelChanged(){
+
+    @Override
+    public List<PK> getAllPk() {
+
+        try {
+            
+            return Persistence.getInstance().getDao().getAllPK(c);
+            
+        } catch (Exception ex) {
+            DisplayMessage.showErrorDialog(ex.getMessage());
+        }
+
+        return new LinkedList();
+    }
+
+    protected void fireModelChanged() {
         this.controller.fireDataModelChanged();
     }
 

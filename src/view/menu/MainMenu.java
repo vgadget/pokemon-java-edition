@@ -22,6 +22,7 @@ import view.MainFrame;
 import view.components.ButtonFactory;
 import view.components.AidPanel;
 import view.components.CustomButton;
+import view.components.Notification;
 import view.menu.components.AnimatedBackgroundPanel;
 import view.pokedex.PokedexViewImpl;
 
@@ -104,8 +105,7 @@ public class MainMenu {
 
         developedByAdrianVazquezBarreraLabel.setLocation(0, Dimensions.getSelectedResolution().height - d.height);
         developedByAdrianVazquezBarreraLabel.setSize(d.width, d.height);
-        
-        
+
         developedByAdrianVazquezBarreraLabel.setOpaque(true);
         developedByAdrianVazquezBarreraLabel.setBackground(new Color(0, 0, 0, 200));
 
@@ -198,17 +198,7 @@ public class MainMenu {
 
         //Actions
         pokedex.addActionListener((ActionEvent e) -> {
-
-            TypeModel typeModel = new TypeModel();
-            SpecieModel specieModel = new SpecieModel();
-            SpecieController specieController = new SpecieController();
-
-            specieModel.setController(specieController);
-            specieController.setModel(specieModel);
-
-            PokedexViewImpl view = new PokedexViewImpl(specieController, typeModel);
-
-            specieController.addView(view);
+            main.Main.pokedexView.display();
 
         });
 

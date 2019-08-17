@@ -7,6 +7,7 @@ import java.util.Stack;
 import javax.swing.JFrame;
 import utilities.image.Dimensions;
 import view.components.AidPanel;
+import view.menu.components.AnimatedBackgroundPanel;
 
 /**
  *
@@ -32,6 +33,7 @@ public class MainFrame extends JFrame {
         lastComponents = new Stack<>();
         setBackground(Color.BLACK);
         setUndecorated(true);
+        setVisible(true);
 
         update();
     }
@@ -42,16 +44,31 @@ public class MainFrame extends JFrame {
         this.setResizable(false);
 
         if (!lastComponents.isEmpty()) {
+
             add(lastComponents.peek());
+
+            utilities.sound.SoundPlayer.getInstance().stopMusic();
+
+            if (lastComponents.peek() instanceof AnimatedBackgroundPanel) {
+
+                ((AnimatedBackgroundPanel) lastComponents.peek()).playBackgroundMusic();
+            }
         }
 
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         setAlwaysOnTop(true);
         this.setLocationRelativeTo(null);
-        this.setVisible(true);
 
         revalidate();
         repaint();
+    }
+
+    public void hideMainFrame() {
+        setVisible(false);
+    }
+
+    public void showMainFrame() {
+        setVisible(true);
     }
 
     public void showView(Container c) {
@@ -65,6 +82,7 @@ public class MainFrame extends JFrame {
     }
 
     public void previousView() {
+
         if (hasPrevious()) {
             remove(lastComponents.pop());
 

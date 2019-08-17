@@ -13,6 +13,8 @@ public class Persistence {
 
     public static Persistence getInstance() {
 
+        Runtime.getRuntime().gc();
+        
         if (instance == null) {
             try {
                 instance = new Persistence(new FileDao());

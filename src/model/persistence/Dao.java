@@ -22,6 +22,8 @@ public interface Dao<E extends Entity, PK extends Comparable> {
     List<E> getAll() throws IOException, ClassNotFoundException;
     
     List<E> getAll(Class c) throws IOException, ClassNotFoundException;
+    
+    List<Comparable> getAllPK(Class c) throws IOException, ClassNotFoundException;
 
     void save(E t) throws IOException;
 

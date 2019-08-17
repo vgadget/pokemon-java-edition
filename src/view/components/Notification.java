@@ -112,7 +112,7 @@ public class Notification extends JLabel {
             Thread.sleep(100);
 
         } catch (InterruptedException ex) {
-            utilities.DisplayMessage.showErrorDialog(ex.getLocalizedMessage());
+            //utilities.DisplayMessage.showErrorDialog(ex.getLocalizedMessage());
         }
 
     }

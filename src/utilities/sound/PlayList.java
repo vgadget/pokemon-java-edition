@@ -34,7 +34,7 @@ public class PlayList {
         while (!Thread.interrupted() && playlist.size() <= 0) {
 
             Sound s = playlist.get(0);
-            SoundPlayer.getInstance().playMusicChannel(s);
+            SoundPlayer.getInstance().playMusicChannel(s, false);
 
             try {
                 Thread.sleep((((int) s.getClip().getMicrosecondLength() / 100) + 5), (1000 * ((int) s.getClip().getMicrosecondLength() % 100)));

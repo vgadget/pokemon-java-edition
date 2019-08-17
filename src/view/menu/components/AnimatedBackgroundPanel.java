@@ -6,13 +6,13 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import utilities.sound.Sound;
 import view.components.AidPanel;
 
 /**
@@ -22,27 +22,35 @@ import view.components.AidPanel;
 public class AnimatedBackgroundPanel extends AidPanel {
 
     private static final String URI_BACKGROUNDS = "Resources/MainTitle/backgrounds";
+    private static final String URI_BACKGROUND_SONGS = "Resources/MainTitle/songs";
 
     private static final int BACKGROUND_SPEED = 1;
 
-    private BufferedImage background;
+    private static BufferedImage background;
 
-    private Dimension frameDimension;
+    private static Dimension frameDimension;
 
-    private int x, y; // Background location
-    private int dx, dy; // Background location trajectory.
+    private static int x, y; // Background location
+    private static int dx, dy; // Background location trajectory.
 
-    Random rnd = new Random();
+    private static Random rnd = new Random();
+
+    //Sound
+    private static Sound backgroundMusic;
 
     public AnimatedBackgroundPanel() {
         this(utilities.image.Dimensions.getSelectedResolution());
     }
 
+    
+    
     public AnimatedBackgroundPanel(Dimension frameDimension) {
 
         this.frameDimension = frameDimension;
 
-        setUpBackgrounds();
+        if (background == null) {
+            setUpBackgrounds();
+        }
 
         dx = dy = BACKGROUND_SPEED;
 
@@ -61,7 +69,39 @@ public class AnimatedBackgroundPanel extends AidPanel {
 
     }
 
-    private void updateBackgroundLocation() {
+    public static synchronized void playBackgroundMusic() {
+
+        new Thread(() -> {
+
+            if (backgroundMusic == null) {
+
+                List<File> allMusicFiles = Arrays.asList(
+                        new File(URI_BACKGROUND_SONGS)
+                                .listFiles(
+                                        (pathname) -> {
+
+                                            return pathname.getName().toLowerCase().endsWith(".wav");
+                                        }));
+
+                try {
+
+                    backgroundMusic = new Sound(allMusicFiles.get(rnd.nextInt(allMusicFiles.size())));
+
+                } catch (Exception ex) {
+                    utilities.DisplayMessage.showErrorDialog(ex.getLocalizedMessage());
+                }
+
+            }
+
+            utilities.sound.SoundPlayer.getInstance().stopMusic();
+
+            utilities.sound.SoundPlayer.getInstance().playMusicChannel(backgroundMusic, true);
+
+        }).start();
+
+    }
+
+    private synchronized void updateBackgroundLocation() {
 
         while (!isValidTrajectory(dx, dy)) {
 
@@ -85,33 +125,27 @@ public class AnimatedBackgroundPanel extends AidPanel {
 
     }
 
-    private boolean isValidTrajectory(int dx, int dy) {
+    private static boolean isValidTrajectory(int dx, int dy) {
 
         // Coordinate X
         if (!isValidXTrajectory(dx)) {
             return false;
         }
-
         // Coordinate Y
-        if (!isValidYTrajectory(dy)) {
-            return false;
-        }
 
-        return true;
+        return isValidYTrajectory(dy);
     }
 
-    private boolean isValidXTrajectory(int dx) {
+    private static boolean isValidXTrajectory(int dx) {
         return !((x + dx >= 0) || (x + dx + background.getWidth() <= frameDimension.getWidth()));
     }
 
-    private boolean isValidYTrajectory(int dy) {
+    private static boolean isValidYTrajectory(int dy) {
         return !((y + dy >= 0) || (y + dy + background.getHeight() <= frameDimension.getHeight()));
     }
 
-    private void setUpBackgrounds() {
+    private static void setUpBackgrounds() {
         try {
-//            int i = new Random().nextInt(AVAILABLE_IMAGES);
-//            background = ImageIO.read(new File(URI_BACKGROUNDS + "/tile(" + i + ").png"));
 
             List<File> images = new LinkedList<>();
 
@@ -128,13 +162,11 @@ public class AnimatedBackgroundPanel extends AidPanel {
 
             background = ImageIO.read(images.get(new Random().nextInt(images.size())));
 
-            double proportionX = Math.max((background.getWidth() / this.frameDimension.getWidth()), (this.frameDimension.getWidth() / background.getWidth()));
-            double proportionY = Math.max((background.getHeight() / this.frameDimension.getHeight()), (this.frameDimension.getHeight() / background.getHeight()));
+            double proportionX = Math.max((background.getWidth() / frameDimension.getWidth()), (frameDimension.getWidth() / background.getWidth()));
+            double proportionY = Math.max((background.getHeight() / frameDimension.getHeight()), (frameDimension.getHeight() / background.getHeight()));
 
             background = utilities.image.ImageUtil.resizeProportional(background, Math.max(proportionX, proportionY) * 1.5f);
-            
-            
-            
+
         } catch (IOException ex) {
             Logger.getLogger(AnimatedBackgroundPanel.class.getName()).log(Level.SEVERE, null, ex);
         }

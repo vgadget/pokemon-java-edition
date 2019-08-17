@@ -6,13 +6,9 @@
 package view.pokedex;
 
 import controller.SpecieController;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import javax.swing.JScrollPane;
-import javax.swing.plaf.basic.BasicSplitPaneDivider;
 import model.TypeModel;
-import view.MainFrame;
 
 /**
  *
@@ -22,7 +18,17 @@ public class PokedexViewImpl extends PokedexView {
 
     private TypeModel typeModel;
 
+    public PokedexViewImpl(SpecieController specieController, TypeModel typeModel) {
+        super(specieController.getModel(), specieController);
+        this.typeModel = typeModel;
+        initComponents();
+
+        setup();
+    }
+
     public void setup() {
+        
+
         //SETUP POKEDEX SPECIE LIST
         int w, h;
 
@@ -31,7 +37,7 @@ public class PokedexViewImpl extends PokedexView {
 
         this.jSplitPane1.remove(this.pokedexSpecieListPane);
 
-        PokedexSpecieListView pokedexSpecieListView = new PokedexSpecieListView(getModel().getAll(), new Dimension(w, h), (PokedexEntryView) pokedexEntryPanel, getController(), typeModel);
+        PokedexSpecieListView pokedexSpecieListView = new PokedexSpecieListView(new Dimension(w, h), (PokedexEntryView) pokedexEntryPanel, getController(), typeModel);
         pokedexSpecieListView.setContainer(this);
         this.pokedexSpecieListPane = new JScrollPane(pokedexSpecieListView);
         this.pokedexSpecieListPane.getVerticalScrollBar().setUnitIncrement(6);
@@ -39,19 +45,8 @@ public class PokedexViewImpl extends PokedexView {
         this.jSplitPane1.add(this.pokedexSpecieListPane);
 
         repaint();
-
-        MainFrame.getInstance().showView(this);
-        MainFrame.getInstance().setLocationRelativeTo(null);
     }
-
-    public PokedexViewImpl(SpecieController specieController, TypeModel typeModel) {
-        super(specieController.getModel(), specieController);
-        this.typeModel = typeModel;
-        initComponents();
-   
-
-        setup();
-    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

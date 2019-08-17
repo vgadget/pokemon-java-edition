@@ -18,7 +18,7 @@ public class LabelTexts {
     }
 
     private LabelTexts() {
-        
+
     }
 
     //Main menu - Text for single player button.
@@ -27,5 +27,10 @@ public class LabelTexts {
     public String developedByAdrianVazquezBarrera() {
         return developedByAdrianVazquezBarrera;
     }
+    
+    private String pleaseWait = "Please, wait.";
 
+    public String pleaseWait() {
+        return pleaseWait;
+    }
 }

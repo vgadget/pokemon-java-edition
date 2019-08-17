@@ -116,8 +116,8 @@ public class Sound implements Serializable {
 
         audioInputStream.close();
         if (clip != null) {
-            clip.drain();
             clip.stop();
+            clip.drain();
             clip.close();
             clip = null;
         }

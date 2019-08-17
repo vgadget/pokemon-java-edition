@@ -14,6 +14,8 @@ public interface Model<C extends Controller, E extends Entity, PK extends Compar
 
     List<E> getAll();
 
+    List<PK> getAllPk();
+    
     C getController();
 
     E getEntity(PK pk);

@@ -10,11 +10,11 @@ import view.components.AidPanel;
  *
  * @author Adrian Vazquez
  */
-public abstract class AbstractView<M extends Model, C extends Controller> extends JLayeredPane implements View<M, C>{
+public abstract class AbstractView<M extends Model, C extends Controller> extends JLayeredPane implements View<M, C> {
 
     private M model;
     private C controller;
-    
+
     @Override
     public C getController() {
         return this.controller;
@@ -36,22 +36,18 @@ public abstract class AbstractView<M extends Model, C extends Controller> extend
     }
 
     @Override
-    public void display(){
-        
-        java.awt.EventQueue.invokeLater(() -> {
-            
-            setVisible(true);
-            refresh();
-            
-        });
+    public void display() {
+
+        MainFrame.getInstance().showView(this);
+        MainFrame.getInstance().setLocationRelativeTo(null);
+        setVisible(true);
     }
-   
+
     @Override
-    public void dataModelChanged(){
+    public void dataModelChanged() {
         refresh();
     }
-        
+
     public abstract void refresh();
-    
-    
+
 }

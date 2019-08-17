@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import model.MoveModel;
@@ -23,10 +24,13 @@ import model.TypeModel;
 import model.entities.Specie;
 import model.entities.Sprite;
 import model.entities.Type;
+import utilities.image.Dimensions;
 import utilities.string.StringComparator;
 import utilities.sound.SoundPlayer;
 import utilities.sound.Sound;
 import view.MainFrame;
+import view.components.Notification;
+import view.menu.components.AnimatedBackgroundPanel;
 import view.pokedex.components.MovementTableModel;
 import view.pokedex.components.SpriteJLabel;
 
@@ -712,105 +716,140 @@ public class CreateSpecieView extends PokedexView {
 
     private void jButtonCreateSpecieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCreateSpecieActionPerformed
 
-        String name = jTextFieldName.getText();
+        this.frame.setVisible(false);
 
-        Type type = null;
-        Type secondaryType = null;
+        Thread createSpecieThread = new Thread(() -> {
 
-        List<Type> listOfTypes = this.typeModel.getAll();
+            String name = jTextFieldName.getText();
 
-        for (int i = 0; ((i < listOfTypes.size()) && (type == null || secondaryType == null)); i++) {
+            Type type = null;
+            Type secondaryType = null;
 
-            if (listOfTypes.get(i).getName().equalsIgnoreCase(((String) this.jComboBoxType.getModel().getSelectedItem()))) {
-                type = listOfTypes.get(i);
-            } else if (listOfTypes.get(i).getName().equalsIgnoreCase(((String) this.jComboBoxSecondaryType.getModel().getSelectedItem()))) {
-                secondaryType = listOfTypes.get(i);
-            }
+            List<Type> listOfTypes = this.typeModel.getAll();
 
-        }
+            for (int i = 0; ((i < listOfTypes.size()) && (type == null || secondaryType == null)); i++) {
 
-        Sprite front = ((SpriteJLabel) this.jLabelFrontImageSprite).getSprite();
-        Sprite back = ((SpriteJLabel) this.jLabelBackImageSprite).getSprite();
-        Float height = (float) Double.parseDouble(this.jTextFieldHeight.getText());
-        Float weight = (float) Double.parseDouble(this.jTextFieldWeight.getText());
-        Integer pokedexID = (int) Long.parseLong(jTextFieldPokedexId.getText());
-        Integer maxHP = (int) Long.parseLong(jTextFieldMaxHp.getText());
-        Integer minHP = (int) Long.parseLong(jTextFieldMinHp.getText());
-        Integer maxAttack = (int) Long.parseLong(jTextFieldMaxAttack.getText());
-        Integer minAttack = (int) Long.parseLong(jTextFieldMinAttack.getText());
-        Integer maxSpecialAttack = (int) Long.parseLong(jTextFieldMaxSpecialAttack.getText());
-        Integer minSpecialAttack = (int) Long.parseLong(jTextFieldMinSpecialAttack.getText());
-        Integer maxDefense = (int) Long.parseLong(jTextFieldMaxDefense.getText());
-        Integer minDefense = (int) Long.parseLong(jTextFieldMinDefense.getText());
-        Integer maxSpecialDefense = (int) Long.parseLong(jTextFieldMaxSpecialDefense.getText());
-        Integer minSpecialDefense = (int) Long.parseLong(jTextFieldMinSpecialDefense.getText());
-        Integer maxSpeed = (int) Long.parseLong(jTextFieldMaxSpeed.getText());
-        Integer minSpeed = (int) Long.parseLong(jTextFieldMinSpeed.getText());
-        Float precision = ((new Float("" + jSpinnerPrecision.getModel().getValue())) / 100);
-        Float evasion = (new Float("" + jSpinnerEvasion.getModel().getValue())) / 100;
-        String description = jTextAreaDescription.getText();
-        Sound cry = loadedCry;
-
-        List<Object> data = new LinkedList<>();
-
-        data.add(name);
-        data.add(type);
-        data.add(secondaryType);
-        data.add(front);
-        data.add(back);
-        data.add(height);
-        data.add(weight);
-        data.add(pokedexID);
-        data.add(maxHP);
-        data.add(minHP);
-        data.add(maxAttack);
-        data.add(minAttack);
-        data.add(maxSpecialAttack);
-        data.add(minSpecialAttack);
-        data.add(maxDefense);
-        data.add(minDefense);
-        data.add(maxSpecialDefense);
-        data.add(minSpecialDefense);
-        data.add(maxSpeed);
-        data.add(minSpeed);
-        data.add(precision);
-        data.add(evasion);
-        data.add(description);
-        data.add(cry);
-
-        Specie specie = this.getController().createEntity(data);
-
-        boolean exist = false;
-        int i = 0;
-
-        List<Specie> specieList = this.getModel().getAll();
-
-        if (specieList.size() >= 999) {
-            utilities.DisplayMessage.showErrorDialog("There are " + specieList.size() + " pokémon, remove some species to add others.");
-        } else {
-
-            while (i < specieList.size() && !exist) {
-
-                if (specieList.get(i).getName().equals(specie.getName()) || specieList.get(i).getPokedexID().equals(specie.getPokedexID())) {
-                    exist = true;
+                if (listOfTypes.get(i).getName().equalsIgnoreCase(((String) this.jComboBoxType.getModel().getSelectedItem()))) {
+                    type = listOfTypes.get(i);
+                } else if (listOfTypes.get(i).getName().equalsIgnoreCase(((String) this.jComboBoxSecondaryType.getModel().getSelectedItem()))) {
+                    secondaryType = listOfTypes.get(i);
                 }
-                i++;
+
             }
 
-            if (!exist) {
+            Sprite front = ((SpriteJLabel) this.jLabelFrontImageSprite).getSprite();
+            Sprite back = ((SpriteJLabel) this.jLabelBackImageSprite).getSprite();
+            Float height = (float) Double.parseDouble(this.jTextFieldHeight.getText());
+            Float weight = (float) Double.parseDouble(this.jTextFieldWeight.getText());
+            Integer pokedexID = (int) Long.parseLong(jTextFieldPokedexId.getText());
+            Integer maxHP = (int) Long.parseLong(jTextFieldMaxHp.getText());
+            Integer minHP = (int) Long.parseLong(jTextFieldMinHp.getText());
+            Integer maxAttack = (int) Long.parseLong(jTextFieldMaxAttack.getText());
+            Integer minAttack = (int) Long.parseLong(jTextFieldMinAttack.getText());
+            Integer maxSpecialAttack = (int) Long.parseLong(jTextFieldMaxSpecialAttack.getText());
+            Integer minSpecialAttack = (int) Long.parseLong(jTextFieldMinSpecialAttack.getText());
+            Integer maxDefense = (int) Long.parseLong(jTextFieldMaxDefense.getText());
+            Integer minDefense = (int) Long.parseLong(jTextFieldMinDefense.getText());
+            Integer maxSpecialDefense = (int) Long.parseLong(jTextFieldMaxSpecialDefense.getText());
+            Integer minSpecialDefense = (int) Long.parseLong(jTextFieldMinSpecialDefense.getText());
+            Integer maxSpeed = (int) Long.parseLong(jTextFieldMaxSpeed.getText());
+            Integer minSpeed = (int) Long.parseLong(jTextFieldMinSpeed.getText());
+            Float precision = ((new Float("" + jSpinnerPrecision.getModel().getValue())) / 100);
+            Float evasion = (new Float("" + jSpinnerEvasion.getModel().getValue())) / 100;
+            String description = jTextAreaDescription.getText();
+            Sound cry = loadedCry;
 
-                specie.setMovementsCanLearn(((MovementTableModel) this.movementTable.getModel()).getSelectedMoves());
+            List<Object> data = new LinkedList<>();
 
-                this.getController().newEntityGesture(specie);
+            data.add(name);
+            data.add(type);
+            data.add(secondaryType);
+            data.add(front);
+            data.add(back);
+            data.add(height);
+            data.add(weight);
+            data.add(pokedexID);
+            data.add(maxHP);
+            data.add(minHP);
+            data.add(maxAttack);
+            data.add(minAttack);
+            data.add(maxSpecialAttack);
+            data.add(minSpecialAttack);
+            data.add(maxDefense);
+            data.add(minDefense);
+            data.add(maxSpecialDefense);
+            data.add(minSpecialDefense);
+            data.add(maxSpeed);
+            data.add(minSpeed);
+            data.add(precision);
+            data.add(evasion);
+            data.add(description);
+            data.add(cry);
 
+            Specie specie = this.getController().createEntity(data);
+
+            boolean exist = false;
+            int i = 0;
+
+            List<Specie> specieList = this.getModel().getAll();
+
+            if (specieList.size() >= 999) {
+                utilities.DisplayMessage.showErrorDialog("There are " + specieList.size() + " pokémon, remove some species to add others.");
             } else {
-                utilities.DisplayMessage.showErrorDialog("This specie is already created.");
-            }
-        }
 
-        this.frame.dispose();
-        MainFrame.getInstance().previousView();
-        MainFrame.getInstance().previousView();
+                while (i < specieList.size() && !exist) {
+
+                    if (specieList.get(i).getName().equals(specie.getName()) || specieList.get(i).getPokedexID().equals(specie.getPokedexID())) {
+                        exist = true;
+                    }
+                    i++;
+                }
+
+                if (!exist) {
+
+                    specie.setMovementsCanLearn(((MovementTableModel) this.movementTable.getModel()).getSelectedMoves());
+
+                    this.getController().newEntityGesture(specie);
+
+                } else {
+                    utilities.DisplayMessage.showErrorDialog("This specie is already created.");
+                }
+            }
+
+            
+            MainFrame.getInstance().hideMainFrame();
+            MainFrame.getInstance().previousView();
+            MainFrame.getInstance().previousView();
+            MainFrame.getInstance().showMainFrame();
+            frame.dispose();
+        });
+
+        createSpecieThread.start();
+
+        new Thread(() -> {
+
+            JPanel pleaseWait = new AnimatedBackgroundPanel(Dimensions.getSelectedResolution());
+
+            pleaseWait.setLayout(null);
+            pleaseWait.setPreferredSize(Dimensions.getSelectedResolution());
+            pleaseWait.setSize(Dimensions.getSelectedResolution());
+
+            pleaseWait.add(Notification.getInstance());
+
+            MainFrame.getInstance().showView(pleaseWait);
+            MainFrame.getInstance().showMainFrame();
+
+            while (createSpecieThread.isAlive()) {
+
+                Notification.getInstance().displayNotification(languajes.LabelTexts.getInstance().pleaseWait());
+
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException ex) {
+                }
+            }
+
+        }).start();
 
     }//GEN-LAST:event_jButtonCreateSpecieActionPerformed
 

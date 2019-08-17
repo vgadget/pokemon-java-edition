@@ -1,19 +1,16 @@
 package utilities;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  *
@@ -33,7 +30,7 @@ public class CSVManager {
 
         List<List<String>> data = new LinkedList<>();
 
-        List<String> allLines = Files.readAllLines(file.toPath());
+        List<String> allLines = Files.readAllLines(file.toPath(), Charset.forName("UTF-8"));
         
         allLines.forEach((line) -> {
             data.add(split(line));
@@ -83,7 +80,7 @@ public class CSVManager {
 
     public synchronized void save() throws FileNotFoundException, IOException {
 
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8));
 
         for (List<String> line : data) {
             writeLine(writer, line);

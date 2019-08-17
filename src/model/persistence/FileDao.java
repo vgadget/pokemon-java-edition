@@ -50,8 +50,23 @@ public class FileDao<E extends Entity, PK extends Comparable> implements Dao<E, 
                 allElements.add(readObject(pathname));
             }
         }
-        
+
         return allElements;
+    }
+
+    @Override
+    public List<Comparable> getAllPK(Class c) throws IOException, ClassNotFoundException {
+
+        List<String> pathnames = listOfFiles();
+
+        List<Comparable> allPK = new LinkedList<>();
+
+        pathnames.parallelStream()
+                .filter((file) -> (file.contains(c.getName()))).map((file) -> file).map((pk) -> pk.substring(pk.indexOf(c.getName()))).map((pk) -> pk.replace(c.getName()+".", "")).map((pk) -> pk.replace(getFileExtension(), "")).forEachOrdered((pk) -> {
+            allPK.add(pk);
+        });
+
+        return allPK;
     }
 
     @Override
@@ -97,7 +112,6 @@ public class FileDao<E extends Entity, PK extends Comparable> implements Dao<E, 
 
         delete(t);
         save(t);
-
     }
 
     @Override
