@@ -7,7 +7,6 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -68,10 +67,6 @@ public class PokedexSpecieListView extends AidPanel {
         Dimension frameDimension = new Dimension((int) (size.getWidth() * 1f), (int) (size.getWidth() * 1f));
 
         List<String> pkList = specieController.getModel().getAllPk();
-
-//        specieController.getModel().getAll().parallelStream().forEach((specie) -> {
-//            pkList.add(specie.getPK());
-//        });
 
         Collections.sort(pkList, new utilities.string.StringComparator()); // SORT SPECIE LIST.
 
