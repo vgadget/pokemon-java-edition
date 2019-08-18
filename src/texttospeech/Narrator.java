@@ -27,6 +27,8 @@ public class Narrator {
 
     private Narrator() {
 
+        enabled = false;
+        
         tts = new TTSEngine();
 
         setLanguage(Language.ENGLISH);

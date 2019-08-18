@@ -16,7 +16,6 @@ class TTSEngine {
     public TTSEngine() {
         try {
             maryTTS = new LocalMaryInterface();
-
         } catch (Exception e) {
             System.err.println(e);
         }
