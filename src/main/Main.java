@@ -45,59 +45,35 @@ import view.pokedex.PokedexViewImpl;
  */
 public class Main {
 
-    //Model
-    public static TypeModel typeModel;
-    public static SpecieModel specieModel;
+    //Models
+    public static final TypeModel typeModel = new TypeModel();
+    public static final SpecieModel specieModel = new SpecieModel();
 
-    //View
-    public static PokedexView pokedexView;
-
-    //Controller
-    public static SpecieController specieController;
+    //Controllers
+    public static final SpecieController specieController = new SpecieController();
 
     public static void main(String[] args) throws Exception {
 
-        typeModel = new TypeModel();
-        specieModel = new SpecieModel();
+        Narrator.getInstance().setEnabled(false);
 
-        specieController = new SpecieController();
-
+        //Link specie model, specie controller and view.
         specieModel.setController(specieController);
         specieController.setModel(specieModel);
-
-        pokedexView = new PokedexViewImpl(specieController, typeModel);
-
+        PokedexView pokedexView = new PokedexViewImpl(specieController, typeModel);
         specieController.addView(pokedexView);
-        
-        Narrator.getInstance().setLanguage(Narrator.Language.ENGLISH);
-        //languajes.StringResourceMultilingualManager.getInstance().setDefaultLanguage("ESPAÑOL");
 
-        //System.out.println(new MoveModel().getAll());
-//        
-//        SpecieModel specieModel = new SpecieModel();
-//        SpecieController specieController = new SpecieController();
-//        
-//        specieModel.setController(specieController);
-//        specieController.setModel(specieModel);
-//        
-//        TypeModel typeModel = new TypeModel();
-//        
-//        CreateSpecieView view = new CreateSpecieView(typeModel, specieController);
-//        
-//        frame.add(view);
-//        
+        // Set Narrator 
+        Narrator.getInstance().setLanguage(Narrator.Language.ENGLISH);
+
+        Narrator.getInstance().setEnabled(true);
+
+//        specieController.start();
         new Thread(() -> {
 
             new MainMenu();
 
         }).start();
 
-//
-//        new Thread(()->{
-//            
-//            
-//            
-//        }).start();
     }
 
 }

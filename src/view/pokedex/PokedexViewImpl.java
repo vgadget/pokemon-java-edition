@@ -7,6 +7,7 @@ package view.pokedex;
 
 import controller.SpecieController;
 import java.awt.Dimension;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import model.TypeModel;
 
@@ -18,16 +19,22 @@ public class PokedexViewImpl extends PokedexView {
 
     private TypeModel typeModel;
 
+    private PokedexSpecieListView pokedexSpecieListView;
+    
+    private JLabel inputDetector;
+
     public PokedexViewImpl(SpecieController specieController, TypeModel typeModel) {
         super(specieController.getModel(), specieController);
         this.typeModel = typeModel;
         initComponents();
 
         setup();
+        inputDetector = pokedexSpecieListView.getInputDetector();
+        pokedexEntryPanel.add(inputDetector);
+        inputDetector.requestFocus();
     }
 
     public void setup() {
-        
 
         //SETUP POKEDEX SPECIE LIST
         int w, h;
@@ -37,8 +44,9 @@ public class PokedexViewImpl extends PokedexView {
 
         this.jSplitPane1.remove(this.pokedexSpecieListPane);
 
-        PokedexSpecieListView pokedexSpecieListView = new PokedexSpecieListView(new Dimension(w, h), (PokedexEntryView) pokedexEntryPanel, getController(), typeModel);
+        pokedexSpecieListView = new PokedexSpecieListView(new Dimension(w, h), (PokedexEntryView) pokedexEntryPanel, getController(), typeModel);
         pokedexSpecieListView.setContainer(this);
+        
         this.pokedexSpecieListPane = new JScrollPane(pokedexSpecieListView);
         this.pokedexSpecieListPane.getVerticalScrollBar().setUnitIncrement(6);
 
@@ -46,7 +54,6 @@ public class PokedexViewImpl extends PokedexView {
 
         repaint();
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -105,6 +112,18 @@ public class PokedexViewImpl extends PokedexView {
     @Override
     public void refresh() {
         setup();
+    }
+
+    @Override
+    public void display() {
+        super.display(); //To change body of generated methods, choose Tools | Templates.
+        
+        if (pokedexSpecieListView != null){
+            pokedexSpecieListView.requestFocus();
+            pokedexSpecieListView.getAudibleDescription(); 
+        }
+        
+        
     }
 
 

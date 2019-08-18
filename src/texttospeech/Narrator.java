@@ -23,6 +23,8 @@ public class Narrator {
     private TTSEngine tts;
     private Language selectedLanguage;
 
+    private boolean enabled;
+
     private Narrator() {
 
         tts = new TTSEngine();
@@ -34,7 +36,7 @@ public class Narrator {
 //                .forEach(voice -> System.out.println("Voice: " + voice)); // Debug
     }
 
-    public static Narrator getInstance() {
+    public synchronized static Narrator getInstance() {
 
         if (instance == null) {
             instance = new Narrator();
@@ -68,18 +70,33 @@ public class Narrator {
 
     public void speak(String s) {
 
-//        String output;
-//
-//        if (this.selectedLanguage.equals(Language.SPANISH)) {
-//            output = spanishAdaptor(s);
-//        } else {
-//            output = s;
-//        }
-//
-//        tts.stopSpeaking();
-//        
-//        tts.speak(output+" ", 1.5f, false, true);
+        if (isEnabled()) {
+            
+            int volume = utilities.sound.SoundPlayer.getInstance().getMusicVolume();
+             utilities.sound.SoundPlayer.getInstance().setMusicVolume(10);
 
+            String output;
+
+            if (this.selectedLanguage.equals(Language.SPANISH)) {
+                output = spanishAdaptor(s);
+            } else {
+                output = s;
+            }
+
+            tts.stopSpeaking();
+
+            tts.speak(output + " ", 1.5f, false, true);
+            
+            utilities.sound.SoundPlayer.getInstance().setMusicVolume(volume);
+        }
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     private String spanishAdaptor(String s) {
@@ -110,7 +127,6 @@ public class Narrator {
         output = output.replace("gí", "jí");
         output = output.replace("que", "qé");
         output = output.replace("w", "gu");
-        
 
         return output;
     }

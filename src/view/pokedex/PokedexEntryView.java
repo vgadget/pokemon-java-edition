@@ -62,71 +62,73 @@ public class PokedexEntryView extends JLayeredPane {
     private SpriteJLabel sprite;
     private JButton cryButton;
 
-    Dimension size;
+    private Dimension size;
 
     public PokedexEntryView() {
 
         pokedexEntryBackground = null;
         setup();
+        
 
     }
 
-    public void setSpecie(Specie s) {
+    public synchronized void setSpecie(Specie s) {
 
-        this.specie = s;
+        if (s != null) {
+            this.specie = s;
 
-        Thread t1, t2, t3; // To optimice load
+//            Thread t1, t2, t3; // To optimice load
+//
+//            t1 = new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    setSprite(specie.getFrontSprite());
+//                }
+//            });
+//
+//            t2 = new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    setType(specie.getType());
+//                    setSecondaryType(specie.getSecondaryType());
+//                    setPokedexIdAndName(specie.getPokedexID() + "", specie.getName());
+//
+//                }
+//            });
+//
+//            t3 = new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    setCry(specie.getCry());
+//                    setHeightAndWeight(specie.getHeight(), specie.getWeight());
+//                    setDescription(specie.getDescription());
+//
+//                }
+//            });
+//
+//            t1.start();
+//            t2.start();
+//            t3.start();
+//
+//            try {
+//                t2.join();
+//                t3.join();
+//                t1.join();
+//
+//            } catch (InterruptedException ex) {
+//                Logger.getLogger(PokedexEntryView.class.getName()).log(Level.SEVERE, null, ex);
+//            }
 
-        t1 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                setSprite(specie.getFrontSprite());
-            }
-        });
+            setDescription(this.specie.getDescription());
+            setPokedexIdAndName(this.specie.getPokedexID() + "", specie.getName());
+            setType(this.specie.getType());
+            setSecondaryType(this.specie.getSecondaryType());
+            setHeightAndWeight(this.specie.getHeight(), specie.getWeight());
+            setSprite(this.specie.getFrontSprite());
+            setCry(this.specie.getCry());
 
-        t2 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                setType(specie.getType());
-                setSecondaryType(specie.getSecondaryType());
-                setPokedexIdAndName(specie.getPokedexID() + "", specie.getName());
-
-            }
-        });
-
-        t3 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                setCry(specie.getCry());
-                setHeightAndWeight(specie.getHeight(), specie.getWeight());
-                setDescription(specie.getDescription());
-
-            }
-        });
-
-        t1.start();
-        t2.start();
-        t3.start();
-
-        try {
-            t2.join();
-            t3.join();
-            t1.join();
-
-        } catch (InterruptedException ex) {
-            Logger.getLogger(PokedexEntryView.class.getName()).log(Level.SEVERE, null, ex);
+            refresh();
         }
-
-        /*
-        setDescription(this.specie.getDescription());
-        setPokedexIdAndName(this.specie.getPokedexID()< + "", specie.getName());
-        setType(this.specie.getType());
-        setSecondaryType(this.specie.getSecondaryType());
-        setHeightAndWeight(this.specie.getHeight(), specie.getWeight());
-        setSprite(this.specie.getFrontSprite());
-        setCry(this.specie.getCry());
-         */
-        refresh();
     }
 
     private synchronized void setCry(Sound cry) {
@@ -153,8 +155,10 @@ public class PokedexEntryView extends JLayeredPane {
 
         try {
             this.sprite.setup(new Sprite(animation, s.getRefreshRate()));
+
         } catch (Exception ex) {
-            Logger.getLogger(PokedexEntryView.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PokedexEntryView.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -202,7 +206,8 @@ public class PokedexEntryView extends JLayeredPane {
             this.type.setIcon(new ImageIcon(finalImage));
 
         } catch (Exception ex) {
-            Logger.getLogger(PokedexEntryView.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PokedexEntryView.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -247,7 +252,8 @@ public class PokedexEntryView extends JLayeredPane {
             this.secondaryType.setIcon(new ImageIcon(finalImage));
 
         } catch (Exception ex) {
-            Logger.getLogger(PokedexEntryView.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PokedexEntryView.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
 
     }

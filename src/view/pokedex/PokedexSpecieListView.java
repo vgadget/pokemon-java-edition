@@ -53,7 +53,7 @@ public class PokedexSpecieListView extends AidPanel {
         this.container = container;
     }
 
-    public void setup() {
+    public synchronized void setup() {
 
         // REMOVE ALL COMPONENTS 
         for (Component c : this.getComponents()) {
@@ -68,28 +68,28 @@ public class PokedexSpecieListView extends AidPanel {
 
         List<String> pkList = specieController.getModel().getAllPk();
 
+        while (pkList.contains(null)) {
+            pkList = specieController.getModel().getAllPk();
+        }
+
         Collections.sort(pkList, new utilities.string.StringComparator()); // SORT SPECIE LIST.
 
-        new Thread(() -> {
-            
-            // START SHOWING FIRST SPECIE
-            if (pkList.size() > 0) {
-                entryView.setSpecie(specieController.getModel().getEntity(pkList.get(0)));
-            }
-
-        }).start();
-
-        pkList.parallelStream().forEachOrdered((String s) -> { // FOR EACH SPECIE CREATES A BUTTON.
+        pkList.forEach((String s) -> { // FOR EACH SPECIE CREATES A BUTTON.
 
             try {
 
                 //System.out.println(s.getName());
                 Specie specie = specieController.getModel().getEntity(s);
+
+                while (specie == null) {
+                    specie = specieController.getModel().getEntity(s);
+                }
+
                 CustomButton cb = ButtonFactory.getPokedexSpecieButton(specie, frameDimension);
                 cb.setDescription(specie.getName());
 
                 // IF BUTTON PRESSED, SHOW THAT POKEMON | ACTION LISTENER.
-                cb.setPressedVoiceFeedback(s.toString());
+                cb.setPressedVoiceFeedback(specie.toString());
 
                 cb.addActionListener(new ActionListener() {
 
@@ -98,9 +98,10 @@ public class PokedexSpecieListView extends AidPanel {
                     @Override
                     public void actionPerformed(ActionEvent e) {
 
-                        Specie specieSelected = specieController.getModel().getEntity(speciePk);
-
                         new Thread(() -> {
+
+                            Specie specieSelected = specieController.getModel().getEntity(speciePk);
+
                             entryView.setSpecie(specieSelected);
 
                             if (isEnabledAudioDescription()) {
@@ -128,6 +129,11 @@ public class PokedexSpecieListView extends AidPanel {
                 Logger.getLogger(PokedexSpecieListView.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
+
+        // START SHOWING FIRST SPECIE
+        if (pkList.size() > 0) {
+            entryView.setSpecie(specieController.getModel().getEntity(pkList.get(0)));
+        }
 
         // CREATE SPECIE BUTTON
         try {
@@ -169,6 +175,7 @@ public class PokedexSpecieListView extends AidPanel {
                     frame.setLocationRelativeTo(null);
                     frame.setVisible(true);
                     frame.setAlwaysOnTop(true);
+                    frame.requestFocus();
                 }
             });
 
@@ -191,14 +198,14 @@ public class PokedexSpecieListView extends AidPanel {
             add(cb);
 
             // SHOW ALL PROPERLY
-            setPreferredSize(new Dimension((int) (frameDimension.getWidth() * 0.90f), (int) ((cb.getSize().height * (pkList.size() + 4)))));
+            setPreferredSize(new Dimension((int) (frameDimension.getWidth() * 0.90f), (int) ((cb.getSize().height * (pkList.size() + 10)))));
 
         } catch (Exception e) {
             utilities.DisplayMessage.showErrorDialog(e.getMessage());
         }
 
         repaint();
-        requestFocusInWindow();
+        
     }
 
 }

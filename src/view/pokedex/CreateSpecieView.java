@@ -787,19 +787,22 @@ public class CreateSpecieView extends PokedexView {
             data.add(cry);
 
             Specie specie = this.getController().createEntity(data);
+            
+            
+            data = null;
 
             boolean exist = false;
             int i = 0;
 
-            List<Specie> specieList = this.getModel().getAll();
+            List<String> speciePKList = this.getModel().getAllPk();
 
-            if (specieList.size() >= 999) {
-                utilities.DisplayMessage.showErrorDialog("There are " + specieList.size() + " pokémon, remove some species to add others.");
+            if (speciePKList.size() >= 999) {
+                utilities.DisplayMessage.showErrorDialog("There are " + speciePKList.size() + " pokémon, remove some species to add others.");
             } else {
 
-                while (i < specieList.size() && !exist) {
+                while (i < speciePKList.size() && !exist) {
 
-                    if (specieList.get(i).getName().equals(specie.getName()) || specieList.get(i).getPokedexID().equals(specie.getPokedexID())) {
+                    if (speciePKList.get(i).equals(specie.getPK())) {
                         exist = true;
                     }
                     i++;
@@ -810,15 +813,18 @@ public class CreateSpecieView extends PokedexView {
                     specie.setMovementsCanLearn(((MovementTableModel) this.movementTable.getModel()).getSelectedMoves());
 
                     this.getController().newEntityGesture(specie);
+                          
 
                 } else {
                     utilities.DisplayMessage.showErrorDialog("This specie is already created.");
                 }
             }
 
+            specie = null;
+            speciePKList = null;
+            
             
             MainFrame.getInstance().hideMainFrame();
-            MainFrame.getInstance().previousView();
             MainFrame.getInstance().previousView();
             MainFrame.getInstance().showMainFrame();
             frame.dispose();
@@ -828,7 +834,7 @@ public class CreateSpecieView extends PokedexView {
 
         new Thread(() -> {
 
-            JPanel pleaseWait = new AnimatedBackgroundPanel(Dimensions.getSelectedResolution());
+            AnimatedBackgroundPanel pleaseWait = new AnimatedBackgroundPanel(Dimensions.getSelectedResolution());
 
             pleaseWait.setLayout(null);
             pleaseWait.setPreferredSize(Dimensions.getSelectedResolution());
@@ -848,7 +854,10 @@ public class CreateSpecieView extends PokedexView {
                 } catch (InterruptedException ex) {
                 }
             }
-
+            
+            pleaseWait.stop();
+            
+            
         }).start();
 
     }//GEN-LAST:event_jButtonCreateSpecieActionPerformed

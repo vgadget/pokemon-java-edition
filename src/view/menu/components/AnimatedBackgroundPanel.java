@@ -38,66 +38,81 @@ public class AnimatedBackgroundPanel extends AidPanel {
     //Sound
     private static Sound backgroundMusic;
 
+    private boolean canMove = true;
+
     public AnimatedBackgroundPanel() {
         this(utilities.image.Dimensions.getSelectedResolution());
     }
 
-    
-    
     public AnimatedBackgroundPanel(Dimension frameDimension) {
 
         this.frameDimension = frameDimension;
 
         if (background == null) {
             setUpBackgrounds();
+
+            dx = dy = BACKGROUND_SPEED;
+
+            new Thread(() -> {
+                while (true) {
+
+                    updateBackgroundLocation();
+                    repaint();
+
+                    try {
+                        Thread.sleep(35);
+                    } catch (InterruptedException ex) {
+                    }
+                }
+            }).start();
+
+        } else {
+
+            new Thread(() -> {
+
+                while (canMove) {
+
+                    repaint();
+
+                    try {
+                        Thread.sleep(35);
+                    } catch (InterruptedException ex) {
+                    }
+                }
+            }).start();
         }
 
-        dx = dy = BACKGROUND_SPEED;
+    }
 
-        new Thread(() -> {
-            while (true) {
-
-                updateBackgroundLocation();
-                repaint();
-
-                try {
-                    Thread.sleep(35);
-                } catch (InterruptedException ex) {
-                }
-            }
-        }).start();
-
+    public void stop() {
+        canMove = false;
     }
 
     public static synchronized void playBackgroundMusic() {
 
-        new Thread(() -> {
+        if (backgroundMusic == null) {
 
-            if (backgroundMusic == null) {
+            List<File> allMusicFiles = Arrays.asList(
+                    new File(URI_BACKGROUND_SONGS)
+                            .listFiles(
+                                    (pathname) -> {
 
-                List<File> allMusicFiles = Arrays.asList(
-                        new File(URI_BACKGROUND_SONGS)
-                                .listFiles(
-                                        (pathname) -> {
+                                        return pathname.getName().toLowerCase().endsWith(".wav");
+                                    }));
 
-                                            return pathname.getName().toLowerCase().endsWith(".wav");
-                                        }));
+            try {
 
-                try {
+                backgroundMusic = new Sound(allMusicFiles.get(rnd.nextInt(allMusicFiles.size())));
 
-                    backgroundMusic = new Sound(allMusicFiles.get(rnd.nextInt(allMusicFiles.size())));
-
-                } catch (Exception ex) {
-                    utilities.DisplayMessage.showErrorDialog(ex.getLocalizedMessage());
-                }
-
+            } catch (Exception ex) {
+                utilities.DisplayMessage.showErrorDialog(ex.getLocalizedMessage());
             }
 
-            utilities.sound.SoundPlayer.getInstance().stopMusic();
+        }
 
-            utilities.sound.SoundPlayer.getInstance().playMusicChannel(backgroundMusic, true);
+        utilities.sound.SoundPlayer.getInstance().stopMusic();
 
-        }).start();
+        utilities.sound.SoundPlayer.getInstance().playMusicChannel(backgroundMusic, true);
 
     }
 

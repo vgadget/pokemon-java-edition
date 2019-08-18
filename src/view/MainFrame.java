@@ -43,6 +43,8 @@ public class MainFrame extends JFrame {
         this.setSize(Dimensions.getSelectedResolution());
         this.setResizable(false);
 
+        Runtime.getRuntime().gc();
+
         if (!lastComponents.isEmpty()) {
 
             add(lastComponents.peek());
@@ -53,6 +55,11 @@ public class MainFrame extends JFrame {
 
                 ((AnimatedBackgroundPanel) lastComponents.peek()).playBackgroundMusic();
             }
+
+            if (lastComponents.peek() instanceof AidPanel) {
+                ((AidPanel) lastComponents.peek()).getAudibleDescription();
+            }
+
         }
 
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -85,10 +92,6 @@ public class MainFrame extends JFrame {
 
         if (hasPrevious()) {
             remove(lastComponents.pop());
-
-            if (lastComponents.peek() instanceof AidPanel) {
-                ((AidPanel) lastComponents.peek()).getAudibleDescription();
-            }
         }
         update();
     }

@@ -13,7 +13,9 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import languajes.LabelTexts;
 import model.entities.Sprite;
+import texttospeech.Narrator;
 import utilities.image.Dimensions;
 import utilities.image.Image;
 import utilities.sound.Sound;
@@ -77,6 +79,9 @@ public class Notification extends JLabel {
         try {
 
             utilities.sound.SoundPlayer.getInstance().playEffectChannel(sound);
+            
+            Narrator.getInstance().speak(LabelTexts.getInstance().notification() + " " + text);
+            Narrator.getInstance().speak(LabelTexts.getInstance().notification() + " " + text);
 
             if (text.length() > 18) { // IF THE TEXT IS TOO LONG, SHOW AS CAROUSEL
 

@@ -1,6 +1,5 @@
 package view.menu;
 
-import controller.SpecieController;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -15,16 +14,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import languajes.ButtonTexts;
 import languajes.LabelTexts;
-import model.SpecieModel;
-import model.TypeModel;
+import texttospeech.Narrator;
 import utilities.image.Dimensions;
 import view.MainFrame;
 import view.components.ButtonFactory;
 import view.components.AidPanel;
 import view.components.CustomButton;
-import view.components.Notification;
 import view.menu.components.AnimatedBackgroundPanel;
-import view.pokedex.PokedexViewImpl;
 
 /**
  *
@@ -54,9 +50,13 @@ public class MainMenu {
     private CustomButton localMultiplayer;
     private CustomButton onlineMultiplayer;
     private CustomButton goBackFromMultiPlayerMenuToMainMenu;
+    
+    
+    //Know if main buttons are ready
+    private boolean mainButtonsReady;
 
     //Semaphore
-    Semaphore mutex;
+    private Semaphore mutex; //Mutex that control the synchronization of the buttons when is on animation
 
     public MainMenu() {
 
@@ -119,10 +119,18 @@ public class MainMenu {
         pokemonLogo.setSize(12 * grid, 7 * grid);
         panel.add(pokemonLogo);
 
+        
+        mainButtonsReady = false;
+        
+        showMainMenuButtons();
+        
+        while(!mainButtonsReady){
+            Thread.sleep(1);
+        }
+        
         //Panel and frame settings
         MainFrame.getInstance().showView(panel);
 
-        showMainMenuButtons();
     }
 
     private void setMainMenuButtons() {
@@ -172,7 +180,6 @@ public class MainMenu {
 
             hideMainMenuButtons();
             System.exit(0);
-
         });
 
     }
@@ -198,7 +205,7 @@ public class MainMenu {
 
         //Actions
         pokedex.addActionListener((ActionEvent e) -> {
-            main.Main.pokedexView.display();
+            main.Main.specieController.start();
 
         });
 
@@ -405,7 +412,8 @@ public class MainMenu {
                     Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-
+            
+            mainButtonsReady = true;
         }).start();
 
     }

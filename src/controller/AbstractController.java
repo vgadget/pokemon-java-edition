@@ -5,6 +5,7 @@ import java.util.List;
 import model.Model;
 import model.entities.Entity;
 import view.View;
+import view.components.AidPanel;
 
 /**
  *
@@ -26,8 +27,9 @@ public abstract class AbstractController<M extends Model, V extends View, E exte
     }
 
     @Override
-    public void start(){
+    public void start() {
         views.forEach((view) -> {
+
             view.display();
         });
     }
@@ -36,9 +38,9 @@ public abstract class AbstractController<M extends Model, V extends View, E exte
     public void addView(V view) {
         this.views.add(view);
     }
-    
+
     @Override
-    public void addViews(List<V> views){
+    public void addViews(List<V> views) {
         this.views.addAll(views);
     }
 
@@ -70,8 +72,8 @@ public abstract class AbstractController<M extends Model, V extends View, E exte
 
     @Override
     public void updateEntityGesture(E e) {
-        
-        if (getModel().getEntity(e.getPK()) != null){
+
+        if (getModel().getEntity(e.getPK()) != null) {
             getModel().removeEntity(e);
             newEntityGesture(e);
         }
@@ -80,7 +82,6 @@ public abstract class AbstractController<M extends Model, V extends View, E exte
     @Override
     public abstract E createEntity(List<Object> data);
 
-    
     @Override
     public void fireDataModelChanged() {
         views.forEach((view) -> {

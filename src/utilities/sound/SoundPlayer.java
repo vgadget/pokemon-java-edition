@@ -30,6 +30,9 @@ public class SoundPlayer {
     private float musicChannelGain = 1;
     private float effectChannelGain = 1;
 
+    private int musicVolume = 100;
+    private int effectVolume = 100;
+
     private SoundPlayer() {
         musicChannel = null;
     }
@@ -53,6 +56,8 @@ public class SoundPlayer {
         }
 
         music = s;
+
+        setMusicVolume(musicVolume);
 
         musicChannel = new Thread(() -> {
 
@@ -80,18 +85,20 @@ public class SoundPlayer {
     public synchronized void stopMusic() {
 
         new Thread(() -> {
-            
+
             if (musicChannel != null) {
 
-                if (!musicChannel.isInterrupted()) {
-                    musicChannel.interrupt();
-                    try {
-                        music.stop();
-                    } catch (Exception ex) {
-                    }
+                try {
+                    music.stop();
+                    music = null;
+                } catch (Exception ex) {
                 }
+                
+                musicChannel.interrupt();
+                musicChannel = null;
+
             }
-            
+
         }).start();
 
     }
@@ -125,6 +132,10 @@ public class SoundPlayer {
             throw new IllegalArgumentException("Volume have to be between 0 and 100");
         }
 
+    }
+
+    public int getMusicVolume() {
+        return musicVolume;
     }
 
     public synchronized void playEffectChannel(Sound s) { // SYNC

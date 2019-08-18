@@ -23,14 +23,18 @@ public class LabelTexts {
 
     //Main menu - Text for single player button.
     private String developedByAdrianVazquezBarrera = " Developed by Adrián Vázquez Barrera.";
-
     public String developedByAdrianVazquezBarrera() {
         return developedByAdrianVazquezBarrera;
     }
     
     private String pleaseWait = "Please, wait.";
-
     public String pleaseWait() {
         return pleaseWait;
     }
+    
+    private String notification = "Notification: ";
+    public String notification(){
+        return notification;
+    }
+    
 }

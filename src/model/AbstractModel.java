@@ -45,7 +45,7 @@ public abstract class AbstractModel<C extends Controller, E extends Entity, PK e
     }
 
     @Override
-    public E getEntity(PK pk) {
+    public synchronized E getEntity(PK pk) {
 
         E entity = null;
 

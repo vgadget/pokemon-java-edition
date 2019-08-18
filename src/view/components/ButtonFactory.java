@@ -242,6 +242,8 @@ public class ButtonFactory {
 
         });
 
+        cb.setDescription(text);
+        
         return cb;
     }
 

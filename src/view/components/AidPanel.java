@@ -22,92 +22,85 @@ public class AidPanel extends JPanel {
 
     private JLabel inputDetector = new JLabel();
 
-    private boolean enabledAudioDescription;
-
     public AidPanel() {
 
-        enabledAudioDescription = false;
         initComponents();
-        
+
         add(Notification.getInstance());
 
     }
 
     public boolean isEnabledAudioDescription() {
-        return enabledAudioDescription;
+        return Narrator.getInstance().isEnabled();
     }
 
-    public synchronized void setEnabledAudioDescription(boolean enabled) {
-        this.enabledAudioDescription = enabled;
+    public JLabel getInputDetector() {
+        return inputDetector;
     }
 
     private synchronized void initComponents() {
 
-        new Thread(() -> {
-            inputDetector.setFocusable(true);
-            inputDetector.addKeyListener(new KeyAdapter() {
+        inputDetector.setFocusable(true);
+        inputDetector.addKeyListener(new KeyAdapter() {
 
-                @Override
-                public synchronized void keyPressed(KeyEvent e) {
-                    inputDetector.requestFocus();
+            @Override
+            public synchronized void keyPressed(KeyEvent e) {
+                inputDetector.requestFocus();
 
-                    Narrator.getInstance().speak(" ");
-                    
-                    if (e.getKeyChar() >= '1' && e.getKeyChar() <= '9') {
+                Narrator.getInstance().speak(" ");
 
-                        int opc = Integer.parseInt(e.getKeyChar() + "") - 1;
+                if (e.getKeyChar() >= '1' && e.getKeyChar() <= '9') {
 
-                        if (opc < currentAidComponents.size()) {
-                            currentAidComponents.get(opc).press();
+                    int opc = Integer.parseInt(e.getKeyChar() + "") - 1;
+
+                    if (opc < currentAidComponents.size()) {
+                        currentAidComponents.get(opc).press();
+                    }
+
+                } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+
+                    getAudibleDescription();
+
+                } else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+
+                    MainFrame.getInstance().previousView();
+
+                } else if ((e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_UP) && allAidComponents.size() > 9) {
+
+                    if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+
+                        if (componentBlockTo + 9 < allAidComponents.size()) {
+
+                            componentBlockFrom = componentBlockTo;
+                            componentBlockTo = componentBlockTo + 9;
+
+                        } else if (componentBlockTo < allAidComponents.size()) {
+                            componentBlockFrom = componentBlockTo;
+                            componentBlockTo = allAidComponents.size();
                         }
 
-                    } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    } else {
 
-                        getAudibleDescription();
+                        if (componentBlockFrom - 9 >= 0) {
 
-                    } else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-
-                        MainFrame.getInstance().previousView();
-
-                    } else if ((e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_UP) && allAidComponents.size() > 9) {
-
-                        if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-
-                            if (componentBlockTo + 9 < allAidComponents.size()) {
-
-                                componentBlockFrom = componentBlockTo;
-                                componentBlockTo = componentBlockTo + 9;
-
-                            } else if (componentBlockTo < allAidComponents.size()) {
-                                componentBlockFrom = componentBlockTo;
-                                componentBlockTo = allAidComponents.size();
-                            }
+                            componentBlockTo = componentBlockFrom;
+                            componentBlockFrom = componentBlockFrom - 9;
 
                         } else {
-
-                            if (componentBlockFrom - 9 >= 0) {
-
-                                componentBlockTo = componentBlockFrom;
-                                componentBlockFrom = componentBlockFrom - 9;
-
-                            } else {
-                                componentBlockFrom = 0;
-                                componentBlockTo = componentBlockFrom + 9;
-                            }
+                            componentBlockFrom = 0;
+                            componentBlockTo = componentBlockFrom + 9;
                         }
-
-                        currentAidComponents = allAidComponents.subList(componentBlockFrom, componentBlockTo);
-                        getAudibleDescription();
                     }
+
+                    currentAidComponents = allAidComponents.subList(componentBlockFrom, componentBlockTo);
+                    getAudibleDescription();
                 }
+            }
 
-            });
+        });
 
-            inputDetector.requestFocus();
-            add(inputDetector);
-
-            getAudibleDescription();
-        }).start();
+        inputDetector.requestFocus();
+        add(inputDetector);
     }
 
     @Override
@@ -182,8 +175,13 @@ public class AidPanel extends JPanel {
 
     }
 
+    @Override
+    public void requestFocus() {
+        this.inputDetector.requestFocus();
+    }
+
     public synchronized void getAudibleDescription() {
-        
+
         this.inputDetector.requestFocus();
 
         if (isEnabledAudioDescription()) {

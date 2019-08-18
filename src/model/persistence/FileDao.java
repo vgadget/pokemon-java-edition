@@ -29,6 +29,8 @@ public class FileDao<E extends Entity, PK extends Comparable> implements Dao<E, 
     @Override
     public List<E> getAll() throws IOException, ClassNotFoundException {
 
+        Runtime.getRuntime().gc();
+
         List<E> allElements = new LinkedList<>();
         List<String> pathnames = listOfFiles();
 
@@ -41,6 +43,8 @@ public class FileDao<E extends Entity, PK extends Comparable> implements Dao<E, 
 
     @Override
     public List<E> getAll(Class c) throws IOException, ClassNotFoundException {
+
+        Runtime.getRuntime().gc();
 
         List<E> allElements = new LinkedList<>();
         List<String> pathnames = listOfFiles();
@@ -57,12 +61,14 @@ public class FileDao<E extends Entity, PK extends Comparable> implements Dao<E, 
     @Override
     public List<Comparable> getAllPK(Class c) throws IOException, ClassNotFoundException {
 
+        Runtime.getRuntime().gc();
+
         List<String> pathnames = listOfFiles();
 
         List<Comparable> allPK = new LinkedList<>();
 
         pathnames.parallelStream()
-                .filter((file) -> (file.contains(c.getName()))).map((file) -> file).map((pk) -> pk.substring(pk.indexOf(c.getName()))).map((pk) -> pk.replace(c.getName()+".", "")).map((pk) -> pk.replace(getFileExtension(), "")).forEachOrdered((pk) -> {
+                .filter((file) -> (file.contains(c.getName()))).map((file) -> file).map((pk) -> pk.substring(pk.indexOf(c.getName()))).map((pk) -> pk.replace(c.getName() + ".", "")).map((pk) -> pk.replace(getFileExtension(), "")).forEachOrdered((pk) -> {
             allPK.add(pk);
         });
 
@@ -71,6 +77,8 @@ public class FileDao<E extends Entity, PK extends Comparable> implements Dao<E, 
 
     @Override
     public E get(PK pk, Class c) throws IOException, ClassNotFoundException {
+
+        Runtime.getRuntime().gc();
 
         String file = URI_SAVEGAME_FOLDER + c.getName() + "." + pk + getFileExtension();
 
@@ -105,6 +113,8 @@ public class FileDao<E extends Entity, PK extends Comparable> implements Dao<E, 
         objectOutputStream.close();
 
         fileOutputStream.close();
+
+        Runtime.getRuntime().gc();
     }
 
     @Override
@@ -112,6 +122,7 @@ public class FileDao<E extends Entity, PK extends Comparable> implements Dao<E, 
 
         delete(t);
         save(t);
+        Runtime.getRuntime().gc(); 
     }
 
     @Override
@@ -122,6 +133,8 @@ public class FileDao<E extends Entity, PK extends Comparable> implements Dao<E, 
         File f = new File(file);
 
         f.delete();
+        
+        Runtime.getRuntime().gc(); 
 
     }
 

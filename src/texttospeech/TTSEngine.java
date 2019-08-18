@@ -37,7 +37,7 @@ class TTSEngine {
             }
 
         } catch (Exception e) {
-            System.err.println(e);
+            System.err.println(text);
         }
     }
 
