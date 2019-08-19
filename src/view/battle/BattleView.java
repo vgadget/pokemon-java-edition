@@ -2,6 +2,7 @@ package view.battle;
 
 import java.awt.image.BufferedImage;
 import model.entities.Pokemon;
+import model.entities.Sprite;
 import view.components.AidPanel;
 
 /**
@@ -10,6 +11,7 @@ import view.components.AidPanel;
  */
 public abstract class BattleView extends AidPanel {
 
+    //Pokemon staff
     public abstract void setPokemonPlayer1(Pokemon p);
 
     public abstract void setPokemonPlayer2(Pokemon p);
@@ -46,17 +48,17 @@ public abstract class BattleView extends AidPanel {
 
     public abstract void pokemonPlayer2LaunchPokeball();
 
-    public abstract void pokemonPlayer1SetNonVolatileStatus(BufferedImage sprites[]);
+    public abstract void pokemonPlayer1SetNonVolatileStatus(Sprite status);
 
-    public abstract void pokemonPlayer2SetNonVolatileStatus(BufferedImage sprites[]);
+    public abstract void pokemonPlayer2SetNonVolatileStatus(Sprite status);
 
     public abstract void pokemonPlayer1RemoveNonVolatileStatus();
 
     public abstract void pokemonPlayer2RemoveNonVolatileStatus();
 
-    public abstract void pokemonPlayer1SetVolatileStatus(BufferedImage sprites[]);
+    public abstract void pokemonPlayer1SetVolatileStatus(Sprite status);
 
-    public abstract void pokemonPlayer2SetVolatileStatus(BufferedImage sprites[]);
+    public abstract void pokemonPlayer2SetVolatileStatus(Sprite status);
 
     public abstract void pokemonPlayer1RemoveVolatileStatus();
 
@@ -80,11 +82,11 @@ public abstract class BattleView extends AidPanel {
     public abstract void pokemonPlayer2UpdateHP(int currentHP, int maxHP);
 
     // Battleground
-    public abstract void setWeather(BufferedImage[] weather);
+    public abstract void setWeather(Sprite weather);
 
     public abstract void removeWeather();
 
-    public abstract void setAttackAnimation(BufferedImage sprites[]);
+    public abstract void setAttackAnimation(Sprite attack);
 
     public abstract void doAttackAnimation();
 
@@ -102,5 +104,9 @@ public abstract class BattleView extends AidPanel {
     public abstract void addText(String t);
 
     public abstract void nextText();
+    
+    public abstract void displayTexts();
+
+    public abstract boolean hasUneradTexts();
 
 }

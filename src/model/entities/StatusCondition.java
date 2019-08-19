@@ -12,5 +12,5 @@ public interface StatusCondition extends Entity<String> {
 
     Sprite getAnimation();
         
-    public void makeEffect(BattleModel battleModel);    
+    public void makeEffect(BattleModel battleModel, Pokemon from, Pokemon to);    
 }

@@ -10,7 +10,7 @@ import java.util.List;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import model.MoveModel;
-import model.entities.Movements.Move;
+import model.entities.movements.Move;
 
 /**
  *

@@ -1,6 +1,6 @@
 package model.entities;
 
-import java.util.Iterator;
+import java.util.List;
 
 /**
  *
@@ -12,8 +12,6 @@ public interface Trainer extends Entity<String>{
     String getName();
     Sprite getSprite();
     Pokemon getSelectedPokemon();
-    Iterator<Pokemon> getTeam();
-    Iterator<Pokemon> getBox();      
-    
+    List<Pokemon> getTeam();   
     
 }

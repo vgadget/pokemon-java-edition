@@ -1,22 +1,12 @@
 package model;
 
 import controller.Controller;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import model.entities.Movements.Move;
-import model.entities.Movements.Tackle;
-import model.entities.Pokemon;
-import model.entities.Sprite;
-import model.entities.StatusCondition;
-import model.entities.Type;
-import utilities.image.Image;
+import model.entities.movements.Move;
+import model.entities.movements.Tackle;
 
 /**
  *

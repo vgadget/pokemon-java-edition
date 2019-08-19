@@ -1,6 +1,6 @@
 package model.entities;
 
-import model.entities.Movements.Move;
+import model.entities.movements.Move;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;

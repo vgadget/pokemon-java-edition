@@ -1,6 +1,6 @@
 package model.entities;
 
-import java.util.Iterator;
+import java.util.List;
 
 /**
  *
@@ -24,14 +24,10 @@ public class TrainerSocket implements Trainer{
     }
 
     @Override
-    public Iterator<Pokemon> getTeam() {
+    public List<Pokemon> getTeam() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public Iterator<Pokemon> getBox() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
     public String getPK() {

@@ -5,14 +5,14 @@
  */
 package model;
 
-import controller.Controller;
+import controller.SpecieController;
 import model.entities.Specie;
 
 /**
  *
  * @author Adrian Vazquez
  */
-public class SpecieModel extends AbstractModel<Controller, Specie, String>{
+public class SpecieModel extends AbstractModel<SpecieController, Specie, String>{
 
     public SpecieModel() {
         super(Specie.class);

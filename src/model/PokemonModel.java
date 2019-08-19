@@ -1,29 +1,17 @@
 package model;
 
 import controller.Controller;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-import model.persistence.Persistence;
+import controller.PokemonController;
 import model.entities.Pokemon;
-import utilities.DisplayMessage;
 
 /**
  *
  * @author Adrian Vazquez
  */
-public class PokemonModel extends AbstractModel<Controller, Pokemon, Comparable> {
+public class PokemonModel extends AbstractModel<PokemonController, Pokemon, String> {
 
     public PokemonModel() {
         super(Pokemon.class);
-        
-        
     }
-
-    
-
-
-
-
 
 }

@@ -205,7 +205,7 @@ public class MainMenu {
 
         //Actions
         pokedex.addActionListener((ActionEvent e) -> {
-            main.Main.specieController.start();
+            main.Main.SPECIE_CONTROLLER.start();
 
         });
 

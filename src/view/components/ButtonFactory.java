@@ -15,7 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import languajes.ButtonTexts;
-import model.entities.Movements.Move;
+import model.entities.movements.Move;
 import model.entities.MoveSet;
 import model.entities.Specie;
 import utilities.image.Dimensions;

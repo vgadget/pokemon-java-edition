@@ -40,7 +40,7 @@ public class Pokemon implements Entity<String> {
 
         moveSet.add(MoveModel.getDefaultMove());
 
-        generateRandomFIelds();
+        generateRandomFields();
 
     }
 
@@ -52,12 +52,12 @@ public class Pokemon implements Entity<String> {
 
         return boost;
     }
-    
-    public void removeBoost(){
+
+    public void removeBoost() {
         boost = null;
     }
 
-    public void generateRandomFIelds() {
+    public void generateRandomFields() {
 
         maxHp = ThreadLocalRandom.current().nextInt(specie.getMinHP(), specie.getMaxHP() + 1);
         currentHp = maxHp;
@@ -69,6 +69,13 @@ public class Pokemon implements Entity<String> {
         precission = specie.getPrecision();
         evasion = specie.getEvasion();
         canLeft = true;
+    }
+
+    public void heal() {
+
+        setCurrentHp(getMaxHp());
+        setPersistentStatusCondition(null);
+        setVolatileStatusCondition(null);
     }
 
     public String getNickname() {

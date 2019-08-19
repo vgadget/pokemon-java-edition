@@ -6,6 +6,7 @@
 package model.entities;
 
 import java.util.Iterator;
+import java.util.List;
 
 /**
  *
@@ -29,12 +30,7 @@ public class TrainerCPU implements Trainer {
     }
 
     @Override
-    public Iterator<Pokemon> getTeam() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Iterator<Pokemon> getBox() {
+    public List<Pokemon> getTeam() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -47,5 +43,7 @@ public class TrainerCPU implements Trainer {
     public int compareTo(Entity o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+   
     
 }
