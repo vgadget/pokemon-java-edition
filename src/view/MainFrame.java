@@ -6,8 +6,9 @@ import java.awt.Container;
 import java.util.Stack;
 import javax.swing.JFrame;
 import utilities.image.Dimensions;
-import view.components.AidPanel;
-import view.menu.components.AnimatedBackgroundPanel;
+import view.components.AidPanelImpl;
+import view.components.AidView;
+import view.components.Musical;
 
 /**
  *
@@ -51,13 +52,13 @@ public class MainFrame extends JFrame {
 
             utilities.sound.SoundPlayer.getInstance().stopMusic();
 
-            if (lastComponents.peek() instanceof AnimatedBackgroundPanel) {
+            if (lastComponents.peek() instanceof Musical) {
 
-                ((AnimatedBackgroundPanel) lastComponents.peek()).playBackgroundMusic();
+                ((Musical) lastComponents.peek()).playBackgroundMusic();
             }
 
-            if (lastComponents.peek() instanceof AidPanel) {
-                ((AidPanel) lastComponents.peek()).getAudibleDescription();
+            if (lastComponents.peek() instanceof AidView) {
+                ((AidView) lastComponents.peek()).getAudibleDescription();
             }
 
         }

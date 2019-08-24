@@ -18,7 +18,7 @@ import model.entities.Specie;
 import texttospeech.Narrator;
 import utilities.sound.SoundPlayer;
 import view.MainFrame;
-import view.components.AidPanel;
+import view.components.AidPanelImpl;
 import view.components.ButtonFactory;
 import view.components.CustomButton;
 
@@ -26,7 +26,7 @@ import view.components.CustomButton;
  *
  * @author Adrian Vazquez
  */
-public class PokedexSpecieListView extends AidPanel {
+public class PokedexSpecieListView extends AidPanelImpl {
 
     private Dimension size;
     private PokedexEntryView entryView;

@@ -30,7 +30,7 @@ import utilities.sound.SoundPlayer;
 import utilities.sound.Sound;
 import view.MainFrame;
 import view.components.Notification;
-import view.menu.components.AnimatedBackgroundPanel;
+import view.components.AnimatedBackgroundPanel;
 import view.pokedex.components.MovementTableModel;
 import view.pokedex.components.SpriteJLabel;
 

@@ -14,13 +14,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import languajes.ButtonTexts;
 import languajes.LabelTexts;
-import texttospeech.Narrator;
 import utilities.image.Dimensions;
 import view.MainFrame;
 import view.components.ButtonFactory;
-import view.components.AidPanel;
+import view.components.AidPanelImpl;
 import view.components.CustomButton;
-import view.menu.components.AnimatedBackgroundPanel;
+import view.components.AnimatedBackgroundPanel;
 
 /**
  *
@@ -30,7 +29,7 @@ public class MainMenu {
 
     private static int grid;
 
-    private AidPanel panel;
+    private AidPanelImpl panel;
 
     // Main menu buttons.
     private CustomButton singlePlayerMenuButton;

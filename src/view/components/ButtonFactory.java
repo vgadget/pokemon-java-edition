@@ -47,7 +47,7 @@ public class ButtonFactory {
             }
 
             Dimension buttonSize = new Dimension(
-                    (int)(grid * 14.7f), //Button width
+                    (int) (grid * 14.7f), //Button width
                     ((int) (grid * 3.6f)) //Button height
             );
 
@@ -206,7 +206,7 @@ public class ButtonFactory {
 
         float grid = (float) (frameDimension.getWidth() * (0.3f));
 
-        Dimension buttonDimension = new Dimension((int) (1.2f*(grid * 3.51)), (int) (1.2f*(grid * 0.45))); // Button proportion 
+        Dimension buttonDimension = new Dimension((int) (1.2f * (grid * 3.51)), (int) (1.2f * (grid * 0.45))); // Button proportion 
 
         Font f = view.components.fonts.PokemonFont.getFont(1);
 
@@ -243,8 +243,20 @@ public class ButtonFactory {
         });
 
         cb.setDescription(text);
-        
+
         return cb;
     }
 
+    private static final String URI_RIGHT_ARROW = "Resources/Common/Arrows/right.png";
+    private static final String URI_LEFT_ARROW = "Resources/Common/Arrows/left.png";
+
+    public static CustomButton rightArrowButton(Dimension size) throws Exception {
+        return new CustomButton(ButtonTexts.getInstance().nextPokemon(), 0, Color.yellow,
+                ImageIO.read(new File(URI_RIGHT_ARROW)), size);
+    }
+
+    public static CustomButton leftArrowButton(Dimension size) throws Exception {
+        return new CustomButton(ButtonTexts.getInstance().previousPokemon(), 0, Color.yellow,
+                ImageIO.read(new File(URI_LEFT_ARROW)), size);
+    }
 }

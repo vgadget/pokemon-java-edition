@@ -4,7 +4,7 @@ import controller.Controller;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import model.Model;
-import view.components.AidPanel;
+import view.components.AidPanelImpl;
 
 /**
  *

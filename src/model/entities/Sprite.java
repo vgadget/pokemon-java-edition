@@ -25,6 +25,10 @@ public class Sprite implements Serializable {
         setRefreshRate(refreshRate);
     }
 
+    public List<Image> getImages(){
+        return animation;
+    }
+    
     public BufferedImage[] getAnimation() {
 
         BufferedImage[] imgs = new BufferedImage[animation.size()];

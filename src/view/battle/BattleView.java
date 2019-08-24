@@ -3,13 +3,13 @@ package view.battle;
 import java.awt.image.BufferedImage;
 import model.entities.Pokemon;
 import model.entities.Sprite;
-import view.components.AidPanel;
+import view.components.AidPanelImpl;
 
 /**
  *
  * @author Adrian Vazquez
  */
-public abstract class BattleView extends AidPanel {
+public abstract class BattleView extends AidPanelImpl {
 
     //Pokemon staff
     public abstract void setPokemonPlayer1(Pokemon p);

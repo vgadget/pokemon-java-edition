@@ -7,6 +7,7 @@ import model.SpecieModel;
 import model.TypeModel;
 import model.entities.Pokemon;
 import texttospeech.Narrator;
+import view.components.AnimatedBackgroundPanel;
 import view.menu.MainMenu;
 import view.pokedex.PokedexView;
 import view.pokedex.PokedexViewImpl;
@@ -28,6 +29,10 @@ public class Main {
     public static final PokemonController POKEMON_CONTROLLER = new PokemonController();
 
     public static void main(String[] args) throws Exception {
+        
+// Set Narrator 
+        Narrator.getInstance().setEnabled(true);
+        Narrator.getInstance().setLanguage(Narrator.Language.ENGLISH);
 
         //Link specie model, specie controller and specie view.
         SPECIE_MODEL.setController(SPECIE_CONTROLLER);
@@ -38,26 +43,17 @@ public class Main {
         //Link pokemon model, pokemon controller and pokemon view.
         POKEMON_MODEL.setController(POKEMON_CONTROLLER);
         POKEMON_CONTROLLER.setModel(POKEMON_MODEL);
-        PokemonView pokemonView = new PokemonView();
-        pokemonView.setModel(POKEMON_MODEL);
-        pokemonView.setController(POKEMON_CONTROLLER);
+        PokemonView pokemonView = new PokemonView(POKEMON_CONTROLLER);
         POKEMON_CONTROLLER.addView(pokemonView);
-                
+
         POKEMON_CONTROLLER.start();
-       
 
-
-        // Set Narrator 
-//        Narrator.getInstance().setLanguage(Narrator.Language.ENGLISH);
-//
-//        Narrator.getInstance().setEnabled(false);
 //
 //        new Thread(() -> {
 //
 //            new MainMenu();
 //
 //        }).start();
-
     }
 
 }

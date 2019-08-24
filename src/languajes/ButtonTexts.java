@@ -117,4 +117,16 @@ public class ButtonTexts {
         return s;
     }
 
+    private String nextPokemon = "Next pokémon";
+
+    public String nextPokemon() {
+        return nextPokemon;
+    }
+    
+    private String previousPokemon = "Previous pokémon";
+
+    public String previousPokemon() {
+        return previousPokemon;
+    }
+
 }

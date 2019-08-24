@@ -5,7 +5,7 @@ import java.util.List;
 import model.Model;
 import model.entities.Entity;
 import view.View;
-import view.components.AidPanel;
+import view.components.AidPanelImpl;
 
 /**
  *

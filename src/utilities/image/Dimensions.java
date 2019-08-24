@@ -19,7 +19,7 @@ public class Dimensions {
 
     private static Dimension selectedResolution = getFullScreenResolution();
 
-    private static boolean enableFullScreen = false;
+    private static boolean enableFullScreen = true;
     private static boolean isEnabledFullScreen = false;
 
     public static Dimension getSelectedResolution() {
@@ -70,14 +70,14 @@ public class Dimensions {
         selectedResolution = getWindowedResolution();
     }
 
-    public static Dimension getWindowedResolution() {
+    private static Dimension getWindowedResolution() {
 
         Dimension fullScreen = getFullScreenResolution();
 
         return new Dimension((int) (fullScreen.width / 1.3f), (int) (fullScreen.height / 1.3f));
     }
 
-    public static Dimension getFullScreenResolution() {
+    private static Dimension getFullScreenResolution() {
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 

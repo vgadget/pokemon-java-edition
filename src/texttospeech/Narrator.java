@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package texttospeech;
 
 /**
@@ -24,9 +19,9 @@ public class Narrator {
     private Language selectedLanguage;
 
     private boolean enabled;
-
+   
     private Narrator() {
-
+        
         enabled = false;
         
         tts = new TTSEngine();
@@ -74,9 +69,7 @@ public class Narrator {
 
         if (isEnabled()) {
             
-            int volume = utilities.sound.SoundPlayer.getInstance().getMusicVolume();
-             utilities.sound.SoundPlayer.getInstance().setMusicVolume(10);
-
+                        
             String output;
 
             if (this.selectedLanguage.equals(Language.SPANISH)) {
@@ -86,10 +79,9 @@ public class Narrator {
             }
 
             tts.stopSpeaking();
-
+    
             tts.speak(output + " ", 1.5f, false, true);
-            
-            utilities.sound.SoundPlayer.getInstance().setMusicVolume(volume);
+                        
         }
     }
 
