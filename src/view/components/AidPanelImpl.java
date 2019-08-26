@@ -26,12 +26,9 @@ public class AidPanelImpl extends JPanel implements AidView {
 
     public AidPanelImpl() {
 
-        setEnableAudioDescriptions(true);
+        setEnableAudioDescriptions(Narrator.getInstance().isEnabled());
 
         initComponents();
-
-        add(Notification.getInstance());
-
     }
 
     @Override

@@ -45,4 +45,12 @@ public class LabelTexts {
     public String selectedPokemon() {
         return selectedPokemon;
     }
+
+    private String areYouSureSbouReleaseThisPokemon = "Are you sure about release {name}";
+    
+    public String areYouSureSbouReleaseThisPokemon(String name){
+        
+        return areYouSureSbouReleaseThisPokemon.replace("{name}", name);
+    }
+    
 }

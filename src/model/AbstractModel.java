@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import model.persistence.Persistence;
-import utilities.DisplayMessage;
+import utilities.displaymessage.DisplayMessage;
 
 /**
  *

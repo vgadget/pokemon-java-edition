@@ -8,7 +8,7 @@ import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.persistence.Persistence;
-import utilities.DisplayMessage;
+import utilities.displaymessage.DisplayMessage;
 
 public class EffectivenessGraph implements Entity<String> {
 

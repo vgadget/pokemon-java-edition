@@ -85,11 +85,11 @@ public class Narrator {
         }
     }
 
-    public boolean isEnabled() {
+    public synchronized boolean isEnabled() {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public synchronized void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 

@@ -25,7 +25,7 @@ import model.PokemonModel;
 import model.entities.Pokemon;
 import model.entities.Sprite;
 import texttospeech.Narrator;
-import utilities.DataStructure.DataPool;
+import utilities.datastructures.DataPool;
 import utilities.image.Image;
 import utilities.string.StringComparator;
 import view.components.AidPanelImpl;
@@ -97,15 +97,14 @@ public class PokemonView extends AbstractView<PokemonModel, PokemonController> i
             remove(c);
         }
 
-        this.aidPanel = new AidPanelImpl();
-        this.add(getInputDetector());
-
         this.allPokemonPk = getModel().getAllPk();
 
         Collections.sort(allPokemonPk, new utilities.string.StringComparator());
 
         boolean aidsActivated = Narrator.getInstance().isEnabled();
         Narrator.getInstance().setEnabled(false);
+        this.aidPanel = new AidPanelImpl();
+        this.add(getInputDetector());
         animatedBackgroundPanel = new AnimatedBackgroundPanel();
         animatedBackgroundPanel.setEnableAudioDescriptions(false);
         Narrator.getInstance().setEnabled(aidsActivated);
@@ -152,7 +151,7 @@ public class PokemonView extends AbstractView<PokemonModel, PokemonController> i
                 img = utilities.image.ImageUtil.resize(img, grid * 12, grid * 12);
                 animation.add(new Image(img));
             } catch (IOException ex) {
-                utilities.DisplayMessage.showErrorDialog(ex.getLocalizedMessage());
+                utilities.displaymessage.DisplayMessage.showErrorDialog(ex.getLocalizedMessage());
             }
         });
 
@@ -163,7 +162,7 @@ public class PokemonView extends AbstractView<PokemonModel, PokemonController> i
             loadingAnimationPosX = (int) ((frameSize.width - loadingAnimation.getImages().get(0).getImage().getWidth()) / 2);
             loadingAnimationPosY = (int) ((frameSize.height - loadingAnimation.getImages().get(0).getImage().getHeight()) / 2);
         } catch (Exception ex) {
-            utilities.DisplayMessage.showErrorDialog(ex.getLocalizedMessage());
+            utilities.displaymessage.DisplayMessage.showErrorDialog(ex.getLocalizedMessage());
         }
 
         // Set the image updater
@@ -329,7 +328,14 @@ public class PokemonView extends AbstractView<PokemonModel, PokemonController> i
         //Pokemon management
         this.mutex = new Semaphore(1);
         this.preloadedPokemonsPool = new DataPool<>(2 * MAX_PRELOAD);
-        setPokemon(getModel().getEntity(getModel().getAllPk().get(0)));
+        
+        Thread t = setPokemon(getModel().getEntity(getModel().getAllPk().get(0)));
+        
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException ex) {
+        }
 
     }
 
@@ -362,9 +368,9 @@ public class PokemonView extends AbstractView<PokemonModel, PokemonController> i
         setup();
     }
 
-    private void setPokemon(Pokemon pokemon) {
+    private Thread setPokemon(Pokemon pokemon) {
 
-        new Thread(() -> {
+        return new Thread(() -> {
 
             this.showLoadingAnimation = true;
 
@@ -394,9 +400,8 @@ public class PokemonView extends AbstractView<PokemonModel, PokemonController> i
             this.aidPanel.removeAudibleDescription();
             this.aidPanel.addAudibleDescription(LabelTexts.getInstance().selectedPokemon() + text);
             getAudibleDescription();
-
             updatePool();
-        }).start();
+        });
     }
 
     public synchronized void nextPokemon() {
@@ -412,7 +417,7 @@ public class PokemonView extends AbstractView<PokemonModel, PokemonController> i
 
             Pokemon p = this.preloadedPokemonsPool.get(this.allPokemonPk.get(index + 1));
             if (p != null) {
-                setPokemon(p);
+                setPokemon(p).start();
             }
         }
 
@@ -433,7 +438,7 @@ public class PokemonView extends AbstractView<PokemonModel, PokemonController> i
             Pokemon p = this.preloadedPokemonsPool.get(this.allPokemonPk.get(index - 1));
 
             if (p != null) {
-                setPokemon(p);
+                setPokemon(p).start();
             }
         }
 

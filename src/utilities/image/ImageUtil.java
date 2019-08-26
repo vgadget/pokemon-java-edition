@@ -80,6 +80,15 @@ public class ImageUtil {
         }
         return image;
     }
+    
+    public static BufferedImage getEmptyImage(Dimension d){
+        
+        BufferedImage img;
+        
+        img = new BufferedImage(d.width, d.height, BufferedImage.OPAQUE);
+        
+        return img;
+    }
 
     public static BufferedImage changeEveryColor(BufferedImage img, RGB newPixelValue) throws Exception {
 

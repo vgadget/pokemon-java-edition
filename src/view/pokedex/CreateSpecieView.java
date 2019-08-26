@@ -672,11 +672,11 @@ public class CreateSpecieView extends PokedexView {
                     spriteLabel.setup(sprite);
 
                 } catch (Exception ex) {
-                    utilities.DisplayMessage.showErrorDialog(ex.getLocalizedMessage());
+                    utilities.displaymessage.DisplayMessage.showErrorDialog(ex.getLocalizedMessage());
                 }
 
             } else {
-                utilities.DisplayMessage.showErrorDialog("ERROR: SELECT AT LEAST 2 IMAGES (CTRL + CLICK)");
+                utilities.displaymessage.DisplayMessage.showErrorDialog("ERROR: SELECT AT LEAST 2 IMAGES (CTRL + CLICK)");
             }
 
         }
@@ -797,7 +797,7 @@ public class CreateSpecieView extends PokedexView {
             List<String> speciePKList = this.getModel().getAllPk();
 
             if (speciePKList.size() >= 999) {
-                utilities.DisplayMessage.showErrorDialog("There are " + speciePKList.size() + " pokémon, remove some species to add others.");
+                utilities.displaymessage.DisplayMessage.showErrorDialog("There are " + speciePKList.size() + " pokémon, remove some species to add others.");
             } else {
 
                 while (i < speciePKList.size() && !exist) {
@@ -816,7 +816,7 @@ public class CreateSpecieView extends PokedexView {
                           
 
                 } else {
-                    utilities.DisplayMessage.showErrorDialog("This specie is already created.");
+                    utilities.displaymessage.DisplayMessage.showErrorDialog("This specie is already created.");
                 }
             }
 
@@ -887,7 +887,7 @@ public class CreateSpecieView extends PokedexView {
                 if (cry.getClip().getMicrosecondLength() <= 1e+7) { // The maximum cry length must be 10 seconds or less
                     this.loadedCry = cry;
                 } else {
-                    utilities.DisplayMessage.showErrorDialog("The maximum cry length must be 10 seconds or less");
+                    utilities.displaymessage.DisplayMessage.showErrorDialog("The maximum cry length must be 10 seconds or less");
                 }
 
             } catch (Exception ex) {

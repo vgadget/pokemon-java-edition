@@ -231,7 +231,7 @@ public class Notification extends JLabel {
             this.sound = new Sound(new File(OVER_AUDIO_FEEDBACK));
 
         } catch (Exception ex) {
-            utilities.DisplayMessage.showErrorDialog(ex.getLocalizedMessage());
+            utilities.displaymessage.DisplayMessage.showErrorDialog(ex.getLocalizedMessage());
         }
 
         // THE X AND Y COORDINATES OF THE NOTIFICATION BAR WHEN IT IS DISPLAYED

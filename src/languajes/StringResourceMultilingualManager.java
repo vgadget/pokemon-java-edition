@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import utilities.CSVManager;
+import utilities.csv.CSVManager;
 
 /**
  *
@@ -23,7 +23,7 @@ public class StringResourceMultilingualManager {
             try {
                 srmm = new StringResourceMultilingualManager();
             } catch (FileNotFoundException ex) {
-                utilities.DisplayMessage.showErrorDialog(ex.getMessage());
+                utilities.displaymessage.DisplayMessage.showErrorDialog(ex.getMessage());
             }
         }
 

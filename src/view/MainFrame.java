@@ -5,10 +5,12 @@ import java.awt.Component;
 import java.awt.Container;
 import java.util.Stack;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import utilities.image.Dimensions;
 import view.components.AidPanelImpl;
 import view.components.AidView;
 import view.components.Musical;
+import view.components.Notification;
 
 /**
  *
@@ -59,6 +61,10 @@ public class MainFrame extends JFrame {
 
             if (lastComponents.peek() instanceof AidView) {
                 ((AidView) lastComponents.peek()).getAudibleDescription();
+            }
+
+            if (lastComponents.peek() instanceof JPanel) {
+                ((JPanel) (lastComponents.peek())).add(Notification.getInstance());
             }
 
         }

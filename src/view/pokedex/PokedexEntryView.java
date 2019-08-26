@@ -390,7 +390,7 @@ public class PokedexEntryView extends JLayeredPane {
             add(this.cryButton, new Integer(8));
 
         } catch (IOException ex) {
-            utilities.DisplayMessage.showErrorDialog(ex.getLocalizedMessage());
+            utilities.displaymessage.DisplayMessage.showErrorDialog(ex.getLocalizedMessage());
         }
     }
 

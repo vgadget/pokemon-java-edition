@@ -5,9 +5,8 @@ import controller.SpecieController;
 import model.PokemonModel;
 import model.SpecieModel;
 import model.TypeModel;
-import model.entities.Pokemon;
 import texttospeech.Narrator;
-import view.components.AnimatedBackgroundPanel;
+import view.components.DialogPane;
 import view.menu.MainMenu;
 import view.pokedex.PokedexView;
 import view.pokedex.PokedexViewImpl;
@@ -29,10 +28,6 @@ public class Main {
     public static final PokemonController POKEMON_CONTROLLER = new PokemonController();
 
     public static void main(String[] args) throws Exception {
-        
-// Set Narrator 
-        Narrator.getInstance().setEnabled(true);
-        Narrator.getInstance().setLanguage(Narrator.Language.ENGLISH);
 
         //Link specie model, specie controller and specie view.
         SPECIE_MODEL.setController(SPECIE_CONTROLLER);
@@ -46,14 +41,20 @@ public class Main {
         PokemonView pokemonView = new PokemonView(POKEMON_CONTROLLER);
         POKEMON_CONTROLLER.addView(pokemonView);
 
-        POKEMON_CONTROLLER.start();
+        //POKEMON_CONTROLLER.start();
+// Set Narrator 
+        Narrator.getInstance().setEnabled(true);
+        Narrator.getInstance().setLanguage(Narrator.Language.ENGLISH);
 
-//
-//        new Thread(() -> {
-//
-//            new MainMenu();
-//
-//        }).start();
+        if (DialogPane.showYesOrNotDialog("Hello, this is a demo version of my\ngame, thanks for playing. Do you want to run it?. ")) {
+
+            new Thread(() -> {
+                new MainMenu();
+            }).start();
+        } else {
+            System.exit(0);
+        }
+
     }
 
 }

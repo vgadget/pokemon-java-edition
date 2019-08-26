@@ -201,7 +201,7 @@ public class PokedexSpecieListView extends AidPanelImpl {
             setPreferredSize(new Dimension((int) (frameDimension.getWidth() * 0.90f), (int) ((cb.getSize().height * (pkList.size() + 10)))));
 
         } catch (Exception e) {
-            utilities.DisplayMessage.showErrorDialog(e.getMessage());
+            utilities.displaymessage.DisplayMessage.showErrorDialog(e.getMessage());
         }
 
         repaint();

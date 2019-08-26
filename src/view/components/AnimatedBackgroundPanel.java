@@ -107,7 +107,7 @@ public class AnimatedBackgroundPanel extends AidPanelImpl implements Musical{
                 backgroundMusic = new Sound(allMusicFiles.get(rnd.nextInt(allMusicFiles.size())));
 
             } catch (Exception ex) {
-                utilities.DisplayMessage.showErrorDialog(ex.getLocalizedMessage());
+                utilities.displaymessage.DisplayMessage.showErrorDialog(ex.getLocalizedMessage());
             }
 
         }

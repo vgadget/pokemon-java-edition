@@ -62,7 +62,7 @@ public class SpecieController extends AbstractController<SpecieModel, View, Spec
             specie = new Specie(name, type, secondaryType, front, back, height, weight, pokedexID, maxHP, minHP, maxAttack, minAttack, maxSpecialAttack, minSpecialAttack, maxDefense, minDefense, maxSpecialDefense, minSpecialDefense, maxSpeed, minSpeed, precision, evasion, description, cry);
 
         } catch (Exception e) {
-            utilities.DisplayMessage.showErrorDialog("SPECIE CONTROLLER createEntity() INVALID FIELDS");
+            utilities.displaymessage.DisplayMessage.showErrorDialog("SPECIE CONTROLLER createEntity() INVALID FIELDS");
         }
 
         return specie;
